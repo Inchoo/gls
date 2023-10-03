@@ -1,0 +1,26 @@
+{
+    "name": "gls-croatia/module-shipping",
+    "description": "GLS Croatia Shipping",
+    "type": "magento2-module",
+    "version": "0.0.1",
+    "require": {
+        "php": "~8.1.0||~8.2.0",
+        "magento/framework": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "GLSCroatia\\Shipping\\": ""
+        }
+    },
+    "authors": [
+        {
+            "name": "Inchoo",
+            "email": "backend@inchoo.net",
+            "homepage": "https://inchoo.net/",
+            "role": "Developer"
+        }
+    ]
+}
