@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <gls>
+                <active>0</active>
+                <title>GLS</title>
+                <allowed_methods>hd,oohd</allowed_methods>
+                <hd_method_name>Home Delivery</hd_method_name>
+                <hd_method_price>0</hd_method_price>
+                <oohd_method_name>Out of Home Delivery</oohd_method_name>
+                <oohd_method_price>0</oohd_method_price>
+                <sallowspecific>1</sallowspecific>
+                <specificcountry>CZ,HR,HU,RO,RS,SI,SK</specificcountry>
+                <model>GLSCroatia\Shipping\Model\Carrier</model>
+            </gls>
+        </carriers>
+    </default>
+</config>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="carriers">
+            <group id="gls" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>GLS</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Title</label>
+                </field>
+                <field id="allowed_methods" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Allowed Methods</label>
+                    <source_model>GLSCroatia\Shipping\Model\Config\Source\Method</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="hd_method_name" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Home Delivery Method Name</label>
+                </field>
+                <field id="hd_method_price" translate="label" type="text" sortOrder="115" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Home Delivery Method Price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="oohd_method_name" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Out of Home Delivery Method Name</label>
+                </field>
+                <field id="oohd_method_price" translate="label" type="text" sortOrder="125" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Out of Home Delivery Method Price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="500" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Ship to Specific Countries</label>
+                    <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="2000" showInDefault="1" showInWebsite="1">
+                    <label>Sort Order</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
