@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <value id="map_gls_hungary" type="host">map.gls-hungary.com</value>
+                <value id="open_street_map" type="host">*.openstreetmap.org</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="map_gls_hungary" type="host">map.gls-hungary.com</value>
+                <value id="open_street_map" type="host">*.openstreetmap.org</value>
+            </values>
+        </policy>
+        <policy id="img-src">
+            <values>
+                <value id="open_street_map" type="host">*.openstreetmap.org</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

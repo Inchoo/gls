@@ -1,0 +1,7 @@
+<!-- ko if: isMethodSelected() && deliveryLocation() -->
+    <!-- ko text: deliveryLocation().name --><!-- /ko --><br>
+    <!-- ko text: deliveryLocation().contact.address --><!-- /ko --><br>
+    <!-- ko text: deliveryLocation().contact.city --><!-- /ko -->, <!-- ko text: deliveryLocation().contact.postalCode --><!-- /ko --><br>
+    <!-- ko text: getCountryName(deliveryLocation().contact.countryCode) --><!-- /ko --><br>
+    <br>
+<!-- /ko -->
