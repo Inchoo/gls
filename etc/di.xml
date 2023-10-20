@@ -6,4 +6,8 @@
             <argument name="type" xsi:type="string">method</argument>
         </arguments>
     </virtualType>
+
+    <type name="Magento\Checkout\Api\ShippingInformationManagementInterface">
+        <plugin name="gls_croatia_shipping" type="GLSCroatia\Shipping\Plugin\Checkout\Model\ShippingInformationManagementPlugin"/>
+    </type>
 </config>
