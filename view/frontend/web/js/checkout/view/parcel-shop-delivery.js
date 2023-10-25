@@ -1,7 +1,7 @@
 define([
     'uiComponent',
     'ko',
-    'GLSCroatia_Shipping/js/model/gls-data',
+    'GLSCroatia_Shipping/js/checkout/model/gls-data',
     'GLSCroatia_Shipping/js/storage',
     'GLSCroatia_Shipping/js/scriptLoader',
     'Magento_Checkout/js/model/quote',
@@ -11,48 +11,45 @@ define([
 
     return Component.extend({
         defaults: {
-            template: 'GLSCroatia_Shipping/checkout/out-of-home-delivery',
+            template: 'GLSCroatia_Shipping/checkout/parcel-shop-delivery',
             mapElementId: 'gls-map-dialog',
-            shippingMethodCode: 'gls_oohd',
+            shippingMethodCode: null,
             supportedCountries: [],
 
             listens: {
                 '${ $.parentName }:isSelected': 'shippingMethodChanged'
-            },
-
+            }
         },
 
         countryCode: ko.observable(null),
-        isMethodSelected: glsData.isMethodSelected,
-        deliveryLocation: glsData.deliveryLocation,
+        isShippingMethodSelected: glsData.isParcelShopDeliverySelected,
+        deliveryPoint: glsData.parcelShopDeliveryPoint,
 
         initialize: function () {
-            this._super();
+            var checkoutConfig = window.checkoutConfig.glsData;
 
-            if (!window.checkoutConfig.glsData) {
+            if (!checkoutConfig) {
                 this.destroy();
                 return this;
             }
 
-            if (Array.isArray(window.checkoutConfig.glsData.supportedCountries)) {
-                this.supportedCountries = window.checkoutConfig.glsData.supportedCountries;
+            this._super();
+
+            this.shippingMethodCode = checkoutConfig.parcelShopDelivery.shippingMethodCode;
+
+            if (Array.isArray(checkoutConfig.supportedCountries)) {
+                this.supportedCountries = checkoutConfig.supportedCountries;
             }
 
-            this._initStorage();
-            this._initCountryCode();
-
-            return this;
-        },
-
-        _initStorage: function () {
-            if (window.checkoutConfig.glsData.deliveryLocation && !storage.hasLocationChanged()) {
-                storage.setDeliveryLocation(window.checkoutConfig.glsData.deliveryLocation);
+            if (checkoutConfig.parcelShopDelivery.deliveryPoint && !storage.hasDeliveryPointChanged()) {
+                storage.setDeliveryPoint(glsCheckoutConfig.deliveryPoint); // init persistence storage
             }
-
-            this.deliveryLocation(storage.getDeliveryLocation());
-            this.deliveryLocation.subscribe(function (newDeliveryLocation) {
-                storage.setDeliveryLocation(newDeliveryLocation);
+            this.deliveryPoint(storage.getDeliveryPoint());
+            this.deliveryPoint.subscribe(function (newDeliveryPoint) {
+                storage.setDeliveryPoint(newDeliveryPoint); // update persistence storage
             });
+
+            this._initCountryCode();
 
             return this;
         },
@@ -65,11 +62,11 @@ define([
             }
 
             if (!this.countryCode()) {
-                this.removeDeliveryLocation();
+                this.removeDeliveryPoint();
             }
 
             this.countryCode.subscribe(function () {
-                this.removeDeliveryLocation();
+                this.removeDeliveryPoint();
             }.bind(this));
 
             quote.shippingAddress.subscribe(function (shippingAddress) {
@@ -88,29 +85,29 @@ define([
         },
 
         shippingMethodChanged: function (currentShippingMethodCode) {
-            var isMethodSelected = currentShippingMethodCode === this.shippingMethodCode;
+            var isShippingMethodSelected = currentShippingMethodCode === this.shippingMethodCode;
 
-            if (isMethodSelected) {
+            if (isShippingMethodSelected) {
                 scriptLoader.createMapScript();
             }
 
-            this.isMethodSelected(isMethodSelected);
+            this.isShippingMethodSelected(isShippingMethodSelected);
         },
 
         openMap: function () {
             document.getElementById(this.mapElementId).showModal();
         },
 
-        removeDeliveryLocation: function () {
-            this.deliveryLocation(null);
+        removeDeliveryPoint: function () {
+            this.deliveryPoint(null);
         },
 
         initMap: function () {
             var mapElement = document.getElementById(this.mapElementId);
 
             mapElement.addEventListener('change', (e) => {
-                if (this.isMethodSelected()) {
-                    this.deliveryLocation(e.detail);
+                if (this.isShippingMethodSelected()) {
+                    this.deliveryPoint(e.detail);
                 }
             });
         },

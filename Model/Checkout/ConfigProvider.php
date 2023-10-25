@@ -51,32 +51,35 @@ class ConfigProvider implements ConfigProviderInterface
         }
 
         $quote = $this->checkoutSession->getQuote();
-        $shippingAddress = $quote->getShippingAddress();
+        $quoteGlsData = $this->extractGlsData($quote->getShippingAddress());
 
         $configData = [
             'supportedCountries' => array_values($this->config->getSupportedCountries()),
-            'deliveryLocation' => $this->extractDeliveryLocation($shippingAddress)
+            'parcelShopDelivery' => [
+                'shippingMethodCode' => 'gls_oohd',
+                'deliveryPoint' => $quoteGlsData['parcelShopDeliveryPoint'] ?? null
+            ]
         ];
 
         return ['glsData' => $configData];
     }
 
     /**
-     * Extract GLS delivery location from the shipping address.
+     * Extract GLS data from the shipping address.
      *
      * @param Address $shippingAddress
-     * @return array|null
+     * @return array
      */
-    protected function extractDeliveryLocation(Address $shippingAddress): ?array
+    protected function extractGlsData(Address $shippingAddress): array
     {
-        if (!$deliveryLocation = $shippingAddress->getData('gls_delivery_location')) {
-            return null;
+        if (!$deliveryLocation = $shippingAddress->getData('gls_data')) {
+            return [];
         }
 
         try {
             return $this->json->unserialize($deliveryLocation);
         } catch (\InvalidArgumentException $e) {
-            return null;
+            return [];
         }
     }
 }

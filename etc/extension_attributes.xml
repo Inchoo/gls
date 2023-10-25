@@ -2,6 +2,6 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
     <extension_attributes for="Magento\Checkout\Api\Data\ShippingInformationInterface">
-        <attribute code="gls_delivery_location" type="string"/>
+        <attribute code="gls_parcel_shop_delivery_point" type="string"/>
     </extension_attributes>
 </config>

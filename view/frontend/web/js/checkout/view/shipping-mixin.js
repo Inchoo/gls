@@ -1,5 +1,5 @@
 define([
-    'GLSCroatia_Shipping/js/model/gls-data',
+    'GLSCroatia_Shipping/js/checkout/model/gls-data',
     'mage/translate'
 ],function (glsData, $t) {
     'use strict';
@@ -9,9 +9,9 @@ define([
             validateShippingInformation: function () {
                 var result = this._super();
 
-                if (result && glsData.isMethodSelected() && !glsData.deliveryLocation()) {
+                if (result && glsData.isParcelShopDeliverySelected() && !glsData.parcelShopDeliveryPoint()) {
                     result = false;
-                    this.errorValidationMessage($t('Please select a GLS delivery location.'));
+                    this.errorValidationMessage($t('Please select a GLS delivery point.'));
                 }
 
                 return result;

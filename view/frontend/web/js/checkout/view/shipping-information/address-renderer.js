@@ -1,6 +1,6 @@
 define([
     'uiComponent',
-    'GLSCroatia_Shipping/js/model/gls-data',
+    'GLSCroatia_Shipping/js/checkout/model/gls-data',
     'Magento_Customer/js/customer-data'
 ], function (Component, glsData, customerData) {
     'use strict';
@@ -10,8 +10,8 @@ define([
             template: 'GLSCroatia_Shipping/checkout/shipping-information/address-renderer'
         },
 
-        isMethodSelected: glsData.isMethodSelected,
-        deliveryLocation: glsData.deliveryLocation,
+        isParcelShopDeliverySelected: glsData.isParcelShopDeliverySelected,
+        parcelShopDeliveryPoint: glsData.parcelShopDeliveryPoint,
 
         getCountryName: function (countryId) {
             var countryData = customerData.get('directory-data')();

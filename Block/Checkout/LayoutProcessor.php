@@ -40,14 +40,17 @@ class LayoutProcessor implements LayoutProcessorInterface
     {
         $isCarrierActive = $this->config->isActive();
 
-        $outOfHomeDeliveryPath = $this->arrayManager->findPath('gls-out-of-home-delivery', $jsLayout);
-        if (!$isCarrierActive && $outOfHomeDeliveryPath) {
-            $jsLayout = $this->arrayManager->remove($outOfHomeDeliveryPath, $jsLayout);
+        $parcelShopDeliveryPath = $this->arrayManager->findPath('gls-parcel-shop-delivery', $jsLayout);
+        if (!$isCarrierActive && $parcelShopDeliveryPath) {
+            $jsLayout = $this->arrayManager->remove($parcelShopDeliveryPath, $jsLayout);
         }
 
-        $deliveryLocationAddressPath = $this->arrayManager->findPath('gls-delivery-location-address', $jsLayout);
-        if (!$isCarrierActive && $deliveryLocationAddressPath) {
-            $jsLayout = $this->arrayManager->remove($deliveryLocationAddressPath, $jsLayout);
+        $parcelShopDeliveryPathAddressPath = $this->arrayManager->findPath(
+            'gls-parcel-shop-delivery-address',
+            $jsLayout
+        );
+        if (!$isCarrierActive && $parcelShopDeliveryPathAddressPath) {
+            $jsLayout = $this->arrayManager->remove($parcelShopDeliveryPathAddressPath, $jsLayout);
         }
 
         return $jsLayout;

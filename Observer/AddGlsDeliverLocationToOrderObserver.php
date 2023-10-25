@@ -22,9 +22,6 @@ class AddGlsDeliverLocationToOrderObserver implements ObserverInterface
         /** @var \Magento\Quote\Model\Quote $quote */
         $quote = $observer->getData('quote');
 
-        $order->setData(
-            'gls_delivery_location',
-            $quote->getShippingAddress()->getData('gls_delivery_location')
-        );
+        $order->setData('gls_data', $quote->getShippingAddress()->getData('gls_data'));
     }
 }

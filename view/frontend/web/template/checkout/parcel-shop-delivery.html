@@ -1,15 +1,15 @@
-<div class="checkout-gls-out-of-home-delivery" data-bind="visible: isMethodSelected() && countryCode()">
-    <h3 data-bind="i18n: 'GLS Delivery Location'"></h3>
+<div class="checkout-gls-parcel-shop-delivery" data-bind="visible: isShippingMethodSelected() && countryCode()">
+    <h3 data-bind="i18n: 'GLS Delivery Point'"></h3>
 
-    <div data-bind="visible: deliveryLocation, with:deliveryLocation">
+    <div data-bind="visible: deliveryPoint, with:deliveryPoint">
         <strong data-bind="i18n: 'Name'"></strong>: <span data-bind="text: name"></span><br>
         <strong data-bind="i18n: 'Street Address'"></strong>: <span data-bind="text: contact.address"></span><br>
         <strong data-bind="i18n: 'City'"></strong>: <span data-bind="text: contact.city"></span>, <span data-bind="text: contact.postalCode"></span><br>
         <strong data-bind="i18n: 'Country'"></strong>: <span data-bind="text: $parent.getCountryName(contact.countryCode)"></span><br>
     </div>
 
-    <button type="button" class="action" data-bind="i18n: 'Select Delivery Location', click: openMap">Select Delivery Location</button>
-    <button type="button" class="action" data-bind="i18n: 'Remove Delivery Location', visible: deliveryLocation, click: removeDeliveryLocation"></button>
+    <button type="button" class="action" data-bind="i18n: 'Select Delivery Point', click: openMap">Select Delivery Point</button>
+    <button type="button" class="action" data-bind="i18n: 'Remove Delivery Point', visible: deliveryPoint, click: removeDeliveryPoint"></button>
 
     <gls-dpm-dialog data-bind="{attr: {id: mapElementId, country: countryCode}, afterRender: initMap}"></gls-dpm-dialog>
 </div>

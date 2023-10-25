@@ -23,7 +23,7 @@ class ShippingInformationManagementPlugin
     }
 
     /**
-     * Save GLS delivery location to the shipping address.
+     * Save GLS data to the shipping address.
      *
      * @param ShippingInformationManagementInterface $subject
      * @param int $cartId
@@ -37,25 +37,44 @@ class ShippingInformationManagementPlugin
         ShippingInformationInterface $addressInformation
     ): void {
         $shippingAddress = $addressInformation->getShippingAddress();
-        $shippingAddress->setData('gls_delivery_location', null);
+        $methodeCode = "{$addressInformation->getShippingCarrierCode()}_{$addressInformation->getShippingMethodCode()}";
 
-        $methodCode = "{$addressInformation->getShippingCarrierCode()}_{$addressInformation->getShippingMethodCode()}";
-        if ($methodCode !== 'gls_oohd') {
-            return;
+        $glsData = $this->jsonDecode($shippingAddress->getData('gls_data') ?: '');
+
+        $isParcelShopDelivery = $methodeCode === 'gls_oohd';
+        $deliveryPoint = $this->jsonDecode(
+            $addressInformation->getExtensionAttributes()->getGlsParcelShopDeliveryPoint() ?: ''
+        );
+
+        if ($isParcelShopDelivery && !$deliveryPoint) {
+            throw new \Magento\Framework\Exception\LocalizedException(__('Invalid GLS delivery point.'));
+        }
+        if ($isParcelShopDelivery) {
+            $glsData['parcelShopDeliveryPoint'] = $deliveryPoint;
+        } else {
+            unset($glsData['parcelShopDeliveryPoint']);
         }
 
-        $deliverLocationJson = $addressInformation->getExtensionAttributes()->getGlsDeliveryLocation() ?: '';
+        $glsData = $glsData ? $this->json->serialize($glsData) : null;
+        $shippingAddress->setData('gls_data', $glsData);
+    }
+
+    /**
+     * Decode JSON string.
+     *
+     * @param string $jsonString
+     * @return array
+     */
+    protected function jsonDecode(string $jsonString): array
+    {
+        if (!$jsonString) {
+            return [];
+        }
 
         try {
-            $deliveryLocation = $this->json->unserialize($deliverLocationJson);
+            return $this->json->unserialize($jsonString);
         } catch (\InvalidArgumentException $e) {
-            $deliveryLocation = [];
+            return [];
         }
-
-        if (!$deliveryLocation) {
-            throw new \Magento\Framework\Exception\LocalizedException(__('Invalid GLS Delivery Location.'));
-        }
-
-        $shippingAddress->setData('gls_delivery_location', $deliverLocationJson);
     }
 }

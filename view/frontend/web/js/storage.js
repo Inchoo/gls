@@ -27,25 +27,41 @@ define([
     function initData()
     {
         return {
-            deliveryLocation: null,
-            locationChanged: false
+            deliveryPoint: null,
+            deliveryPointChanged: false
         };
     }
 
     return {
-        getDeliveryLocation: function () {
-            return getData().deliveryLocation;
+        get: function (propertyKey) {
+            var data = getData();
+
+            if (data.hasOwnProperty(propertyKey)) {
+                return data[propertyKey];
+            }
+
+            return null;
         },
 
-        setDeliveryLocation: function (data) {
-            var obj = getData();
-            obj.deliveryLocation = data;
-            obj.locationChanged = true;
-            saveData(obj);
+        set: function (propertyKey, value) {
+            var data = getData();
+
+            data[propertyKey] = value;
+
+            saveData(data);
         },
 
-        hasLocationChanged: function () {
-            return getData().locationChanged;
+        getDeliveryPoint: function () {
+            return this.get('deliveryPoint');
+        },
+
+        setDeliveryPoint: function (value) {
+            this.set('deliveryPoint', value);
+            this.set('deliveryPointChanged', true);
+        },
+
+        hasDeliveryPointChanged: function () {
+            return this.get('deliveryPointChanged');
         }
     }
 });

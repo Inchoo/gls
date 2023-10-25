@@ -14,8 +14,8 @@
                                             <item name="children" xsi:type="array">
                                                 <item name="shippingAddress" xsi:type="array">
                                                     <item name="children" xsi:type="array">
-                                                        <item name="gls-out-of-home-delivery" xsi:type="array">
-                                                            <item name="component" xsi:type="string">GLSCroatia_Shipping/js/view/out-of-home-delivery</item>
+                                                        <item name="gls-parcel-shop-delivery" xsi:type="array">
+                                                            <item name="component" xsi:type="string">GLSCroatia_Shipping/js/checkout/view/parcel-shop-delivery</item>
                                                             <item name="displayArea" xsi:type="string">shippingAdditional</item>
                                                             <item name="config" xsi:type="array">
                                                                 <item name="deps" xsi:type="array">
@@ -35,9 +35,9 @@
                                             <item name="children" xsi:type="array">
                                                 <item name="ship-to" xsi:type="array">
                                                     <item name="children" xsi:type="array">
-                                                        <item name="gls-delivery-location-address" xsi:type="array">
+                                                        <item name="gls-parcel-shop-delivery-address" xsi:type="array">
                                                             <item name="config" xsi:type="array">
-                                                                <item name="component" xsi:type="string">GLSCroatia_Shipping/js/view/shipping-information/address-renderer</item>
+                                                                <item name="component" xsi:type="string">GLSCroatia_Shipping/js/checkout/view/shipping-information/address-renderer</item>
                                                             </item>
                                                         </item>
                                                     </item>

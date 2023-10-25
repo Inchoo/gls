@@ -5,7 +5,7 @@ define(function () {
 
     return {
         /**
-         * Create GLS map <script> element.
+         * Create GLS delivery point map <script> element.
          */
         createMapScript: function () {
             var element, firstScriptElement;
