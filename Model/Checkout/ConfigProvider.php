@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Checkout;
 
+use GLSCroatia\Shipping\Model\Carrier;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Quote\Model\Quote\Address;
 
@@ -56,7 +57,7 @@ class ConfigProvider implements ConfigProviderInterface
         $configData = [
             'supportedCountries' => array_values($this->config->getSupportedCountries()),
             'parcelShopDelivery' => [
-                'shippingMethodCode' => 'gls_oohd',
+                'shippingMethodCode' => Carrier::CODE . '_' . Carrier::PARCEL_SHOP_DELIVERY_METHOD,
                 'deliveryPoint' => $quoteGlsData['parcelShopDeliveryPoint'] ?? null
             ]
         ];

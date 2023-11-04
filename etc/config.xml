@@ -5,14 +5,36 @@
         <carriers>
             <gls>
                 <active>0</active>
+                <client_id/>
+                <api_mode>sandbox</api_mode>
+                <api_username/>
+                <api_password backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <api_country>HR</api_country>
                 <title>GLS</title>
-                <allowed_methods>hd,oohd</allowed_methods>
-                <hd_method_name>Home Delivery</hd_method_name>
-                <hd_method_price>0</hd_method_price>
-                <oohd_method_name>Out of Home Delivery</oohd_method_name>
-                <oohd_method_price>0</oohd_method_price>
+                <max_package_weight>40</max_package_weight>
+                <allowed_methods>home,psd</allowed_methods>
+                <home_method_name>Home Delivery</home_method_name>
+                <home_method_price>0</home_method_price>
+                <psd_method_name>Out of Home Delivery</psd_method_name>
+                <psd_method_price>0</psd_method_price>
                 <sallowspecific>1</sallowspecific>
-                <specificcountry>CZ,HR,HU,RO,RS,SI,SK</specificcountry>
+                <specificcountry>CZ,HR,HU,RO,SI,SK</specificcountry>
+                <client_reference>Order #{increment_id}</client_reference>
+                <printer_type>A4_2x2</printer_type>
+                <print_position>1</print_position>
+                <service>
+                    <guaranteed_24h>0</guaranteed_24h>
+                    <aos>0</aos>
+                    <cs1>0</cs1>
+                    <fds>0</fds>
+                    <fss>0</fss>
+                    <ins>0</ins>
+                    <sm1>0</sm1>
+                    <sm1_text/>
+                    <sm2>0</sm2>
+                    <tgs>0</tgs>
+                </service>
+                <supported_countries>CZ,HR,HU,RO,SI,SK</supported_countries>
                 <model>GLSCroatia\Shipping\Model\Carrier</model>
             </gls>
         </carriers>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Plugin\Checkout\Model;
 
+use GLSCroatia\Shipping\Model\Carrier;
 use Magento\Checkout\Api\Data\ShippingInformationInterface;
 use Magento\Checkout\Api\ShippingInformationManagementInterface;
 
@@ -37,11 +38,12 @@ class ShippingInformationManagementPlugin
         ShippingInformationInterface $addressInformation
     ): void {
         $shippingAddress = $addressInformation->getShippingAddress();
-        $methodeCode = "{$addressInformation->getShippingCarrierCode()}_{$addressInformation->getShippingMethodCode()}";
 
         $glsData = $this->jsonDecode($shippingAddress->getData('gls_data') ?: '');
 
-        $isParcelShopDelivery = $methodeCode === 'gls_oohd';
+        $isParcelShopDelivery = $addressInformation->getShippingCarrierCode() === Carrier::CODE
+            && $addressInformation->getShippingMethodCode() === Carrier::PARCEL_SHOP_DELIVERY_METHOD;
+
         $deliveryPoint = $this->jsonDecode(
             $addressInformation->getExtensionAttributes()->getGlsParcelShopDeliveryPoint() ?: ''
         );
