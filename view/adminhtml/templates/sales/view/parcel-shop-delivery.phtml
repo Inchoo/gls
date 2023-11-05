@@ -1,0 +1,30 @@
+<?php
+/** @var \Magento\Backend\Block\Template $block */
+
+/** @var \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery */
+$parcelShopDelivery = $block->getData('parcel_shop_delivery');
+
+/** @var \Magento\Sales\Block\Adminhtml\Order\View\Info $orderInfoBlock */
+$orderInfoBlock = $block->getLayout()->getBlock('order_info');
+
+$order = $orderInfoBlock->getOrder();
+?>
+
+<?php if ($parcelShopDelivery->isParcelShopDeliveryMethod($order->getShippingMethod())): ?>
+    <section class="admin__page-section">
+        <div class="admin__page-section-title">
+            <span class="title"><?= $block->escapeHtml($order->getShippingDescription()) ?></span>
+        </div>
+        <address class="admin__page-section-content">
+            <?php if ($deliveryData = $parcelShopDelivery->getParcelShopDeliveryPointData($order)): ?>
+                <strong><?= $block->escapeHtml($deliveryData['id'] ?? '') ?></strong><br>
+                <?= $block->escapeHtml($deliveryData['name'] ?? '') ?><br>
+                <?= $block->escapeHtml($deliveryData['contact']['address'] ?? '') ?><br>
+                <?= $block->escapeHtml($deliveryData['contact']['city'] ?? '') ?>, <?= $block->escapeHtml($deliveryData['contact']['postalCode'] ?? '') // phpcs:ignore ?><br>
+                <?= $block->escapeHtml($deliveryData['contact']['countryCode'] ?? '') ?><br>
+            <?php else: ?>
+                <?= $block->escapeHtml(__('Parcel shop delivery data is missing.')) ?>
+            <?php endif; ?>
+        </address>
+    </section>
+<?php endif; ?>
