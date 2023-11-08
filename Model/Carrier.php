@@ -208,23 +208,27 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
                 'City' => $request->getShipperAddressCity(),
                 'ZipCode' => $request->getShipperAddressPostalCode(),
                 'CountryIsoCode' => $request->getShipperAddressCountryCode(),
-                'ContactName' => $request->getShipperContactPersonName()
+                'ContactName' => $request->getShipperContactPersonName(),
+                'ContactPhone' => $request->getShipperContactPhoneNumber(),
+                'ContactEmail' => $request->getShipperEmail()
             ],
             'DeliveryAddress' => [
                 'Name' => $request->getRecipientContactCompanyName() ?: $request->getRecipientContactPersonName(),
-                'Street' => $request->getRecipientAddressStreet1(),
+                'Street' => $request->getRecipientAddressStreet1(), // todo check
 //                'HouseNumber',
 //                'HouseNumberInfo',
                 'City' => $request->getRecipientAddressCity(),
                 'ZipCode' => $request->getRecipientAddressPostalCode(),
                 'CountryIsoCode' => $request->getRecipientAddressCountryCode(),
-                'ContactName' => $request->getRecipientContactPersonName()
+                'ContactName' => $request->getRecipientContactPersonName(),
+                'ContactPhone' => $request->getRecipientContactPhoneNumber(),
+                'ContactEmail' => $request->getRecipientEmail()
             ]
         ];
 
         $customsValue = 0;
         foreach ($request->getPackages() as $packageData) {
-            $customsValue += $packageData['params']['customs_value'] ?? 0; // todo test with multiple qty
+            $customsValue += $packageData['params']['customs_value'] ?? 0;
         }
 
         $serviceList = [];
@@ -274,7 +278,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             $serviceList[] = [
                 'Code' => 'FSS',
                 'FSSParameter' => [
-                    'Value' => (string)$request->getRecipientContactPhoneNumber() // todo international format
+                    'Value' => (string)$request->getRecipientContactPhoneNumber()
                 ]
             ];
         }
@@ -290,7 +294,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             $serviceList[] = [
                 'Code' => 'SM1',
                 'SM1Parameter' => [
-                    'Value' => "{$request->getRecipientContactPhoneNumber()}|$sm1Text" // todo international format
+                    'Value' => "{$request->getRecipientContactPhoneNumber()}|$sm1Text"
                 ]
             ];
         }
@@ -298,7 +302,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             $serviceList[] = [
                 'Code' => 'SM2',
                 'SM2Parameter' => [
-                    'Value' => (string)$request->getRecipientContactPhoneNumber() // todo international format
+                    'Value' => (string)$request->getRecipientContactPhoneNumber()
                 ]
             ];
         }
