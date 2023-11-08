@@ -1,7 +1,7 @@
 define([
     'GLSCroatia_Shipping/js/checkout/model/gls-data',
     'mage/translate'
-],function (glsData, $t) {
+], function (glsData, $t) {
     'use strict';
 
     return function (Component) {

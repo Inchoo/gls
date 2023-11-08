@@ -333,7 +333,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
         }
 
         if ($printLabelsInfoList = $body['PrintLabelsInfoList'] ?? []) {
-            $result->setTrackingNumber('tracking_number', $printLabelsInfoList[0]['ParcelNumber'] ?? null);
+            $result->setTrackingNumber($printLabelsInfoList[0]['ParcelNumber'] ?? null);
         }
 
         return $result;
