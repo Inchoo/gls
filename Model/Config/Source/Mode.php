@@ -19,8 +19,8 @@ class Mode implements OptionSourceInterface
     public function toOptionArray()
     {
         return [
-            ['value' => self::SANDBOX, 'label' => __('Sandbox')],
-            ['value' => self::PRODUCTION, 'label' => __('Production')]
+            ['value' => self::SANDBOX, 'label' => 'Sandbox'],
+            ['value' => self::PRODUCTION, 'label' => 'Production']
         ];
     }
 }
