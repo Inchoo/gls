@@ -38,9 +38,15 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
     protected \Magento\Framework\DataObjectFactory $dataObjectFactory;
 
     /**
+     * @var \Magento\Framework\App\State
+     */
+    protected \Magento\Framework\App\State $appState;
+
+    /**
      * @param \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery
      * @param \GLSCroatia\Shipping\Model\Api\Service $apiService
      * @param \Magento\Framework\DataObjectFactory $dataObjectFactory
+     * @param \Magento\Framework\App\State $appState
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
@@ -62,6 +68,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
         \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery,
         \GLSCroatia\Shipping\Model\Api\Service $apiService,
         \Magento\Framework\DataObjectFactory $dataObjectFactory,
+        \Magento\Framework\App\State $appState,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
         \Psr\Log\LoggerInterface $logger,
@@ -82,6 +89,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
         $this->parcelShopDelivery = $parcelShopDelivery;
         $this->apiService = $apiService;
         $this->dataObjectFactory = $dataObjectFactory;
+        $this->appState = $appState;
         parent::__construct(
             $scopeConfig,
             $rateErrorFactory,
@@ -117,10 +125,15 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
         $result = $this->_rateFactory->create();
 
         foreach ($allowedMethods as $methodCode => $methodTitle) {
-            $method = $this->_rateMethodFactory->create();
+            if ($methodCode === self::PARCEL_SHOP_DELIVERY_METHOD
+                && $this->appState->getAreaCode() === \Magento\Framework\App\Area::AREA_ADMINHTML
+            ) {
+                continue; // psd method not supported from the admin area
+            }
 
             $price = $this->getConfigData("{$methodCode}_method_price") ?: 0;
 
+            $method = $this->_rateMethodFactory->create();
             $method->setData([
                 'carrier'       => $this->getCarrierCode(),
                 'carrier_title' => $this->getConfigData('title'),
