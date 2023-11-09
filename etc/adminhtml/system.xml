@@ -118,10 +118,6 @@
                         <label>SMS Pre-advice Service</label>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     </field>
-                    <field id="tgs" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Think Green Service</label>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    </field>
                 </group>
             </group>
         </section>

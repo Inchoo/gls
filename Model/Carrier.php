@@ -215,7 +215,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
 //            'PickupDate',
             'PickupAddress' => [
                 'Name' => $request->getShipperContactCompanyName(),
-                'Street' => $request->getShipperAddressStreet1(), // todo check
+                'Street' => $request->getShipperAddressStreet(),
 //                'HouseNumber',
 //                'HouseNumberInfo',
                 'City' => $request->getShipperAddressCity(),
@@ -227,7 +227,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             ],
             'DeliveryAddress' => [
                 'Name' => $request->getRecipientContactCompanyName() ?: $request->getRecipientContactPersonName(),
-                'Street' => $request->getRecipientAddressStreet1(), // todo check
+                'Street' => $request->getRecipientAddressStreet(),
 //                'HouseNumber',
 //                'HouseNumberInfo',
                 'City' => $request->getRecipientAddressCity(),
@@ -319,25 +319,22 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
                 ]
             ];
         }
-        if ($this->getConfigFlag('service/tgs')) {
-            $serviceList[] = [
-                'Code' => 'TGS'
-            ];
-        }
 
         $params = [
             'ParcelList' => [$parcel],
             'TypeOfPrinter' => $this->getConfigData('printer_type'),
             'PrintPosition' => (int)$this->getConfigData('print_position') ?: 1,
-            'ShowPrintDialog' => false,
-            'ServiceList' => $serviceList
+            'ShowPrintDialog' => false
         ];
 
-        $response = $this->apiService->printLabels($params); // todo log
+        if ($serviceList) {
+            $params['ServiceList'] = $serviceList;
+        }
+
+        $response = $this->apiService->printLabels($params);
         $body = $response->getDecodedBody();
 
         if ($printLabelsErrorList = $body['PrintLabelsErrorList'] ?? []) {
-            // todo log
             return $result->setErrors($printLabelsErrorList[0]['ErrorDescription'] ?? __('GLS API error.'));
         }
 
@@ -345,7 +342,6 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             $result->setShippingLabelContent(implode(array_map('chr', $labels)));
         }
         if (!$result->getShippingLabelContent()) {
-            // todo log
             return $result->setErrors(__('Could not create label.'));
         }
 

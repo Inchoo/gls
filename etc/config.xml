@@ -32,7 +32,6 @@
                     <sm1>0</sm1>
                     <sm1_text/>
                     <sm2>0</sm2>
-                    <tgs>0</tgs>
                 </service>
                 <supported_countries>CZ,HR,HU,RO,SI,SK</supported_countries>
                 <model>GLSCroatia\Shipping\Model\Carrier</model>
