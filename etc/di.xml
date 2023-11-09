@@ -9,4 +9,10 @@
     <type name="Magento\Checkout\Api\ShippingInformationManagementInterface">
         <plugin name="gls_data" type="GLSCroatia\Shipping\Plugin\Checkout\Model\ShippingInformationManagementPlugin"/>
     </type>
+    <type name="Magento\Sales\Block\Order\Email\Items">
+        <plugin name="gls_parcel_shop_delivery_point" type="GLSCroatia\Shipping\Plugin\Sales\Block\Order\Email\ItemsPlugin"/>
+    </type>
+    <type name="Magento\Sales\Block\Order\Email\Shipment\Items">
+        <plugin name="gls_parcel_shop_delivery_point" type="GLSCroatia\Shipping\Plugin\Sales\Block\Order\Email\ItemsPlugin"/>
+    </type>
 </config>
