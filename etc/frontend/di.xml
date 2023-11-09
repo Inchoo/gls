@@ -22,6 +22,9 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Sales\Block\Order\Info">
+        <plugin name="gls_parcel_shop_delivery" type="GLSCroatia\Shipping\Plugin\Sales\Block\Order\InfoPlugin"/>
+    </type>
     <type name="Magento\Paypal\Block\Express\Review">
         <plugin name="gls_parcel_shop_delivery" type="GLSCroatia\Shipping\Plugin\PayPal\Block\Express\ReviewPlugin"/>
     </type>
