@@ -71,54 +71,66 @@
                     <label>Print Position</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\PrintPosition</source_model>
                 </field>
-                <field id="sort_order" translate="label" type="text" sortOrder="2000" showInDefault="1" showInWebsite="1">
+                <field id="sort_order" translate="label" type="text" sortOrder="1500" showInDefault="1" showInWebsite="1">
                     <label>Sort Order</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
-                <group id="service" translate="label" type="text" sortOrder="2500" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Service</label>
-                    <field id="guaranteed_24h" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Guaranteed 24h Service</label>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    </field>
-                    <field id="aos" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Addressee Only Service</label>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    </field>
-                    <field id="cs1" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Contact Service</label>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    </field>
-                    <field id="fds" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Flexible Delivery Service</label>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    </field>
-                    <field id="fss" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Flexible Delivery SMS Service</label>
-                        <comment><![CDATA[Not available without "Flexible Delivery Service."]]></comment>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    </field>
-                    <field id="ins" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Insurance Service</label>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    </field>
-                    <field id="sm1" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>SMS Service</label>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    </field>
-                    <field id="sm1_text" translate="label comment" type="text" sortOrder="71" showInDefault="1" showInWebsite="1">
-                        <label>SMS Service Text</label>
-                        <comment><![CDATA[Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.]]></comment>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                        <depends>
-                            <field id="sm1">1</field>
-                        </depends>
-                    </field>
-                    <field id="sm2" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>SMS Pre-advice Service</label>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    </field>
-                </group>
+                <field id="guaranteed_24h" translate="label" type="select" sortOrder="2000" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Guaranteed 24h Service</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="express_delivery" translate="label" type="select" sortOrder="2010" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Express Delivery Service</label>
+                    <source_model>GLSCroatia\Shipping\Model\Config\Source\ExpressDeliveryCode</source_model>
+                </field>
+                <field id="cs1" translate="label" type="select" sortOrder="2020" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Contact Service</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="fds" translate="label" type="select" sortOrder="2030" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Flexible Delivery Service</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="fss" translate="label comment" type="select" sortOrder="2040" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Flexible Delivery SMS Service</label>
+                    <comment><![CDATA[Not available without "Flexible Delivery Service."]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sm1" translate="label" type="select" sortOrder="2050" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>SMS Service</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sm1_text" translate="label comment" type="text" sortOrder="2051" showInDefault="1" showInWebsite="1">
+                    <label>SMS Service Text</label>
+                    <comment><![CDATA[Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="sm1">1</field>
+                    </depends>
+                </field>
+                <field id="sm2" translate="label" type="select" sortOrder="2060" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>SMS Pre-advice Service</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="aos" translate="label" type="select" sortOrder="2070" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Addressee Only Service</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="szl" translate="label" type="select" sortOrder="2080" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Document Return Service</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="szl_document_id" translate="label comment" type="text" sortOrder="2081" showInDefault="1" showInWebsite="1">
+                    <label>Document Return Service Document ID</label>
+                    <validate>validate-length maximum-length-15</validate>
+                    <depends>
+                        <field id="szl">1</field>
+                    </depends>
+                </field>
+                <field id="ins" translate="label" type="select" sortOrder="2090" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Insurance Service</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
             </group>
         </section>
     </system>

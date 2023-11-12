@@ -153,7 +153,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
      * Do request to shipment.
      *
      * @param \Magento\Shipping\Model\Shipment\Request $request
-     * @return \Magento\Framework\DataObject
+     * @return DataObject
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function requestToShipment($request)
@@ -190,7 +190,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
      * Do shipment request to carrier web service, obtain Print Shipping Labels and process errors in response.
      *
      * @param \Magento\Shipping\Model\Shipment\Request $request
-     * @return \Magento\Framework\DataObject
+     * @return DataObject
      */
     protected function _doShipmentRequest(DataObject $request)
     {
@@ -205,6 +205,8 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
         $incrementId = $request->getOrderShipment()->getOrder()->getIncrementId();
         $clientReference = str_replace('{increment_id}', $incrementId, $this->getConfigData('client_reference'));
 
+//        $currentTimestamp = round(microtime(true) * 1000); // milliseconds
+
         $parcel = [
             'ClientNumber' => (int)$clientId,
             'ClientReference' => $clientReference,
@@ -212,7 +214,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
 //            'CODAmount',
 //            'CODReference',
 //            'Content',
-//            'PickupDate',
+//            'PickupDate' => "/Date({$currentTimestamp})/",
             'PickupAddress' => [
                 'Name' => $request->getShipperContactCompanyName(),
                 'Street' => $request->getShipperAddressStreet(),
@@ -244,9 +246,17 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             $customsValue += $packageData['params']['customs_value'] ?? 0;
         }
 
+        $countryCallingCode = $this->getCode('country_calling_code', $request->getRecipientAddressCountryCode());
+        $recipientPhoneNumber = ltrim((string)$request->getRecipientContactPhoneNumber(), '0');
+        if (!str_starts_with($recipientPhoneNumber, (string)$countryCallingCode)) {
+            $recipientPhoneNumber = "{$countryCallingCode}{$recipientPhoneNumber}";
+        }
+
         $serviceList = [];
 
-        if ($request->getShippingMethod() === self::PARCEL_SHOP_DELIVERY_METHOD) {
+        $isShopDeliveryService = $request->getShippingMethod() === self::PARCEL_SHOP_DELIVERY_METHOD;
+        // Parcel Shop Delivery Service
+        if ($isShopDeliveryService) {
             $deliveryPointData = $this->parcelShopDelivery->getParcelShopDeliveryPointData(
                 $request->getOrderShipment()->getOrder()
             );
@@ -258,66 +268,100 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
                 ]
             ];
         }
-        if ($this->getConfigFlag('service/guaranteed_24h')) {
+        // Guaranteed 24h Service
+        if ($this->getConfigFlag('guaranteed_24h')) {
             $serviceList[] = [
                 'Code' => '24H'
             ];
         }
-        if ($this->getConfigFlag('service/aos')) {
+        // Express Delivery Service
+        if (!$isShopDeliveryService && $expressDeliverCode = $this->getConfigData('express_delivery')) {
             $serviceList[] = [
-                'Code' => 'AOS',
-                'AOSParameter' => [
-                    'Value' => $request->getRecipientContactPersonName()
-                ]
+                'Code' => $expressDeliverCode
             ];
         }
-        if ($this->getConfigFlag('service/cs1')) {
+        // Contact Service
+        if (!$isShopDeliveryService && $this->getConfigFlag('cs1')) {
             $serviceList[] = [
                 'Code' => 'CS1',
                 'CS1Parameter' => [
-                    'Value' => $request->getRecipientContactPhoneNumber()
+                    'Value' => $recipientPhoneNumber
                 ]
             ];
         }
-        if ($this->getConfigFlag('service/fds')) {
+        // Flexible Delivery Service
+        if (!$isShopDeliveryService && !$this->getConfigFlag('express_delivery') && $this->getConfigFlag('fds')) {
             $serviceList[] = [
                 'Code' => 'FDS',
                 'FDSParameter' => [
-                    'Value' => $request->getRecipientEmail()
+                    'Value' => (string)$request->getRecipientEmail()
                 ]
             ];
         }
-        if ($this->getConfigFlag('service/fss') && $this->getConfigFlag('service/fds')) {
+        // Flexible Delivery SMS Service
+        if (!$isShopDeliveryService
+            && !$this->getConfigFlag('express_delivery')
+            && $this->getConfigFlag('fss')
+            && $this->getConfigFlag('fds')
+        ) {
             $serviceList[] = [
                 'Code' => 'FSS',
                 'FSSParameter' => [
-                    'Value' => (string)$request->getRecipientContactPhoneNumber()
+                    'Value' => $recipientPhoneNumber
                 ]
             ];
         }
-        if ($this->getConfigFlag('service/ins')) {
-            $serviceList[] = [
-                'Code' => 'INS',
-                'INSParameter' => [
-                    'Value' => $customsValue
-                ]
-            ];
-        }
-        if ($this->getConfigFlag('service/sm1') && $sm1Text = $this->getConfigData('service/sm1_text')) {
+        // SMS Service
+        if ($this->getConfigFlag('sm1') && $sm1Text = $this->getConfigData('sm1_text')) {
             $serviceList[] = [
                 'Code' => 'SM1',
                 'SM1Parameter' => [
-                    'Value' => "{$request->getRecipientContactPhoneNumber()}|$sm1Text"
+                    'Value' => "{$recipientPhoneNumber}|$sm1Text"
                 ]
             ];
         }
-        if ($this->getConfigFlag('service/sm2')) {
+        // SMS Pre-advice Service
+        if ($this->getConfigFlag('sm2')) {
             $serviceList[] = [
                 'Code' => 'SM2',
                 'SM2Parameter' => [
-                    'Value' => (string)$request->getRecipientContactPhoneNumber()
+                    'Value' => $recipientPhoneNumber
                 ]
             ];
+        }
+        // Addressee Only Service
+        if (!$isShopDeliveryService && $this->getConfigFlag('aos')) {
+            $serviceList[] = [
+                'Code' => 'AOS',
+                'AOSParameter' => [
+                    'Value' => (string)$request->getRecipientContactPersonName()
+                ]
+            ];
+        }
+        // Document Return Service
+        if (!$isShopDeliveryService
+            && $this->getConfigFlag('szl')
+            && $szlDocumentId = $this->getConfigData('szl_document_id')
+        ) {
+            $serviceList[] = [
+                'Code' => 'SZL',
+                'SZLParameter' => [
+                    'Value' => $szlDocumentId
+                ]
+            ];
+        }
+        // Insurance Service
+//        if ($this->getConfigFlag('ins')) {
+//            $serviceList[] = [
+//                'Code' => 'INS',
+//                'INSParameter' => [
+//                    'Value' => $customsValue
+//                ]
+//            ];
+//        }
+
+        if ($serviceList) {
+            $parcel['ServiceList'] = $serviceList;
         }
 
         $params = [
@@ -326,10 +370,6 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             'PrintPosition' => (int)$this->getConfigData('print_position') ?: 1,
             'ShowPrintDialog' => false
         ];
-
-        if ($serviceList) {
-            $params['ServiceList'] = $serviceList;
-        }
 
         $response = $this->apiService->printLabels($params);
         $body = $response->getDecodedBody();
@@ -432,6 +472,14 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             'method' => [
                 self::HOME_DELIVERY_METHOD => __('Home Delivery'),
                 self::PARCEL_SHOP_DELIVERY_METHOD => __('Out of Home Delivery')
+            ],
+            'country_calling_code' => [
+                'CZ' => '+420',
+                'HR' => '+385',
+                'HU' => '+36',
+                'RO' => '+40',
+                'SI' => '+386',
+                'SK' => '+421'
             ]
         ];
 

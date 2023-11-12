@@ -22,17 +22,18 @@
                 <client_reference>Order #{increment_id}</client_reference>
                 <printer_type>A4_2x2</printer_type>
                 <print_position>1</print_position>
-                <service>
-                    <guaranteed_24h>0</guaranteed_24h>
-                    <aos>0</aos>
-                    <cs1>0</cs1>
-                    <fds>0</fds>
-                    <fss>0</fss>
-                    <ins>0</ins>
-                    <sm1>0</sm1>
-                    <sm1_text/>
-                    <sm2>0</sm2>
-                </service>
+                <guaranteed_24h>0</guaranteed_24h>
+                <express_delivery/>
+                <cs1>0</cs1>
+                <fds>0</fds>
+                <fss>0</fss>
+                <sm1>0</sm1>
+                <sm1_text/>
+                <sm2>0</sm2>
+                <aos>0</aos>
+                <szl>0</szl>
+                <szl_document_id/>
+                <ins>0</ins>
                 <supported_countries>CZ,HR,HU,RO,SI,SK</supported_countries>
                 <model>GLSCroatia\Shipping\Model\Carrier</model>
             </gls>
