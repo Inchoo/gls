@@ -42,6 +42,7 @@ class Client
     public function post(Request $request): Response
     {
         $curl = $this->createCurlClient($request);
+
         try {
             $curl->post($request->getUri(), $request->getParams() ?: []);
         } catch (\Exception $e) {
@@ -61,11 +62,13 @@ class Client
     public function get(Request $request): Response
     {
         $curl = $this->createCurlClient($request);
+
         try {
             $curl->get($request->getUri());
         } catch (\Exception $e) {
             throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
         }
+
         return $this->createResponse($curl);
     }
 

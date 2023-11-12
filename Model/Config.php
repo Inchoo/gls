@@ -121,6 +121,21 @@ class Config
     }
 
     /**
+     * Is debug log enabled.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isDebugEnabled(int|string $scopeCode = null): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            "carriers/{$this->carrierCode}/debug",
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $scopeCode
+        );
+    }
+
+    /**
      * Get API URL.
      *
      * @param string $serviceName

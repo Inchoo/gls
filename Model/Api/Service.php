@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Api;
 
+use GLSCroatia\Shipping\Model\Api\Client\Request;
 use GLSCroatia\Shipping\Model\Api\Client\Response;
 
 class Service
@@ -29,21 +30,29 @@ class Service
     protected \Magento\Framework\Serialize\Serializer\Json $json;
 
     /**
+     * @var \Magento\Framework\Event\ManagerInterface
+     */
+    protected \Magento\Framework\Event\ManagerInterface $eventManager;
+
+    /**
      * @param \GLSCroatia\Shipping\Model\Config $config
      * @param \GLSCroatia\Shipping\Model\Api\Client $client
      * @param \GLSCroatia\Shipping\Model\Api\Client\RequestFactory $requestFactory
      * @param \Magento\Framework\Serialize\Serializer\Json $json
+     * @param \Magento\Framework\Event\ManagerInterface $eventManager
      */
     public function __construct(
         \GLSCroatia\Shipping\Model\Config $config,
         \GLSCroatia\Shipping\Model\Api\Client $client,
         \GLSCroatia\Shipping\Model\Api\Client\RequestFactory $requestFactory,
-        \Magento\Framework\Serialize\Serializer\Json $json
+        \Magento\Framework\Serialize\Serializer\Json $json,
+        \Magento\Framework\Event\ManagerInterface $eventManager
     ) {
         $this->config = $config;
         $this->client = $client;
         $this->requestFactory = $requestFactory;
         $this->json = $json;
+        $this->eventManager = $eventManager;
     }
 
     /**
@@ -57,6 +66,7 @@ class Service
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
+        $request->setMethod('POST');
         $request->setUri($this->getUrl('ParcelService', 'PrepareLabels'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
@@ -69,7 +79,7 @@ class Service
 
         $request->setParams($this->json->serialize($params));
 
-        return $this->client->post($request);
+        return $this->makeRequest($request);
     }
 
     /**
@@ -83,6 +93,7 @@ class Service
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
+        $request->setMethod('POST');
         $request->setUri($this->getUrl('ParcelService', 'GetPrintedLabels'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
@@ -95,7 +106,7 @@ class Service
 
         $request->setParams($this->json->serialize($params));
 
-        return $this->client->post($request);
+        return $this->makeRequest($request);
     }
 
     /**
@@ -109,6 +120,7 @@ class Service
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
+        $request->setMethod('POST');
         $request->setUri($this->getUrl('ParcelService', 'PrintLabels'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
@@ -121,7 +133,7 @@ class Service
 
         $request->setParams($this->json->serialize($params));
 
-        return $this->client->post($request);
+        return $this->makeRequest($request);
     }
 
     /**
@@ -135,6 +147,7 @@ class Service
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
+        $request->setMethod('POST');
         $request->setUri($this->getUrl('ParcelService', 'DeleteLabels'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
@@ -147,7 +160,7 @@ class Service
 
         $request->setParams($this->json->serialize($params));
 
-        return $this->client->post($request);
+        return $this->makeRequest($request);
     }
 
     /**
@@ -161,6 +174,7 @@ class Service
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
+        $request->setMethod('POST');
         $request->setUri($this->getUrl('ParcelService', 'ModifyCOD'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
@@ -173,7 +187,7 @@ class Service
 
         $request->setParams($this->json->serialize($params));
 
-        return $this->client->post($request);
+        return $this->makeRequest($request);
     }
 
     /**
@@ -187,6 +201,7 @@ class Service
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
+        $request->setMethod('POST');
         $request->setUri($this->getUrl('ParcelService', 'GetParcelList'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
@@ -199,7 +214,7 @@ class Service
 
         $request->setParams($this->json->serialize($params));
 
-        return $this->client->post($request);
+        return $this->makeRequest($request);
     }
 
     /**
@@ -213,6 +228,7 @@ class Service
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
+        $request->setMethod('POST');
         $request->setUri($this->getUrl('ParcelService', 'GetParcelStatuses'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
@@ -225,7 +241,7 @@ class Service
 
         $request->setParams($this->json->serialize($params));
 
-        return $this->client->post($request);
+        return $this->makeRequest($request);
     }
 
     /**
@@ -275,5 +291,33 @@ class Service
         }
 
         throw new \Magento\Framework\Exception\LocalizedException(__('API password is not configured.'));
+    }
+
+    /**
+     * Make an API request.
+     *
+     * @param \GLSCroatia\Shipping\Model\Api\Client\Request $request
+     * @return \GLSCroatia\Shipping\Model\Api\Client\Response
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function makeRequest(Request $request): Response
+    {
+        $this->eventManager->dispatch('gls_before_api_request', [
+            'request' => $request,
+            'object'  => $request
+        ]);
+
+        if (strtolower($request->getMethod()) === 'get') {
+            $response = $this->client->get($request);
+        } else {
+            $response = $this->client->post($request);
+        }
+
+        $this->eventManager->dispatch('gls_after_api_request', [
+            'response' => $response,
+            'object'   => $response
+        ]);
+
+        return $response;
     }
 }

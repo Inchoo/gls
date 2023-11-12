@@ -4,4 +4,10 @@
     <event name="sales_model_service_quote_submit_before">
         <observer name="gls_data" instance="GLSCroatia\Shipping\Observer\AddGlsDataToOrderObserver"/>
     </event>
+    <event name="gls_before_api_request">
+        <observer name="gls_request_logging" instance="GLSCroatia\Shipping\Observer\ApiLogObserver"/>
+    </event>
+    <event name="gls_after_api_request">
+        <observer name="gls_request_logging" instance="GLSCroatia\Shipping\Observer\ApiLogObserver"/>
+    </event>
 </config>

@@ -28,6 +28,11 @@
                     <label>API Country</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
                 </field>
+                <field id="debug" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Debug</label>
+                    <comment>In production mode, debug logging needs to be enabled.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="title" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Title</label>
                 </field>

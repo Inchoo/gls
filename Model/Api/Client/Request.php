@@ -24,6 +24,9 @@ use Magento\Framework\DataObject;
  *
  * @method \GLSCroatia\Shipping\Model\Api\Client\Request setTimeout(int $timeout)
  * @method int|null getTimeout()
+ *
+ * @method \GLSCroatia\Shipping\Model\Api\Client\Request setMethod(string $method)
+ * @method string|null getMethod()
  */
 class Request extends DataObject
 {

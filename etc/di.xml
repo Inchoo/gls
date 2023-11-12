@@ -15,4 +15,9 @@
     <type name="Magento\Sales\Block\Order\Email\Shipment\Items">
         <plugin name="gls_parcel_shop_delivery_point" type="GLSCroatia\Shipping\Plugin\Sales\Block\Order\Email\ItemsPlugin"/>
     </type>
+    <type name="GLSCroatia\Shipping\Observer\ApiLogObserver">
+        <arguments>
+            <argument name="logger" xsi:type="object">Magento\Shipping\Model\Method\VirtualLogger</argument>
+        </arguments>
+    </type>
 </config>
