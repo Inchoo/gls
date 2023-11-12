@@ -17,6 +17,7 @@ Country,Država
 "Select Delivery Point","Izberite točko dostave"
 "Remove Delivery Point","Odstranite točko dostave"
 "Please select a GLS delivery point.","Prosim, izberite točko dostave GLS."
+GLS,GLS
 Enabled,Omogočeno
 "Client ID","ID odjemalca"
 "This is required for API usage.","To je potrebno za uporabo API-ja."
@@ -24,6 +25,8 @@ Enabled,Omogočeno
 "API Username","Uporabniško ime API-ja"
 "API Password","Geslo API-ja"
 "API Country","Država API-ja"
+Debug,Debug
+"In production mode, debug logging needs to be enabled.","V režime produkcie je potrebné povoliť záznamy pre ladenie (debug logging)."
 Title,Naslov
 "Maximum Package Weight","Največja teža paketa"
 "Allowed Methods","Dovoljene metode"
@@ -36,15 +39,18 @@ Title,Naslov
 "Type of Printer","Vrsta tiskalnika"
 "Print Position","Položaj tiska"
 "Sort Order","Vrstni red razvrščanja"
-Service,Storitev
 "Guaranteed 24h Service","Zagotovljena 24-urna storitev"
+"Express Delivery Service","Služba expresného doručenia"
 "Addressee Only Service","Storitev samo za naslovnika"
 "Contact Service","Storitev stika"
 "Flexible Delivery Service","Prilagodljiva storitev dostave"
 "Flexible Delivery SMS Service","Prilagodljiva storitev SMS dostave"
-"Not available without ""Flexible Delivery Service.""","Ni na voljo brez ""Prilagodljive storitve dostave."""
-"Insurance Service","Storitev zavarovanja"
+"Not available without Flexible Delivery Service.","Ni na voljo brez Prilagodljive storitve dostave."
 "SMS Service","SMS storitev"
 "SMS Service Text","Besedilo storitve SMS"
 "Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.","Spremenljivke, ki jih lahko uporabite v besedilu SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 "SMS Pre-advice Service","Storitev predhodnega obvestila prek SMS"
+"Addressee Only Service","Služba len pre adresáta"
+"Document Return Service","Služba vrátenia dokumentov"
+"Document Return Service Document ID","Identifikátor dokumentu služby vrátenia dokumentov"
+"Insurance Service","Poistná služba"

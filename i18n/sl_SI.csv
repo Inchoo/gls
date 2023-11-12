@@ -17,6 +17,7 @@ Country,Krajina
 "Select Delivery Point","Vyberte bod doručenia"
 "Remove Delivery Point","Odstrániť bod doručenia"
 "Please select a GLS delivery point.","Vyberte prosím bod doručenia GLS."
+GLS,GLS
 Enabled,Zapnuté
 "Client ID","Identifikátor klienta"
 "This is required for API usage.","Je to potrebné pre používanie API."
@@ -24,6 +25,8 @@ Enabled,Zapnuté
 "API Username","API používateľské meno"
 "API Password","API heslo"
 "API Country","API krajina"
+Debug,Debug
+"In production mode, debug logging needs to be enabled.","V načinu proizvodnje je treba omogočiti beleženje odpravljanja napak (debug logging)."
 Title,Názov
 "Maximum Package Weight","Maximálna hmotnosť balíka"
 "Allowed Methods","Povolené metódy"
@@ -36,15 +39,18 @@ Title,Názov
 "Type of Printer","Typ tlačiarne"
 "Print Position","Pozícia tlače"
 "Sort Order","Radenie"
-Service,Služba
 "Guaranteed 24h Service","Zaručená 24-hodinová služba"
+"Express Delivery Service","Storitev hitre dostave"
 "Addressee Only Service","Služba len pre adresáta"
 "Contact Service","Kontaktná služba"
 "Flexible Delivery Service","Flexibilná služba doručenia"
 "Flexible Delivery SMS Service","Flexibilná služba SMS doručenia"
-"Not available without ""Flexible Delivery Service.""","Nie je dostupné bez ""Flexibilnej služby doručenia."""
-"Insurance Service","Služba poistenia"
+"Not available without Flexible Delivery Service.","Nie je dostupné bez Flexibilnej služby doručenia."
 "SMS Service","SMS služba"
 "SMS Service Text","Text SMS služby"
 "Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.","Premenné, ktoré možno použiť v texte SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 "SMS Pre-advice Service","SMS služba predchádzajúceho upozornenia"
+"Addressee Only Service","Storitev samo za naslovnika"
+"Document Return Service","Storitev vračila dokumentov"
+"Document Return Service Document ID","ID dokumenta storitve vračila dokumentov"
+"Insurance Service","Storitev zavarovanja"

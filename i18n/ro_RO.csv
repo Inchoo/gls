@@ -17,6 +17,7 @@ Country,Țară
 "Select Delivery Point","Selectați punctul de livrare"
 "Remove Delivery Point","Eliminați punctul de livrare"
 "Please select a GLS delivery point.","Vă rugăm să selectați un punct de livrare GLS."
+GLS,GLS
 Enabled,Activat
 "Client ID","ID client"
 "This is required for API usage.","Acesta este necesar pentru utilizarea API-ului."
@@ -24,6 +25,8 @@ Enabled,Activat
 "API Username","Nume de utilizator API"
 "API Password","Parola API"
 "API Country","Țara API"
+Debug,Debug
+"In production mode, debug logging needs to be enabled.","În modul de producție, jurnalizarea depană trebuie să fie activată."
 Title,Titlu
 "Maximum Package Weight","Greutatea maximă a coletului"
 "Allowed Methods","Metode permise"
@@ -36,15 +39,18 @@ Title,Titlu
 "Type of Printer","Tip de imprimantă"
 "Print Position","Poziția de imprimare"
 "Sort Order","Ordine de sortare"
-Service,Serviciu
 "Guaranteed 24h Service","Serviciu garantat de 24 de ore"
+"Express Delivery Service","Serviciu de livrare expres"
 "Addressee Only Service","Serviciu doar pentru destinatar"
 "Contact Service","Serviciu de contact"
 "Flexible Delivery Service","Serviciu de livrare flexibil"
 "Flexible Delivery SMS Service","Serviciu de livrare flexibil prin SMS"
-"Not available without ""Flexible Delivery Service.""","Indisponibil fără ""Serviciul de livrare flexibil."""
-"Insurance Service","Serviciu de asigurare"
+"Not available without Flexible Delivery Service.","Indisponibil fără Serviciul de livrare flexibil."
 "SMS Service","Serviciu SMS"
 "SMS Service Text","Textul serviciului SMS"
 "Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.","Variabile care pot fi folosite în textul SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 "SMS Pre-advice Service","Serviciu de preaviz prin SMS"
+"Addressee Only Service","Serviciu doar pentru destinatar"
+"Document Return Service","Serviciu de returnare documente"
+"Document Return Service Document ID","ID document pentru serviciul de returnare documente"
+"Insurance Service","Serviciu de asigurare"

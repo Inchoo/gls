@@ -98,7 +98,7 @@
                 </field>
                 <field id="fss" translate="label comment" type="select" sortOrder="2040" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Flexible Delivery SMS Service</label>
-                    <comment><![CDATA[Not available without "Flexible Delivery Service."]]></comment>
+                    <comment><![CDATA[Not available without Flexible Delivery Service.]]></comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="sm1" translate="label" type="select" sortOrder="2050" showInDefault="1" showInWebsite="1" canRestore="1">

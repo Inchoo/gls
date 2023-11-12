@@ -17,6 +17,7 @@ Country,Country
 "Select Delivery Point","Select Delivery Point"
 "Remove Delivery Point","Remove Delivery Point"
 "Please select a GLS delivery point.","Please select a GLS delivery point."
+GLS,GLS
 Enabled,Enabled
 "Client ID","Client ID"
 "This is required for API usage.","This is required for API usage."
@@ -24,6 +25,8 @@ Enabled,Enabled
 "API Username","API Username"
 "API Password","API Password"
 "API Country","API Country"
+Debug,Debug
+"In production mode, debug logging needs to be enabled.","In production mode, debug logging needs to be enabled."
 Title,Title
 "Maximum Package Weight","Maximum Package Weight"
 "Allowed Methods","Allowed Methods"
@@ -36,15 +39,17 @@ Title,Title
 "Type of Printer","Type of Printer"
 "Print Position","Print Position"
 "Sort Order","Sort Order"
-Service,Service
 "Guaranteed 24h Service","Guaranteed 24h Service"
-"Addressee Only Service","Addressee Only Service"
+"Express Delivery Service","Express Delivery Service"
 "Contact Service","Contact Service"
 "Flexible Delivery Service","Flexible Delivery Service"
 "Flexible Delivery SMS Service","Flexible Delivery SMS Service"
-"Not available without ""Flexible Delivery Service.""","Not available without ""Flexible Delivery Service."""
-"Insurance Service","Insurance Service"
+"Not available without Flexible Delivery Service.","Not available without Flexible Delivery Service."
 "SMS Service","SMS Service"
 "SMS Service Text","SMS Service Text"
 "Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.","Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 "SMS Pre-advice Service","SMS Pre-advice Service"
+"Addressee Only Service","Addressee Only Service"
+"Document Return Service","Document Return Service"
+"Document Return Service Document ID","Document Return Service Document ID"
+"Insurance Service","Insurance Service"

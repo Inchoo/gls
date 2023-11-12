@@ -16,7 +16,7 @@ class ExpressDeliveryCode implements OptionSourceInterface
     public function toOptionArray()
     {
         return [
-            ['value' => '', 'label' => __('-- Please Select --')],
+            ['value' => '', 'label' => ' '],
             ['value' => 'T09', 'label' => '09:00'],
             ['value' => 'T10', 'label' => '10:00'],
             ['value' => 'T12', 'label' => '12:00']

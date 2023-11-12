@@ -17,6 +17,7 @@ Country,Zemlja
 "Select Delivery Point","Odaberi točku dostave"
 "Remove Delivery Point","Ukloni točku dostave"
 "Please select a GLS delivery point.","Molimo odaberite GLS točku dostave."
+GLS,GLS
 Enabled,Omogućeno
 "Client ID","ID klijenta"
 "This is required for API usage.","Ovo je potrebno za korištenje API-ja."
@@ -24,6 +25,8 @@ Enabled,Omogućeno
 "API Username","Korisničko ime API-ja"
 "API Password","Lozinka API-ja"
 "API Country","Zemlja API-ja"
+Debug,Debug
+"In production mode, debug logging needs to be enabled.","U načinu proizvodnje potrebno je omogućiti zapisivanje pogrešaka (debug logging)."
 Title,Naslov
 "Maximum Package Weight","Maksimalna težina paketa"
 "Allowed Methods","Dopuštene metode"
@@ -36,15 +39,18 @@ Title,Naslov
 "Type of Printer","Vrsta pisača"
 "Print Position","Položaj ispisa"
 "Sort Order","Redoslijed sortiranja"
-Service,Usluga
 "Guaranteed 24h Service","Usluga zajamčene 24-satne dostave"
+"Express Delivery Service","Usluga brze dostave"
 "Addressee Only Service","Usluga samo za primatelja"
 "Contact Service","Usluga kontakta"
 "Flexible Delivery Service","Usluga fleksibilne dostave"
 "Flexible Delivery SMS Service","Usluga SMS fleksibilne dostave"
-"Not available without ""Flexible Delivery Service.""","Nije dostupno bez ""Usluge fleksibilne dostave."""
-"Insurance Service","Usluga osiguranja"
+"Not available without Flexible Delivery Service.","Nije dostupno bez sluge fleksibilne dostave."
 "SMS Service","Usluga SMS-a"
 "SMS Service Text","Tekst usluge SMS-a"
 "Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.","Varijable koje se mogu koristiti u tekstu SMS-a: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 "SMS Pre-advice Service","Usluga SMS prethodnog savjetovanja"
+"Addressee Only Service","Usluga samo za primatelja"
+"Document Return Service","Usluga povratka dokumenata"
+"Document Return Service Document ID","ID dokumenta usluge povratka dokumenata"
+"Insurance Service","Usluga osiguranja"

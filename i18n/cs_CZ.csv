@@ -17,6 +17,7 @@ Country,Země
 "Select Delivery Point","Vyberte bod doručení"
 "Remove Delivery Point","Odebrat bod doručení"
 "Please select a GLS delivery point.","Vyberte prosím bod doručení GLS."
+GLS,GLS
 Enabled,Aktivováno
 "Client ID","Identifikátor klienta"
 "This is required for API usage.","Toto je vyžadováno pro používání API."
@@ -24,6 +25,8 @@ Enabled,Aktivováno
 "API Username","Uživatelské jméno API"
 "API Password","Heslo API"
 "API Country","Země API"
+Debug,Debug
+"In production mode, debug logging needs to be enabled.","V režimu produkce je nutné povolit záznamy pro ladění (debug logging)."
 Title,Titul
 "Maximum Package Weight","Maximální váha balíčku"
 "Allowed Methods","Povolené metody"
@@ -36,15 +39,18 @@ Title,Titul
 "Type of Printer","Typ tiskárny"
 "Print Position","Pozice tisku"
 "Sort Order","Řadit podle"
-Service,Služba
 "Guaranteed 24h Service","Služba s garantovaným doručením do 24 hodin"
+"Express Delivery Service","Služba expresního doručení"
 "Addressee Only Service","Služba pouze pro adresáta"
 "Contact Service","Kontaktní služba"
 "Flexible Delivery Service","Pružná doručovací služba"
 "Flexible Delivery SMS Service","Služba SMS s pružným doručením"
-"Not available without ""Flexible Delivery Service.""","Není dostupné bez ""Pružné doručovací služby."""
-"Insurance Service","Služba pojištění"
+"Not available without Flexible Delivery Service.","Není dostupné bez Pružné doručovací služby."
 "SMS Service","SMS služba"
 "SMS Service Text","Text SMS služby"
 "Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.","Proměnné, které lze použít ve textu SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 "SMS Pre-advice Service","SMS služba předběžného oznámení"
+"Addressee Only Service","Služba pouze pro adresáta"
+"Document Return Service","Služba vrácení dokumentů"
+"Document Return Service Document ID","Identifikátor dokumentu služby vrácení dokumentů"
+"Insurance Service","Služba pojištění"
