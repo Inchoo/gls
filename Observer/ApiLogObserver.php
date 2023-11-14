@@ -43,7 +43,7 @@ class ApiLogObserver implements ObserverInterface
     /**
      * Log GLS API requests/response.
      *
-     * @param Observer $observer
+     * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
     public function execute(Observer $observer)

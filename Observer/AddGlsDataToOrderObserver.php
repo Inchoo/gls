@@ -12,7 +12,7 @@ class AddGlsDataToOrderObserver implements ObserverInterface
     /**
      * Save GLS delivery location to the order.
      *
-     * @param Observer $observer
+     * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
     public function execute(Observer $observer)
