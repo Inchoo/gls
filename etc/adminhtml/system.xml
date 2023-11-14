@@ -121,21 +121,10 @@
                     <label>Addressee Only Service</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="szl" translate="label" type="select" sortOrder="2080" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Document Return Service</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="szl_document_id" translate="label comment" type="text" sortOrder="2081" showInDefault="1" showInWebsite="1">
-                    <label>Document Return Service Document ID</label>
-                    <validate>validate-length maximum-length-15</validate>
-                    <depends>
-                        <field id="szl">1</field>
-                    </depends>
-                </field>
-                <field id="ins" translate="label" type="select" sortOrder="2090" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Insurance Service</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
+<!--                <field id="ins" translate="label" type="select" sortOrder="2090" showInDefault="1" showInWebsite="1" canRestore="1">-->
+<!--                    <label>Insurance Service</label>-->
+<!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+<!--                </field>-->
             </group>
         </section>
     </system>
