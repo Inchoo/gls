@@ -40,27 +40,46 @@
                     <label>Maximum Package Weight</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
-                <field id="allowed_methods" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="sort_order" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1">
+                    <label>Sort Order</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="allowed_methods" translate="label" type="multiselect" sortOrder="500" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Allowed Methods</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\Method</source_model>
                     <can_be_empty>1</can_be_empty>
                 </field>
-                <field id="standard_method_name" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="standard_method_name" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Delivery to Address Method Name</label>
                 </field>
-                <field id="standard_method_price" translate="label" type="text" sortOrder="115" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="standard_method_price" translate="label" type="text" sortOrder="510" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Delivery to Address Method Price</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
-                <field id="psd_method_name" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="standard_sallowspecific" translate="label" type="select" sortOrder="520" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Delivery to Address Applicable Countries</label>
+                    <frontend_class>shipping-applicable-country</frontend_class>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="standard_specificcountry" translate="label" type="multiselect" sortOrder="521" showInDefault="1" showInWebsite="1">
+                    <label>Delivery to Address Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="psd_method_name" translate="label" type="text" sortOrder="600" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Delivery to Parcel Location Method Name</label>
                 </field>
-                <field id="psd_method_price" translate="label" type="text" sortOrder="125" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="psd_method_price" translate="label" type="text" sortOrder="610" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Delivery to Parcel Location Method Price</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
-                <field id="specificcountry" translate="label" type="multiselect" sortOrder="500" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Ship to Specific Countries</label>
+                <field id="psd_sallowspecific" translate="label" type="select" sortOrder="620" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Delivery to Parcel Location Applicable Countries</label>
+                    <frontend_class>shipping-applicable-country</frontend_class>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="psd_specificcountry" translate="label" type="multiselect" sortOrder="621" showInDefault="1" showInWebsite="1">
+                    <label>Delivery to Parcel Location Specific Countries</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
                     <can_be_empty>1</can_be_empty>
                 </field>
@@ -76,36 +95,32 @@
                     <label>Print Position</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\PrintPosition</source_model>
                 </field>
-                <field id="sort_order" translate="label" type="text" sortOrder="1500" showInDefault="1" showInWebsite="1">
-                    <label>Sort Order</label>
-                    <validate>validate-number validate-zero-or-greater</validate>
-                </field>
-                <field id="guaranteed_24h" translate="label" type="select" sortOrder="2000" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="guaranteed_24h" translate="label" type="select" sortOrder="1500" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Guaranteed 24h Service</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="express_delivery" translate="label" type="select" sortOrder="2010" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="express_delivery" translate="label" type="select" sortOrder="1510" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Express Delivery Service</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\ExpressDeliveryCode</source_model>
                 </field>
-                <field id="cs1" translate="label" type="select" sortOrder="2020" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="cs1" translate="label" type="select" sortOrder="1520" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Contact Service</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="fds" translate="label" type="select" sortOrder="2030" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="fds" translate="label" type="select" sortOrder="1530" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Flexible Delivery Service</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="fss" translate="label comment" type="select" sortOrder="2040" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="fss" translate="label comment" type="select" sortOrder="1540" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Flexible Delivery SMS Service</label>
                     <comment><![CDATA[Not available without Flexible Delivery Service.]]></comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="sm1" translate="label" type="select" sortOrder="2050" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="sm1" translate="label" type="select" sortOrder="1550" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>SMS Service</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="sm1_text" translate="label comment" type="text" sortOrder="2051" showInDefault="1" showInWebsite="1">
+                <field id="sm1_text" translate="label comment" type="text" sortOrder="1551" showInDefault="1" showInWebsite="1">
                     <label>SMS Service Text</label>
                     <comment><![CDATA[Maximum text length is 130. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.]]></comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -113,15 +128,15 @@
                         <field id="sm1">1</field>
                     </depends>
                 </field>
-                <field id="sm2" translate="label" type="select" sortOrder="2060" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="sm2" translate="label" type="select" sortOrder="1560" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>SMS Pre-advice Service</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="aos" translate="label" type="select" sortOrder="2070" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="aos" translate="label" type="select" sortOrder="1570" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Addressee Only Service</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-<!--                <field id="ins" translate="label" type="select" sortOrder="2090" showInDefault="1" showInWebsite="1" canRestore="1">-->
+<!--                <field id="ins" translate="label" type="select" sortOrder="1580" showInDefault="1" showInWebsite="1" canRestore="1">-->
 <!--                    <label>Insurance Service</label>-->
 <!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
 <!--                </field>-->

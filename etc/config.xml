@@ -13,13 +13,16 @@
                 <debug>0</debug>
                 <title>GLS</title>
                 <max_package_weight>40</max_package_weight>
+                <sort_order/>
                 <allowed_methods>standard,psd</allowed_methods>
                 <standard_method_name>Delivery to Address</standard_method_name>
                 <standard_method_price>0</standard_method_price>
+                <psd_sallowspecific>0</psd_sallowspecific>
+                <psd_specificcountry/>
                 <psd_method_name>Delivery to Parcel Location</psd_method_name>
                 <psd_method_price>0</psd_method_price>
-                <sallowspecific>1</sallowspecific>
-                <specificcountry>CZ,HR,HU,RO,SI,SK</specificcountry>
+                <psd_sallowspecific>0</psd_sallowspecific>
+                <psd_specificcountry/>
                 <client_reference>Order #{increment_id}</client_reference>
                 <printer_type>A4_2x2</printer_type>
                 <print_position>1</print_position>

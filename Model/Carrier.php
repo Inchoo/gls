@@ -118,19 +118,13 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
      */
     public function collectRates(RateRequest $request)
     {
-        if (!$this->isActive() || !$allowedMethods = $this->getAllowedMethods()) {
+        if (!$this->isActive() || !$allowedMethods = $this->getValidatedMethods($request)) {
             return false;
         }
 
         $result = $this->_rateFactory->create();
 
         foreach ($allowedMethods as $methodCode => $methodTitle) {
-            if ($methodCode === self::PARCEL_SHOP_DELIVERY_METHOD
-                && $this->appState->getAreaCode() === \Magento\Framework\App\Area::AREA_ADMINHTML
-            ) {
-                continue; // psd method not supported from the admin area
-            }
-
             $price = $this->getConfigData("{$methodCode}_method_price") ?: 0;
 
             $method = $this->_rateMethodFactory->create();
@@ -144,6 +138,59 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             ]);
 
             $result->append($method);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Validate allowed methods with shipping request.
+     *
+     * @param \Magento\Quote\Model\Quote\Address\RateRequest $request
+     * @return array
+     */
+    protected function getValidatedMethods(RateRequest $request): array
+    {
+        if (!$allowedMethods = $this->getAllowedMethods()) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($allowedMethods as $methodCode => $methodTitle) {
+            if ($methodCode === self::PARCEL_SHOP_DELIVERY_METHOD
+                && $this->appState->getAreaCode() === \Magento\Framework\App\Area::AREA_ADMINHTML
+            ) {
+                continue; // PSD not available in adminhtml
+            }
+
+            $countryAllowSpecific = $this->getConfigData("{$methodCode}_sallowspecific");
+            $specificCountry = $this->getConfigData("{$methodCode}_specificcountry");
+            $availableCountries = $specificCountry ? explode(',', (string)$specificCountry) : [];
+
+            if ($countryAllowSpecific && $countryAllowSpecific == 1
+                && !in_array($request->getDestCountryId(), $availableCountries, true)
+            ) {
+                continue; // not available for destination country
+            }
+
+            $result[$methodCode] = $methodTitle;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get allowed GLS shipping methods.
+     *
+     * @return array
+     */
+    public function getAllowedMethods()
+    {
+        $allowedMethods = explode(',', $this->getConfigData('allowed_methods'));
+
+        $result = [];
+        foreach ($allowedMethods as $code) {
+            $result[$code] = $this->getCode('method', $code) ?: 'GLS';
         }
 
         return $result;
@@ -387,23 +434,6 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
 
         if ($printLabelsInfoList = $body['PrintLabelsInfoList'] ?? []) {
             $result->setTrackingNumber($printLabelsInfoList[0]['ParcelNumber'] ?? null);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get allowed GLS shipping methods.
-     *
-     * @return array
-     */
-    public function getAllowedMethods()
-    {
-        $allowedMethods = explode(',', $this->getConfigData('allowed_methods'));
-
-        $result = [];
-        foreach ($allowedMethods as $code) {
-            $result[$code] = $this->getCode('method', $code) ?: 'GLS';
         }
 
         return $result;
