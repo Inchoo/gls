@@ -14,7 +14,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
 {
     public const CODE = 'gls';
 
-    public const HOME_DELIVERY_METHOD        = 'home';
+    public const STANDARD_DELIVERY_METHOD    = 'standard';
     public const PARCEL_SHOP_DELIVERY_METHOD = 'psd';
 
     /**
@@ -470,8 +470,8 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
     {
         $data = [
             'method' => [
-                self::HOME_DELIVERY_METHOD => __('Home Delivery'),
-                self::PARCEL_SHOP_DELIVERY_METHOD => __('Out of Home Delivery')
+                self::STANDARD_DELIVERY_METHOD => __('Delivery to Address'),
+                self::PARCEL_SHOP_DELIVERY_METHOD => __('Delivery to Parcel Location')
             ],
             'country_calling_code' => [
                 'CZ' => '+420',

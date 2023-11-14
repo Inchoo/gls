@@ -45,18 +45,18 @@
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\Method</source_model>
                     <can_be_empty>1</can_be_empty>
                 </field>
-                <field id="home_method_name" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Home Delivery Method Name</label>
+                <field id="standard_method_name" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Delivery to Address Method Name</label>
                 </field>
-                <field id="home_method_price" translate="label" type="text" sortOrder="115" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Home Delivery Method Price</label>
+                <field id="standard_method_price" translate="label" type="text" sortOrder="115" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Delivery to Address Method Price</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
                 <field id="psd_method_name" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Out of Home Delivery Method Name</label>
+                    <label>Delivery to Parcel Location Method Name</label>
                 </field>
                 <field id="psd_method_price" translate="label" type="text" sortOrder="125" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Out of Home Delivery Method Price</label>
+                    <label>Delivery to Parcel Location Method Price</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
                 <field id="specificcountry" translate="label" type="multiselect" sortOrder="500" showInDefault="1" showInWebsite="1" canRestore="1">
@@ -107,7 +107,7 @@
                 </field>
                 <field id="sm1_text" translate="label comment" type="text" sortOrder="2051" showInDefault="1" showInWebsite="1">
                     <label>SMS Service Text</label>
-                    <comment><![CDATA[Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.]]></comment>
+                    <comment><![CDATA[Maximum text length is 130. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.]]></comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
                         <field id="sm1">1</field>

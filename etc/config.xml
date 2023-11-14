@@ -13,10 +13,10 @@
                 <debug>0</debug>
                 <title>GLS</title>
                 <max_package_weight>40</max_package_weight>
-                <allowed_methods>home,psd</allowed_methods>
-                <home_method_name>Home Delivery</home_method_name>
-                <home_method_price>0</home_method_price>
-                <psd_method_name>Out of Home Delivery</psd_method_name>
+                <allowed_methods>standard,psd</allowed_methods>
+                <standard_method_name>Delivery to Address</standard_method_name>
+                <standard_method_price>0</standard_method_price>
+                <psd_method_name>Delivery to Parcel Location</psd_method_name>
                 <psd_method_price>0</psd_method_price>
                 <sallowspecific>1</sallowspecific>
                 <specificcountry>CZ,HR,HU,RO,SI,SK</specificcountry>
