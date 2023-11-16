@@ -23,6 +23,7 @@ define([
 
         countryCode: ko.observable(null),
         isShippingMethodSelected: glsData.isParcelShopDeliverySelected,
+        selectorTitle: ko.observable(null),
         deliveryPoint: glsData.parcelShopDeliveryPoint,
 
         initialize: function () {
@@ -84,11 +85,15 @@ define([
             }
         },
 
-        shippingMethodChanged: function (currentShippingMethodCode) {
-            var isShippingMethodSelected = currentShippingMethodCode === this.shippingMethodCode;
+        shippingMethodChanged: function (newShippingMethodCode) {
+            var isShippingMethodSelected = newShippingMethodCode === this.shippingMethodCode,
+                shippingMethod = quote.shippingMethod();
 
             if (isShippingMethodSelected) {
                 scriptLoader.createMapScript();
+                this.selectorTitle(shippingMethod.carrier_title + ' ' + shippingMethod.method_title);
+            } else {
+                this.selectorTitle(null);
             }
 
             this.isShippingMethodSelected(isShippingMethodSelected);

@@ -1,5 +1,5 @@
 <div class="checkout-gls-parcel-shop-delivery" data-bind="visible: isShippingMethodSelected() && countryCode()">
-    <h3 data-bind="i18n: 'GLS Delivery Point'"></h3>
+    <h3 data-bind="text: selectorTitle"></h3>
 
     <div data-bind="visible: deliveryPoint, with:deliveryPoint">
         <strong data-bind="i18n: 'Name'"></strong>: <span data-bind="text: name"></span><br>
