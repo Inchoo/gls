@@ -316,7 +316,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             ];
         }
         // Guaranteed 24h Service
-        if ($this->getConfigFlag('guaranteed_24h')) {
+        if ($this->getConfigFlag('guaranteed_24h') && $request->getRecipientAddressCountryCode() !== 'RS') {
             $serviceList[] = [
                 'Code' => '24H'
             ];

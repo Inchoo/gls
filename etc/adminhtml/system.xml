@@ -95,8 +95,9 @@
                     <label>Print Position</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\PrintPosition</source_model>
                 </field>
-                <field id="guaranteed_24h" translate="label" type="select" sortOrder="1500" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="guaranteed_24h" translate="label comment" type="select" sortOrder="1500" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Guaranteed 24h Service</label>
+                    <comment>Not available in Serbia.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="express_delivery" translate="label" type="select" sortOrder="1510" showInDefault="1" showInWebsite="1" canRestore="1">
