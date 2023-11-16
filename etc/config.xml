@@ -21,8 +21,8 @@
                 <psd_specificcountry/>
                 <psd_method_name>Delivery to Parcel Location</psd_method_name>
                 <psd_method_price>0</psd_method_price>
-                <psd_sallowspecific>0</psd_sallowspecific>
-                <psd_specificcountry/>
+                <psd_sallowspecific>1</psd_sallowspecific>
+                <psd_specificcountry>CZ,HR,HU,RO,SI,SK</psd_specificcountry>
                 <client_reference>Order #{increment_id}</client_reference>
                 <printer_type>A4_2x2</printer_type>
                 <print_position>1</print_position>

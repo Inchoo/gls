@@ -73,12 +73,7 @@
                     <label>Delivery to Parcel Location Method Price</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
-                <field id="psd_sallowspecific" translate="label" type="select" sortOrder="620" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Delivery to Parcel Location Applicable Countries</label>
-                    <frontend_class>shipping-applicable-country</frontend_class>
-                    <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
-                </field>
-                <field id="psd_specificcountry" translate="label" type="multiselect" sortOrder="621" showInDefault="1" showInWebsite="1">
+                <field id="psd_specificcountry" translate="label" type="multiselect" sortOrder="620" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Delivery to Parcel Location Specific Countries</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
                     <can_be_empty>1</can_be_empty>
