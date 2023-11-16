@@ -385,18 +385,6 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
                 ]
             ];
         }
-        // Document Return Service
-        if (!$isShopDeliveryService
-            && $this->getConfigFlag('szl')
-            && $szlDocumentId = $this->getConfigData('szl_document_id')
-        ) {
-            $serviceList[] = [
-                'Code' => 'SZL',
-                'SZLParameter' => [
-                    'Value' => $szlDocumentId
-                ]
-            ];
-        }
         // Insurance Service
 //        if ($this->getConfigFlag('ins')) {
 //            $serviceList[] = [
