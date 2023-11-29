@@ -118,6 +118,7 @@
                 </field>
                 <field id="sm1_text" translate="label comment" type="text" sortOrder="1551" showInDefault="1" showInWebsite="1">
                     <label>SMS Service Text</label>
+                    <validate>validate-length maximum-length-130</validate>
                     <comment><![CDATA[Maximum text length is 130. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.]]></comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
