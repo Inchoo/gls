@@ -43,10 +43,16 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
     protected \Magento\Framework\App\State $appState;
 
     /**
+     * @var \Magento\Framework\Math\FloatComparator
+     */
+    protected \Magento\Framework\Math\FloatComparator $floatComparator;
+
+    /**
      * @param \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery
      * @param \GLSCroatia\Shipping\Model\Api\Service $apiService
      * @param \Magento\Framework\DataObjectFactory $dataObjectFactory
      * @param \Magento\Framework\App\State $appState
+     * @param \Magento\Framework\Math\FloatComparator $floatComparator
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
@@ -69,6 +75,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
         \GLSCroatia\Shipping\Model\Api\Service $apiService,
         \Magento\Framework\DataObjectFactory $dataObjectFactory,
         \Magento\Framework\App\State $appState,
+        \Magento\Framework\Math\FloatComparator $floatComparator,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
         \Psr\Log\LoggerInterface $logger,
@@ -90,6 +97,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
         $this->apiService = $apiService;
         $this->dataObjectFactory = $dataObjectFactory;
         $this->appState = $appState;
+        $this->floatComparator = $floatComparator;
         parent::__construct(
             $scopeConfig,
             $rateErrorFactory,
@@ -386,14 +394,20 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             ];
         }
         // Insurance Service
-//        if ($this->getConfigFlag('ins')) {
-//            $serviceList[] = [
-//                'Code' => 'INS',
-//                'INSParameter' => [
-//                    'Value' => $customsValue
-//                ]
-//            ];
-//        }
+        $isInsuranceAllowed = $this->getConfigFlag('ins') && $this->isInsuranceAllowed(
+            (float)$customsValue,
+            $request->getOrderShipment()->getOrder()->getOrderCurrencyCode(),
+            $request->getShipperAddressCountryCode(),
+            $request->getRecipientAddressCountryCode()
+        );
+        if ($isInsuranceAllowed) {
+            $serviceList[] = [
+                'Code' => 'INS',
+                'INSParameter' => [
+                    'Value' => $customsValue
+                ]
+            ];
+        }
 
         if ($serviceList) {
             $parcel['ServiceList'] = $serviceList;
@@ -478,6 +492,44 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
     }
 
     /**
+     * Check if insurance is allowed for package value.
+     *
+     * @param float $packageValue
+     * @param string $packageValueCurrency
+     * @param string $originCountry
+     * @param string $destinationCountry
+     * @return bool
+     */
+    protected function isInsuranceAllowed(
+        float $packageValue,
+        string $packageValueCurrency,
+        string $originCountry,
+        string $destinationCountry
+    ): bool {
+        if (!$originCurrencyCode = $this->getCode('country_currency_code', $originCountry)) {
+            return false;
+        }
+
+        $type = $originCountry === $destinationCountry ? 'country_domestic_insurance' : 'country_export_insurance';
+        if (!$minMax = $this->getCode($type, $originCountry)) {
+            return false;
+        }
+
+        try {
+            $currencyModel = $this->_currencyFactory->create()->load($packageValueCurrency);
+            $packageValue = (float)$currencyModel->convert($packageValue, $originCurrencyCode);
+        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            $this->_logger->error('GLS insurance check.', [
+                'message' => $e->getMessage()
+            ]);
+            return false;
+        }
+
+        return $this->floatComparator->greaterThanOrEqual($packageValue, (float)$minMax['min'])
+            && $this->floatComparator->greaterThanOrEqual((float)$minMax['max'], $packageValue);
+    }
+
+    /**
      * Get GLS carrier configuration data.
      *
      * @param string $type
@@ -497,7 +549,34 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
                 'HU' => '+36',
                 'RO' => '+40',
                 'SI' => '+386',
-                'SK' => '+421'
+                'SK' => '+421',
+                'RS' => '+381',
+            ],
+            'country_currency_code' => [
+                'CZ' => 'CZK',
+                'HR' => 'EUR',
+                'HU' => 'HUF',
+                'RO' => 'RON',
+                'SI' => 'EUR',
+                'SK' => 'EUR',
+                'RS' => 'RSD',
+            ],
+            'country_domestic_insurance' => [
+                'CZ' => ['min' => 20000, 'max' => 100000], // CZK
+                'HR' => ['min' => 165.9, 'max' => 1659.04], // EUR
+                'HU' => ['min' => 50000, 'max' => 500000], // HUF
+                'RO' => ['min' => 2000, 'max' => 7000], // RON
+                'SI' => ['min' => 200, 'max' => 2000], // EUR
+                'SK' => ['min' => 332, 'max' => 2655], // EUR
+                'RS' => ['min' => 40000, 'max' => 200000] // RSD
+            ],
+            'country_export_insurance' => [
+                'CZ' => ['min' => 20000, 'max' => 100000], // CZK
+                'HR' => ['min' => 165.91, 'max' => 663.61], // EUR
+                'HU' => ['min' => 50000, 'max' => 200000], // HUF
+                'RO' => ['min' => 2000, 'max' => 7000], // RON
+                'SI' => ['min' => 200, 'max' => 2000], // EUR
+                'SK' => ['min' => 332, 'max' => 1000] // EUR
             ]
         ];
 

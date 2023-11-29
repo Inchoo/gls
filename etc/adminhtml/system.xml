@@ -133,10 +133,11 @@
                     <label>Addressee Only Service</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-<!--                <field id="ins" translate="label" type="select" sortOrder="1580" showInDefault="1" showInWebsite="1" canRestore="1">-->
-<!--                    <label>Insurance Service</label>-->
-<!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-<!--                </field>-->
+                <field id="ins" translate="label comment" type="select" sortOrder="1580" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Insurance Service</label>
+                    <comment><![CDATA[Magento currency converter needs to be configured.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
             </group>
         </section>
     </system>
