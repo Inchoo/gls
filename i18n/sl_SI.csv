@@ -1,32 +1,32 @@
 "API URL is not configured.","API URL ni konfiguriran."
-"API username is not configured.","Uporabniško ime API-ja ni konfigurirano."
-"API password is not configured.","API geslo ni konfigurirano."
+"API username is not configured.","Uporabniško ime za API ni konfigurirano."
+"API password is not configured.","Geslo za API ni konfigurirano."
 "No packages for request","Ni paketov za zahtevo"
 "GLS Client ID is not configured.","GLS ID odjemalca ni konfiguriran."
 "GLS API error.","Napaka GLS API-ja."
 "Could not create label.","Oznake ni mogoče ustvariti."
 "Delivery to Address","Dostava na naslov"
 "Delivery to Parcel Location","Dostava na lokacijo paketa"
-"Invalid GLS delivery point.","Neveljavna GLS dostava."
-"Parcel shop delivery data is missing.","Manjkajo podatki o dostavi paketa v trgovino."
+"Invalid GLS Delivery Point.","Neveljavna GLS dostavna točka."
+"ParcelShop delivery data is missing.","Manjkajo podatki o dostavi paketa v trgovino."
 Name,Ime
 "Street Address","Naslov"
 City,Mesto
 Country,Država
 "Select Delivery Point","Izberite točko dostave"
 "Remove Delivery Point","Odstranite točko dostave"
-"Please select a GLS delivery point.","Izberite točko dostave GLS."
+"Please select a GLS Delivery Point.","Prosimo, izberite GLS dostavno točko."
 GLS,GLS
 Enabled,Omogočeno
 "Client ID","ID odjemalca"
 "This is required for API usage.","To je potrebno za uporabo API-ja."
 "API Mode","Način API-ja"
-"API Username","Uporabniško ime API-ja"
-"API Password","Geslo API-ja"
+"API Username","API Uporabniško ime"
+"API Password","API Geslo"
 "API Country","Država API-ja"
-Debug,Debug
+Debug,Razhroščevanje
 "In production mode, debug logging needs to be enabled.","V produkcijskem načinu je treba omogočiti beleženje odpravljanja napak."
-Title,Naslov
+Title,Naziv
 "Maximum Package Weight","Največja teža paketa"
 "Sort Order","Vrstni red razvrščanja"
 "Allowed Methods","Dovoljene metode"
@@ -38,9 +38,9 @@ Title,Naslov
 "Delivery to Parcel Location Method Price","Cena metode dostave na lokacijo paketa"
 "Delivery to Parcel Location Applicable Countries","Države za dostavo na lokacijo paketa"
 "Delivery to Parcel Location Specific Countries","Določene države za dostavo na lokacijo paketa"
-"Client Reference","Sklic odjemalca"
+"Client Reference","Referenca odjemalca"
 "Type of Printer","Vrsta tiskalnika"
-"Print Position","Položaj tiskanja"
+"Print Position","Položaj tiska"
 "Guaranteed 24h Service","Zagotovljena 24-urna storitev"
 "Not available in Serbia.","Ni na voljo v Srbiji."
 "Express Delivery Service","Express dostavna storitev"

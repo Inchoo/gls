@@ -7,15 +7,15 @@
 "Could not create label.","Nelze vytvořit štítek."
 "Delivery to Address","Dodávka na adresu"
 "Delivery to Parcel Location","Dodávka na místo výdeje balíků"
-"Invalid GLS delivery point.","Neplatný bod dodávky GLS."
-"Parcel shop delivery data is missing.","Chybí údaje o dodávce do pobočky s balíky."
+"Invalid GLS Delivery Point.","Neplatný bod dodávky GLS."
+"ParcelShop delivery data is missing.","Chybí údaje o dodávce do pobočky s balíky."
 Name,Název
 "Street Address","Ulice a číslo popisné"
 City,Město
 Country,Země
 "Select Delivery Point","Vyberte bod dodávky"
 "Remove Delivery Point","Odebrat bod dodávky"
-"Please select a GLS delivery point.","Vyberte prosím bod dodávky GLS."
+"Please select a GLS Delivery Point.","Vyberte prosím bod dodávky GLS."
 GLS,GLS
 Enabled,Povoleno
 "Client ID","Identifikace klienta"

@@ -7,15 +7,15 @@
 "Could not create label.","Nem sikerült címkét létrehozni."
 "Delivery to Address","Szállítás a címre"
 "Delivery to Parcel Location","Szállítás a csomag helyszínére"
-"Invalid GLS delivery point.","Érvénytelen GLS szállítási pont."
-"Parcel shop delivery data is missing.","Hiányoznak a csomagbolt szállítási adatai."
+"Invalid GLS Delivery Point.","Érvénytelen GLS szállítási pont."
+"ParcelShop delivery data is missing.","Hiányoznak a csomagbolt szállítási adatai."
 Name,Név
 "Street Address","Utca és házszám"
 City,Város
 Country,Ország
 "Select Delivery Point","Válassza ki a szállítási pontot"
 "Remove Delivery Point","Szállítási pont eltávolítása"
-"Please select a GLS delivery point.","Kérjük, válasszon egy GLS szállítási pontot."
+"Please select a GLS Delivery Point.","Kérjük, válasszon egy GLS szállítási pontot."
 GLS,GLS
 Enabled,Engedélyezve
 "Client ID","Ügyfélazonosító"

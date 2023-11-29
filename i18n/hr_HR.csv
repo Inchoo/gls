@@ -4,18 +4,18 @@
 "No packages for request","Nema paketa za zahtjev"
 "GLS Client ID is not configured.","GLS identifikacija klijenta nije konfigurirana."
 "GLS API error.","GLS API pogreška."
-"Could not create label.","Nije moguće stvoriti oznaku."
+"Could not create label.","Nije moguće stvoriti adresnicu."
 "Delivery to Address","Dostava na adresu"
 "Delivery to Parcel Location","Dostava na lokaciju paketa"
-"Invalid GLS delivery point.","Nevažeća GLS točka dostave."
-"Parcel shop delivery data is missing.","Nedostaju podaci o dostavi u trgovinu paketima."
+"Invalid GLS Delivery Point.","Nevažeća GLS točka dostave."
+"ParcelShop delivery data is missing.","Nedostaju podaci o dostavi u trgovinu paketima."
 Name,Ime
 "Street Address","Adresa"
 City,Grad
 Country,Zemlja
 "Select Delivery Point","Odaberi točku dostave"
 "Remove Delivery Point","Ukloni točku dostave"
-"Please select a GLS delivery point.","Odaberite GLS točku dostave."
+"Please select a GLS Delivery Point.","Odaberite GLS točku dostave."
 GLS,GLS
 Enabled,Aktivirano
 "Client ID","ID klijenta"

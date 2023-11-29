@@ -23,7 +23,7 @@ $order = $orderInfoBlock->getOrder();
                 <?= $block->escapeHtml($deliveryData['contact']['city'] ?? '') ?>, <?= $block->escapeHtml($deliveryData['contact']['postalCode'] ?? '') // phpcs:ignore ?><br>
                 <?= $block->escapeHtml($deliveryData['contact']['countryCode'] ?? '') ?><br>
             <?php else: ?>
-                <?= $block->escapeHtml(__('Parcel shop delivery data is missing.')) ?>
+                <?= $block->escapeHtml(__('ParcelShop delivery data is missing.')) ?>
             <?php endif; ?>
         </address>
     </section>

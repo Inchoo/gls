@@ -11,7 +11,7 @@ define([
 
                 if (result && glsData.isParcelShopDeliverySelected() && !glsData.parcelShopDeliveryPoint()) {
                     result = false;
-                    this.errorValidationMessage($t('Please select a GLS delivery point.'));
+                    this.errorValidationMessage($t('Please select a GLS Delivery Point.'));
                 }
 
                 return result;

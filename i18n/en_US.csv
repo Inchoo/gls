@@ -7,15 +7,15 @@
 "Could not create label.","Could not create label."
 "Delivery to Address","Delivery to Address"
 "Delivery to Parcel Location","Delivery to Parcel Location"
-"Invalid GLS delivery point.","Invalid GLS delivery point."
-"Parcel shop delivery data is missing.","Parcel shop delivery data is missing."
+"Invalid GLS Delivery Point.","Invalid GLS Delivery Point."
+"ParcelShop delivery data is missing.","ParcelShop delivery data is missing."
 Name,Name
 "Street Address","Street Address"
 City,City
 Country,Country
 "Select Delivery Point","Select Delivery Point"
 "Remove Delivery Point","Remove Delivery Point"
-"Please select a GLS delivery point.","Please select a GLS delivery point."
+"Please select a GLS Delivery Point.","Please select a GLS Delivery Point."
 GLS,GLS
 Enabled,Enabled
 "Client ID","Client ID"

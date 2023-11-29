@@ -49,7 +49,7 @@ class ShippingInformationManagementPlugin
         );
 
         if ($isParcelShopDelivery && !$deliveryPoint) {
-            throw new \Magento\Framework\Exception\LocalizedException(__('Invalid GLS delivery point.'));
+            throw new \Magento\Framework\Exception\LocalizedException(__('Invalid GLS Delivery Point.'));
         }
         if ($isParcelShopDelivery) {
             $glsData['parcelShopDeliveryPoint'] = $deliveryPoint;
