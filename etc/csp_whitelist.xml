@@ -4,13 +4,25 @@
     <policies>
         <policy id="script-src">
             <values>
+                <value id="map_gls_croatia" type="host">map.gls-croatia.com</value>
+                <value id="map_gls_czech" type="host">map.gls-czech.com</value>
                 <value id="map_gls_hungary" type="host">map.gls-hungary.com</value>
+                <value id="map_gls_romania" type="host">map.gls-romania.com</value>
+                <value id="map_gls_slovenia" type="host">map.gls-slovenia.com</value>
+                <value id="map_gls_slovakia" type="host">map.gls-slovakia.com</value>
+                <value id="map_gls_serbia" type="host">map.gls-serbia.com</value>
                 <value id="open_street_map" type="host">*.openstreetmap.org</value>
             </values>
         </policy>
         <policy id="connect-src">
             <values>
+                <value id="map_gls_croatia" type="host">map.gls-croatia.com</value>
+                <value id="map_gls_czech" type="host">map.gls-czech.com</value>
                 <value id="map_gls_hungary" type="host">map.gls-hungary.com</value>
+                <value id="map_gls_romania" type="host">map.gls-romania.com</value>
+                <value id="map_gls_slovenia" type="host">map.gls-slovenia.com</value>
+                <value id="map_gls_slovakia" type="host">map.gls-slovakia.com</value>
+                <value id="map_gls_serbia" type="host">map.gls-serbia.com</value>
                 <value id="open_street_map" type="host">*.openstreetmap.org</value>
             </values>
         </policy>

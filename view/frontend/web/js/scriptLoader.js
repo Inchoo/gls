@@ -7,12 +7,12 @@ define(function () {
         /**
          * Create GLS delivery point map <script> element.
          */
-        createMapScript: function () {
+        createMapScript: function (url) {
             var element, firstScriptElement;
 
             if (!scriptCreated) {
                 element = document.createElement('script');
-                element.src = 'https://map.gls-hungary.com/widget/gls-dpm.js';
+                element.src = url;
                 element.type = 'module'
                 element.async = true;
                 element.defer = true;

@@ -13,6 +13,7 @@ define([
         defaults: {
             template: 'GLSCroatia_Shipping/checkout/parcel-shop-delivery',
             mapElementId: 'gls-map-dialog',
+            mapScriptUrl: 'https://map.gls-croatia.com/widget/gls-dpm.js',
             shippingMethodCode: null,
             supportedCountries: [],
 
@@ -35,6 +36,10 @@ define([
             }
 
             this._super();
+
+            if (checkoutConfig.mapScriptUrl) {
+                this.mapScriptUrl = checkoutConfig.mapScriptUrl;
+            }
 
             this.shippingMethodCode = checkoutConfig.parcelShopDelivery.shippingMethodCode;
 
@@ -90,7 +95,7 @@ define([
                 shippingMethod = quote.shippingMethod();
 
             if (isShippingMethodSelected) {
-                scriptLoader.createMapScript();
+                scriptLoader.createMapScript(this.mapScriptUrl);
                 this.selectorTitle(shippingMethod.carrier_title + ' ' + shippingMethod.method_title);
             } else {
                 this.selectorTitle(null);

@@ -156,6 +156,25 @@ class Config
     }
 
     /**
+     * Get GLS map script URL.
+     *
+     * @param int|string|null $scopeCode
+     * @return string
+     */
+    public function getMapScriptUrl(int|string $scopeCode = null): string
+    {
+        return match ($this->getApiCountryCode($scopeCode)) {
+            'CZ' => 'https://map.gls-czech.com/widget/gls-dpm.js',
+            'HU' => 'https://map.gls-hungary.com/widget/gls-dpm.js',
+            'RO' => 'https://map.gls-romania.com/widget/gls-dpm.js',
+            'SI' => 'https://map.gls-slovenia.com/widget/gls-dpm.js',
+            'SK' => 'https://map.gls-slovakia.com/widget/gls-dpm.js',
+            'RS' => 'https://map.gls-serbia.com/widget/gls-dpm.js',
+            default => 'https://map.gls-croatia.com/widget/gls-dpm.js',
+        };
+    }
+
+    /**
      * List of currently supported countries.
      *
      * @return string[]

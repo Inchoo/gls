@@ -55,6 +55,7 @@ class ConfigProvider implements ConfigProviderInterface
         $quoteGlsData = $this->extractGlsData($quote->getShippingAddress());
 
         $configData = [
+            'mapScriptUrl' => $this->config->getMapScriptUrl(),
             'supportedCountries' => array_values($this->config->getSupportedCountries()),
             'parcelShopDelivery' => [
                 'shippingMethodCode' => Carrier::CODE . '_' . Carrier::PARCEL_SHOP_DELIVERY_METHOD,
