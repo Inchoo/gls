@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="GLSCroatia\Shipping\Model\Carrier">
+        <arguments>
+            <argument name="dataHelper" xsi:type="object">GLSCroatia\Shipping\Helper\Data\Proxy</argument>
+        </arguments>
+    </type>
     <virtualType name="GLSCroatia\Shipping\Model\Config\Source\Method" type="GLSCroatia\Shipping\Model\Config\Source\CarrierGeneric">
         <arguments>
             <argument name="type" xsi:type="string">method</argument>
