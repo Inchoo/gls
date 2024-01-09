@@ -2,7 +2,7 @@
     "name": "gls-croatia/module-shipping",
     "description": "GLS Croatia Shipping",
     "type": "magento2-module",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "require": {
         "php": "~8.1.0||~8.2.0",
         "magento/framework": "*"
