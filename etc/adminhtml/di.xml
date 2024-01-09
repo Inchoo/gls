@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Model\Order\Pdf\Shipment">
+        <plugin name="gls_parcel_shop_delivery" type="GLSCroatia\Shipping\Plugin\Sales\Controller\Adminhtml\Shipment\PrintActionPlugin"/>
+    </type>
+</config>

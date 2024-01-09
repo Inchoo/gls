@@ -1,0 +1,7 @@
+<!-- ko if: isParcelShopDeliverySelected() && parcelShopDeliveryPoint() -->
+    <!-- ko text: parcelShopDeliveryPoint().name --><!-- /ko --><br>
+    <!-- ko text: parcelShopDeliveryPoint().contact.address --><!-- /ko --><br>
+    <!-- ko text: parcelShopDeliveryPoint().contact.city --><!-- /ko -->, <!-- ko text: parcelShopDeliveryPoint().contact.postalCode --><!-- /ko --><br>
+    <!-- ko text: getCountryName(parcelShopDeliveryPoint().contact.countryCode) --><!-- /ko --><br>
+    <br>
+<!-- /ko -->

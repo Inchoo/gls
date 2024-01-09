@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Customer:etc/sections.xsd">
+    <action name="checkout/onepage/saveOrder">
+        <section name="gls-data"/>
+    </action>
+    <action name="rest/*/V1/carts/*/payment-information">
+        <section name="gls-data"/>
+    </action>
+    <action name="rest/*/V1/guest-carts/*/payment-information">
+        <section name="gls-data"/>
+    </action>
+    <action name="sales/guest/reorder">
+        <section name="gls-data"/>
+    </action>
+    <action name="sales/order/reorder">
+        <section name="gls-data"/>
+    </action>
+    <action name="paypal/express/placeOrder">
+        <section name="gls-data"/>
+    </action>
+    <action name="paypal/payflowexpress/placeOrder">
+        <section name="gls-data"/>
+    </action>
+    <action name="paypal/express/onAuthorization">
+        <section name="gls-data"/>
+    </action>
+    <action name="braintree/paypal/placeOrder">
+        <section name="gls-data"/>
+    </action>
+    <action name="braintree/googlepay/placeOrder">
+        <section name="gls-data"/>
+    </action>
+</config>

@@ -1,0 +1,12 @@
+{
+    "quote_address": {
+        "column": {
+            "gls_data": true
+        }
+    },
+    "sales_order": {
+        "column": {
+            "gls_data": true
+        }
+    }
+}

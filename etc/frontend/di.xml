@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Block\Onepage">
+        <arguments>
+            <argument name="layoutProcessors" xsi:type="array">
+                <item name="glsShipping" xsi:type="object">GLSCroatia\Shipping\Block\Checkout\LayoutProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="gls_config_provider" xsi:type="object">GLSCroatia\Shipping\Model\Checkout\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Customer\Block\SectionConfig">
+        <arguments>
+            <argument name="clientSideSections" xsi:type="array">
+                <item name="gls-data" xsi:type="string">gls-data</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Sales\Block\Order\Info">
+        <plugin name="gls_parcel_shop_delivery" type="GLSCroatia\Shipping\Plugin\Sales\Block\Order\InfoPlugin"/>
+    </type>
+    <type name="Magento\Paypal\Block\Express\Review">
+        <plugin name="gls_parcel_shop_delivery" type="GLSCroatia\Shipping\Plugin\PayPal\Block\Express\ReviewPlugin"/>
+    </type>
+</config>

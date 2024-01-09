@@ -1,0 +1,28 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+
+/** @var \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery */
+$parcelShopDelivery = $block->getData('parcel_shop_delivery');
+
+/** @var \Magento\Sales\Model\Order $order */
+$order = $block->getParentBlock()->getOrder();
+
+$isParcelShopDeliveryMethod = $parcelShopDelivery->isParcelShopDeliveryMethod($order->getShippingMethod());
+$deliveryData = $isParcelShopDeliveryMethod ? $parcelShopDelivery->getParcelShopDeliveryPointData($order) : [];
+?>
+
+<?php if ($deliveryData): ?>
+    <table>
+        <tr>
+            <td>
+                <h3><?= $block->escapeHtml($order->getShippingDescription()) ?></h3>
+                <p>
+                    <?= $block->escapeHtml($deliveryData['name'] ?? '') ?><br>
+                    <?= $block->escapeHtml($deliveryData['contact']['address'] ?? '') ?><br>
+                    <?= $block->escapeHtml($deliveryData['contact']['city'] ?? '') ?>, <?= $block->escapeHtml($deliveryData['contact']['postalCode'] ?? '') // phpcs:ignore ?><br>
+                    <?= $block->escapeHtml($deliveryData['contact']['countryCode'] ?? '') ?><br>
+                </p>
+            </td>
+        </tr>
+    </table>
+<?php endif; ?>

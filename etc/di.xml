@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="GLSCroatia\Shipping\Model\Carrier">
+        <arguments>
+            <argument name="dataHelper" xsi:type="object">GLSCroatia\Shipping\Helper\Data\Proxy</argument>
+        </arguments>
+    </type>
+    <virtualType name="GLSCroatia\Shipping\Model\Config\Source\Method" type="GLSCroatia\Shipping\Model\Config\Source\CarrierGeneric">
+        <arguments>
+            <argument name="type" xsi:type="string">method</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Checkout\Api\ShippingInformationManagementInterface">
+        <plugin name="gls_data" type="GLSCroatia\Shipping\Plugin\Checkout\Model\ShippingInformationManagementPlugin"/>
+    </type>
+    <type name="Magento\Sales\Block\Order\Email\Items">
+        <plugin name="gls_parcel_shop_delivery_point" type="GLSCroatia\Shipping\Plugin\Sales\Block\Order\Email\ItemsPlugin"/>
+    </type>
+    <type name="Magento\Sales\Block\Order\Email\Shipment\Items">
+        <plugin name="gls_parcel_shop_delivery_point" type="GLSCroatia\Shipping\Plugin\Sales\Block\Order\Email\ItemsPlugin"/>
+    </type>
+    <type name="GLSCroatia\Shipping\Observer\ApiLogObserver">
+        <arguments>
+            <argument name="logger" xsi:type="object">Magento\Shipping\Model\Method\VirtualLogger</argument>
+        </arguments>
+    </type>
+</config>
