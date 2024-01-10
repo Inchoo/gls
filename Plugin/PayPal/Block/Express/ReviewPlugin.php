@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GLSCroatia\Shipping\Plugin\PayPal\Block\Express;
 
 use Magento\Paypal\Block\Express\Review;
