@@ -3,6 +3,21 @@
     "description": "GLS Croatia Shipping",
     "type": "magento2-module",
     "version": "1.0.0",
+    "license": [
+        "OSL-3.0"
+    ],
+    "authors": [
+        {
+            "name": "GLS Croatia",
+            "email": "gls@gls-croatia.com"
+        },
+        {
+            "name": "Inchoo",
+            "email": "backend@inchoo.net",
+            "homepage": "https://inchoo.net/",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": "~8.1.0||~8.2.0",
         "magento/framework": "*"
@@ -14,13 +29,5 @@
         "psr-4": {
             "GLSCroatia\\Shipping\\": ""
         }
-    },
-    "authors": [
-        {
-            "name": "Inchoo",
-            "email": "backend@inchoo.net",
-            "homepage": "https://inchoo.net/",
-            "role": "Developer"
-        }
-    ]
+    }
 }
