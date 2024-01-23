@@ -42,7 +42,7 @@ class Config
      * @param int|string|null $scopeCode
      * @return bool
      */
-    public function isActive(int|string $scopeCode = null): bool
+    public function isActive($scopeCode = null): bool
     {
         return $this->scopeConfig->isSetFlag(
             "carriers/{$this->carrierCode}/active",
@@ -57,7 +57,7 @@ class Config
      * @param int|string|null $scopeCode
      * @return string
      */
-    public function getClientId(int|string $scopeCode = null): string
+    public function getClientId($scopeCode = null): string
     {
         return (string)$this->scopeConfig->getValue(
             "carriers/{$this->carrierCode}/client_id",
@@ -72,7 +72,7 @@ class Config
      * @param int|string|null $scopeCode
      * @return string
      */
-    public function getMode(int|string $scopeCode = null): string
+    public function getMode($scopeCode = null): string
     {
         return (string)$this->scopeConfig->getValue(
             "carriers/{$this->carrierCode}/api_mode",
@@ -87,7 +87,7 @@ class Config
      * @param int|string|null $scopeCode
      * @return string
      */
-    public function getApiUsername(int|string $scopeCode = null): string
+    public function getApiUsername($scopeCode = null): string
     {
         return (string)$this->scopeConfig->getValue(
             "carriers/{$this->carrierCode}/api_username",
@@ -102,7 +102,7 @@ class Config
      * @param int|string|null $scopeCode
      * @return string
      */
-    public function getApiPassword(int|string $scopeCode = null): string
+    public function getApiPassword($scopeCode = null): string
     {
         return (string)$this->scopeConfig->getValue(
             "carriers/{$this->carrierCode}/api_password",
@@ -117,7 +117,7 @@ class Config
      * @param int|string|null $scopeCode
      * @return string
      */
-    public function getApiCountryCode(int|string $scopeCode = null): string
+    public function getApiCountryCode($scopeCode = null): string
     {
         return (string)$this->scopeConfig->getValue(
             "carriers/{$this->carrierCode}/api_country",
@@ -132,7 +132,7 @@ class Config
      * @param int|string|null $scopeCode
      * @return bool
      */
-    public function isDebugEnabled(int|string $scopeCode = null): bool
+    public function isDebugEnabled($scopeCode = null): bool
     {
         return $this->scopeConfig->isSetFlag(
             "carriers/{$this->carrierCode}/debug",
@@ -148,7 +148,7 @@ class Config
      * @param int|string|null $scopeCode
      * @return string
      */
-    public function getApiUrl(string $serviceName, int|string $scopeCode = null): string
+    public function getApiUrl(string $serviceName, $scopeCode = null): string
     {
         $countryCode = $this->getApiCountryCode($scopeCode);
         if (!$countryCode || !in_array($countryCode, $this->getSupportedCountries(), true)) {
@@ -167,17 +167,24 @@ class Config
      * @param int|string|null $scopeCode
      * @return string
      */
-    public function getMapScriptUrl(int|string $scopeCode = null): string
+    public function getMapScriptUrl($scopeCode = null): string
     {
-        return match ($this->getApiCountryCode($scopeCode)) {
-            'CZ' => 'https://map.gls-czech.com/widget/gls-dpm.js',
-            'HU' => 'https://map.gls-hungary.com/widget/gls-dpm.js',
-            'RO' => 'https://map.gls-romania.com/widget/gls-dpm.js',
-            'SI' => 'https://map.gls-slovenia.com/widget/gls-dpm.js',
-            'SK' => 'https://map.gls-slovakia.com/widget/gls-dpm.js',
-            'RS' => 'https://map.gls-serbia.com/widget/gls-dpm.js',
-            default => 'https://map.gls-croatia.com/widget/gls-dpm.js',
-        };
+        switch ($this->getApiCountryCode($scopeCode)) {
+            case 'CZ':
+                return 'https://map.gls-czech.com/widget/gls-dpm.js';
+            case 'HU':
+                return 'https://map.gls-hungary.com/widget/gls-dpm.js';
+            case 'RO':
+                return 'https://map.gls-romania.com/widget/gls-dpm.js';
+            case 'SI':
+                return 'https://map.gls-slovenia.com/widget/gls-dpm.js';
+            case 'SK':
+                return 'https://map.gls-slovakia.com/widget/gls-dpm.js';
+            case 'RS':
+                return 'https://map.gls-serbia.com/widget/gls-dpm.js';
+            default:
+                return 'https://map.gls-croatia.com/widget/gls-dpm.js';
+        }
     }
 
     /**

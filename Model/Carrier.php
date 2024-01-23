@@ -581,7 +581,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
      * @param int|string|null $code
      * @return mixed
      */
-    public function getCode(string $type, int|string $code = null): mixed
+    public function getCode(string $type, $code = null)
     {
         $data = [
             'method' => [
