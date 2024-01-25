@@ -39,9 +39,9 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
     protected \GLSCroatia\Shipping\Model\Api\Service $apiService;
 
     /**
-     * @var \GLSCroatia\Shipping\Helper\Data
+     * @var \GLSCroatia\Shipping\Model\ExpressDelivery\Checker
      */
-    protected \GLSCroatia\Shipping\Helper\Data $dataHelper;
+    protected \GLSCroatia\Shipping\Model\ExpressDelivery\Checker $expressDeliveryChecker;
 
     /**
      * @var \Magento\Framework\DataObjectFactory
@@ -61,7 +61,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
     /**
      * @param \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery
      * @param \GLSCroatia\Shipping\Model\Api\Service $apiService
-     * @param \GLSCroatia\Shipping\Helper\Data $dataHelper
+     * @param \GLSCroatia\Shipping\Model\ExpressDelivery\Checker $expressDeliveryChecker
      * @param \Magento\Framework\DataObjectFactory $dataObjectFactory
      * @param \Magento\Framework\App\State $appState
      * @param \Magento\Framework\Math\FloatComparator $floatComparator
@@ -85,7 +85,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
     public function __construct(
         \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery,
         \GLSCroatia\Shipping\Model\Api\Service $apiService,
-        \GLSCroatia\Shipping\Helper\Data $dataHelper,
+        \GLSCroatia\Shipping\Model\ExpressDelivery\Checker $expressDeliveryChecker,
         \Magento\Framework\DataObjectFactory $dataObjectFactory,
         \Magento\Framework\App\State $appState,
         \Magento\Framework\Math\FloatComparator $floatComparator,
@@ -108,7 +108,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
     ) {
         $this->parcelShopDelivery = $parcelShopDelivery;
         $this->apiService = $apiService;
-        $this->dataHelper = $dataHelper;
+        $this->expressDeliveryChecker = $expressDeliveryChecker;
         $this->dataObjectFactory = $dataObjectFactory;
         $this->appState = $appState;
         $this->floatComparator = $floatComparator;
@@ -346,7 +346,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
         // Express Delivery Service
         $expressDeliverCode = $this->getConfigData('express_delivery');
         $isExpressDeliveryAllowed = !$isShopDeliveryService && $expressDeliverCode
-            && $this->isExpressDeliveryAllowed(
+            && $this->expressDeliveryChecker->isAllowed(
                 $expressDeliverCode,
                 $request->getShipperAddressCountryCode(),
                 $request->getRecipientAddressCountryCode(),
@@ -549,29 +549,6 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
 
         return $this->floatComparator->greaterThanOrEqual($packageValue, (float)$minMax['min'])
             && $this->floatComparator->greaterThanOrEqual((float)$minMax['max'], $packageValue);
-    }
-
-    /**
-     * Check if express delivery is allowed for country/postcode.
-     *
-     * @param string $expressDeliverCode
-     * @param string $originCountry
-     * @param string $destinationCountry
-     * @param string $postcode
-     * @return bool
-     */
-    protected function isExpressDeliveryAllowed(
-        string $expressDeliverCode,
-        string $originCountry,
-        string $destinationCountry,
-        string $postcode
-    ): bool {
-        if ($originCountry !== $destinationCountry) {
-            return false;
-        }
-
-        $allowedCodes = $this->dataHelper->getExpressDeliveryData($destinationCountry, $postcode);
-        return in_array($expressDeliverCode, $allowedCodes, true);
     }
 
     /**
