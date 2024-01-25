@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": "~7.4.0||~8.1.0||~8.2.0",
-        "magento/framework": "^103.0.4"
+        "magento/framework": "~103.0.0"
     },
     "autoload": {
         "files": [
