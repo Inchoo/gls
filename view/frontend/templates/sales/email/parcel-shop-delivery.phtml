@@ -14,7 +14,7 @@ $parcelShopDelivery = $block->getData('parcel_shop_delivery');
 /** @var \Magento\Sales\Model\Order $order */
 $order = $block->getParentBlock()->getOrder();
 
-$isParcelShopDeliveryMethod = $parcelShopDelivery->isParcelShopDeliveryMethod($order->getShippingMethod());
+$isParcelShopDeliveryMethod = $order && $parcelShopDelivery->isParcelShopDeliveryMethod($order->getShippingMethod());
 $deliveryData = $isParcelShopDeliveryMethod ? $parcelShopDelivery->getParcelShopDeliveryPointData($order) : [];
 ?>
 
