@@ -37,6 +37,38 @@ class Config
     }
 
     /**
+     * Get carrier config value.
+     *
+     * @param string $field
+     * @param int|string|null $scopeCode
+     * @return int|string|null
+     */
+    public function getConfigValue(string $field, $scopeCode = null)
+    {
+        return $this->scopeConfig->getValue(
+            "carriers/{$this->carrierCode}/{$field}",
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $scopeCode
+        );
+    }
+
+    /**
+     * Get carrier config flag.
+     *
+     * @param string $field
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function getConfigFlag(string $field, $scopeCode = null): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            "carriers/{$this->carrierCode}/{$field}",
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $scopeCode
+        );
+    }
+
+    /**
      * Is GLS carrier enabled.
      *
      * @param int|string|null $scopeCode
@@ -44,11 +76,7 @@ class Config
      */
     public function isActive($scopeCode = null): bool
     {
-        return $this->scopeConfig->isSetFlag(
-            "carriers/{$this->carrierCode}/active",
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $scopeCode
-        );
+        return $this->getConfigFlag('active', $scopeCode);
     }
 
     /**
@@ -59,11 +87,7 @@ class Config
      */
     public function getClientId($scopeCode = null): string
     {
-        return (string)$this->scopeConfig->getValue(
-            "carriers/{$this->carrierCode}/client_id",
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $scopeCode
-        );
+        return $this->getConfigValue('client_id', $scopeCode);
     }
 
     /**
@@ -74,11 +98,7 @@ class Config
      */
     public function getMode($scopeCode = null): string
     {
-        return (string)$this->scopeConfig->getValue(
-            "carriers/{$this->carrierCode}/api_mode",
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $scopeCode
-        );
+        return (string)$this->getConfigValue('api_mode', $scopeCode);
     }
 
     /**
@@ -89,11 +109,7 @@ class Config
      */
     public function getApiUsername($scopeCode = null): string
     {
-        return (string)$this->scopeConfig->getValue(
-            "carriers/{$this->carrierCode}/api_username",
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $scopeCode
-        );
+        return (string)$this->getConfigValue('api_username', $scopeCode);
     }
 
     /**
@@ -104,11 +120,7 @@ class Config
      */
     public function getApiPassword($scopeCode = null): string
     {
-        return (string)$this->scopeConfig->getValue(
-            "carriers/{$this->carrierCode}/api_password",
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $scopeCode
-        );
+        return (string)$this->getConfigValue('api_password', $scopeCode);
     }
 
     /**
@@ -119,11 +131,7 @@ class Config
      */
     public function getApiCountryCode($scopeCode = null): string
     {
-        return (string)$this->scopeConfig->getValue(
-            "carriers/{$this->carrierCode}/api_country",
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $scopeCode
-        );
+        return (string)$this->getConfigValue('api_country', $scopeCode);
     }
 
     /**
@@ -134,11 +142,172 @@ class Config
      */
     public function isDebugEnabled($scopeCode = null): bool
     {
-        return $this->scopeConfig->isSetFlag(
-            "carriers/{$this->carrierCode}/debug",
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $scopeCode
-        );
+        return $this->getConfigFlag('debug', $scopeCode);
+    }
+
+    /**
+     * Get Carrier title.
+     *
+     * @param int|string|null $scopeCode
+     * @return string
+     */
+    public function getCarrierTitle($scopeCode = null): string
+    {
+        return (string)$this->getConfigValue('title', $scopeCode);
+    }
+
+    /**
+     * Get Client Reference.
+     *
+     * @param int|string|null $scopeCode
+     * @return string
+     */
+    public function getClientReference($scopeCode = null): string
+    {
+        return (string)$this->getConfigValue('client_reference', $scopeCode);
+    }
+
+    /**
+     * Get Printer Type.
+     *
+     * @param int|string|null $scopeCode
+     * @return string
+     */
+    public function getPrinterType($scopeCode = null): string
+    {
+        return (string)$this->getConfigValue('printer_type', $scopeCode);
+    }
+
+    /**
+     * Get Print Position.
+     *
+     * @param int|string|null $scopeCode
+     * @return int
+     */
+    public function getPrintPosition($scopeCode = null): int
+    {
+        return (int)$this->getConfigValue('print_position', $scopeCode) ?: 1;
+    }
+
+    /**
+     * Is enabled Guaranteed 24H Service.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isEnabledGuaranteed24hService($scopeCode = null): bool
+    {
+        return $this->getConfigFlag('guaranteed_24h', $scopeCode);
+    }
+
+    /**
+     * Is enabled Express Delivery Service.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isEnabledExpressDeliveryService($scopeCode = null): bool
+    {
+        return $this->getConfigFlag('express_delivery', $scopeCode);
+    }
+
+    /**
+     * Get Express Delivery code.
+     *
+     * @param int|string|null $scopeCode
+     * @return string
+     */
+    public function getExpressDeliveryServiceCode($scopeCode = null): string
+    {
+        return (string)$this->getConfigValue('express_delivery', $scopeCode);
+    }
+
+    /**
+     * Is enabled Contact Service.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isEnabledContactService($scopeCode = null): bool
+    {
+        return $this->getConfigFlag('cs1', $scopeCode);
+    }
+
+    /**
+     * Is enabled Flexible Delivery Service.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isEnabledFlexibleDeliveryService($scopeCode = null): bool
+    {
+        return $this->getConfigFlag('fds', $scopeCode);
+    }
+
+    /**
+     * Is enabled Flexible Delivery SMS Service.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isEnabledFlexibleDeliverySmsService($scopeCode = null): bool
+    {
+        return $this->getConfigFlag('fss', $scopeCode);
+    }
+
+    /**
+     * Is enabled SMS Service.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isEnabledSmsService($scopeCode = null): bool
+    {
+        return $this->getConfigFlag('sm1', $scopeCode);
+    }
+
+    /**
+     * Get SMS Service text.
+     *
+     * @param int|string|null $scopeCode
+     * @return string
+     */
+    public function getSmsServiceText($scopeCode = null): string
+    {
+        return (string)$this->getConfigValue('sm1_text', $scopeCode);
+    }
+
+    /**
+     * Is enabled SMS Pre-advice Service.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isEnabledSmsPreAdviceService($scopeCode = null): bool
+    {
+        return $this->getConfigFlag('sm2', $scopeCode);
+    }
+
+    /**
+     * Is enabled Addressee Only Service.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isEnabledAddresseeOnlyService($scopeCode = null): bool
+    {
+        return $this->getConfigFlag('aos', $scopeCode);
+    }
+
+    /**
+     * Is enabled Insurance Service.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isEnabledInsuranceService($scopeCode = null): bool
+    {
+        return $this->getConfigFlag('ins', $scopeCode);
     }
 
     /**
@@ -194,7 +363,7 @@ class Config
      */
     public function getSupportedCountries(): array
     {
-        $value = (string)$this->scopeConfig->getValue("carriers/{$this->carrierCode}/supported_countries");
+        $value = (string)$this->getConfigValue('supported_countries');
         return $value ? explode(',', $value) : [];
     }
 }

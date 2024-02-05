@@ -48,6 +48,7 @@ class ParcelShopDelivery implements ArgumentInterface
      */
     public function getParcelShopDeliveryPointData(Order $order): array
     {
+        // todo vrati data object
         if (!$glsDataJson = $order->getData('gls_data')) {
             return [];
         }
