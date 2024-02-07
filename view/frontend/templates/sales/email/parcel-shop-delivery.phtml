@@ -15,19 +15,21 @@ $parcelShopDelivery = $block->getData('parcel_shop_delivery');
 $order = $block->getParentBlock()->getOrder();
 
 $isParcelShopDeliveryMethod = $order && $parcelShopDelivery->isParcelShopDeliveryMethod($order->getShippingMethod());
-$deliveryData = $isParcelShopDeliveryMethod ? $parcelShopDelivery->getParcelShopDeliveryPointData($order) : [];
+if ($isParcelShopDeliveryMethod) {
+    $deliveryData = $parcelShopDelivery->getParcelShopDeliveryPointData($order);
+}
 ?>
 
-<?php if ($deliveryData): ?>
+<?php if ($isParcelShopDeliveryMethod && $deliveryData->getData()): ?>
     <table>
         <tr>
             <td>
                 <h3><?= $block->escapeHtml($order->getShippingDescription()) ?></h3>
                 <p>
-                    <?= $block->escapeHtml($deliveryData['name'] ?? '') ?><br>
-                    <?= $block->escapeHtml($deliveryData['contact']['address'] ?? '') ?><br>
-                    <?= $block->escapeHtml($deliveryData['contact']['city'] ?? '') ?>, <?= $block->escapeHtml($deliveryData['contact']['postalCode'] ?? '') // phpcs:ignore ?><br>
-                    <?= $block->escapeHtml($deliveryData['contact']['countryCode'] ?? '') ?><br>
+                    <?= $block->escapeHtml((string)$deliveryData->getData('name')) ?><br>
+                    <?= $block->escapeHtml((string)$deliveryData->getData('contact/address')) ?><br>
+                    <?= $block->escapeHtml((string)$deliveryData->getData('contact/city')) ?>, <?= $block->escapeHtml((string)$deliveryData->getData('contact/postalCode')) // phpcs:ignore ?><br>
+                    <?= $block->escapeHtml((string)$deliveryData->getData('contact/countryCode')) ?><br>
                 </p>
             </td>
         </tr>

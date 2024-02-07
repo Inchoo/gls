@@ -80,7 +80,7 @@ class ShipmentRequestBuilder
         $storeId = $request->getStoreId();
 
         if (!$clientId = $this->config->getClientId($storeId)) {
-            throw new \Magento\Framework\Exception\LocalizedException(__('GLS Client ID is not configured.')); // todo test this
+            throw new \Magento\Framework\Exception\LocalizedException(__('GLS Client ID is not configured.'));
         }
 
         $incrementId = $request->getOrderShipment()->getOrder()->getIncrementId();
@@ -92,9 +92,9 @@ class ShipmentRequestBuilder
             'ClientNumber' => (int)$clientId,
             'ClientReference' => $clientReference,
             'Count' => count($request->getPackages() ?: []) ?: 1,
-//            'CODAmount',todo
-//            'CODReference',todo
-//            'Content',todo
+//            'CODAmount', todo
+//            'CODReference', todo
+//            'Content', todo
 //            'PickupDate' => "/Date({$currentTimestamp})/",
             'PickupAddress' => [
                 'Name' => $request->getShipperContactCompanyName(),
@@ -133,9 +133,9 @@ class ShipmentRequestBuilder
         );
 
         $serviceList = [];
-        $isShopDeliveryService = $this->isShopDeliveryService((string)$request->getShippingMethod());
 
         // Parcel Shop Delivery Service
+        $isShopDeliveryService = $this->isShopDeliveryService((string)$request->getShippingMethod());
         if ($isShopDeliveryService) {
             $deliveryPointData = $this->parcelShopDelivery->getParcelShopDeliveryPointData(
                 $request->getOrderShipment()->getOrder()
@@ -144,7 +144,7 @@ class ShipmentRequestBuilder
             $serviceList[] = [
                 'Code' => 'PSD',
                 'PSDParameter' => [
-                    'StringValue' => $deliveryPointData['id'] ?? ''
+                    'StringValue' => (string)$deliveryPointData->getData('id')
                 ]
             ];
         }
@@ -235,7 +235,9 @@ class ShipmentRequestBuilder
         }
 
         // Addressee Only Service
-        if (!$isShopDeliveryService && $this->config->isEnabledAddresseeOnlyService($storeId)) {
+        if (!$isShopDeliveryService
+            && $this->config->isEnabledAddresseeOnlyService($storeId)
+        ) {
             $serviceList[] = [
                 'Code' => 'AOS',
                 'AOSParameter' => [

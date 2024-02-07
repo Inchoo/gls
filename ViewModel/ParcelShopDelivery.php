@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace GLSCroatia\Shipping\ViewModel;
 
 use GLSCroatia\Shipping\Model\Carrier;
+use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Sales\Model\Order;
 
@@ -22,11 +23,20 @@ class ParcelShopDelivery implements ArgumentInterface
     protected \Magento\Framework\Serialize\Serializer\Json $json;
 
     /**
-     * @param \Magento\Framework\Serialize\Serializer\Json $json
+     * @var \Magento\Framework\DataObjectFactory
      */
-    public function __construct(\Magento\Framework\Serialize\Serializer\Json $json)
-    {
+    protected \Magento\Framework\DataObjectFactory $dataObjectFactory;
+
+    /**
+     * @param \Magento\Framework\Serialize\Serializer\Json $json
+     * @param \Magento\Framework\DataObjectFactory $dataObjectFactory
+     */
+    public function __construct(
+        \Magento\Framework\Serialize\Serializer\Json $json,
+        \Magento\Framework\DataObjectFactory $dataObjectFactory
+    ) {
         $this->json = $json;
+        $this->dataObjectFactory = $dataObjectFactory;
     }
 
     /**
@@ -44,21 +54,22 @@ class ParcelShopDelivery implements ArgumentInterface
      * Extract GLS parcel shop delivery data from the order.
      *
      * @param \Magento\Sales\Model\Order $order
-     * @return array
+     * @return \Magento\Framework\DataObject
      */
-    public function getParcelShopDeliveryPointData(Order $order): array
+    public function getParcelShopDeliveryPointData(Order $order): DataObject
     {
-        // todo vrati data object
+        $dataObject = $this->dataObjectFactory->create();
+
         if (!$glsDataJson = $order->getData('gls_data')) {
-            return [];
+            return $dataObject;
         }
 
         try {
             $glsData = $this->json->unserialize($glsDataJson);
         } catch (\InvalidArgumentException $e) {
-            return [];
+            return $dataObject;
         }
 
-        return $glsData['parcelShopDeliveryPoint'] ?? [];
+        return $dataObject->setData($glsData['parcelShopDeliveryPoint'] ?? []);
     }
 }
