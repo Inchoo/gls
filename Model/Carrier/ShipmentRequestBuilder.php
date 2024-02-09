@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace GLSCroatia\Shipping\Model\Carrier;
 
 use Magento\Framework\DataObject;
+use Magento\Sales\Model\Order\Shipment;
 
 class ShipmentRequestBuilder
 {
@@ -25,47 +26,47 @@ class ShipmentRequestBuilder
     protected \GLSCroatia\Shipping\Helper\Data $dataHelper;
 
     /**
+     * @var \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\CashOnDelivery
+     */
+    protected \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\CashOnDelivery $cashOnDelivery;
+
+    /**
+     * @var \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\ExpressDelivery
+     */
+    protected \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\ExpressDelivery $expressDelivery;
+
+    /**
+     * @var \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Insurance
+     */
+    protected \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Insurance $insurance;
+
+    /**
      * @var \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery
      */
     protected \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery;
 
     /**
-     * @var \GLSCroatia\Shipping\Model\ExpressDelivery\Checker
-     */
-    protected \GLSCroatia\Shipping\Model\ExpressDelivery\Checker $expressDeliveryChecker;
-
-    /**
-     * @var \Magento\Framework\Math\FloatComparator
-     */
-    protected \Magento\Framework\Math\FloatComparator $floatComparator;
-
-    /**
-     * @var \Magento\Directory\Model\CurrencyFactory
-     */
-    protected \Magento\Directory\Model\CurrencyFactory $currencyFactory;
-
-    /**
      * @param \GLSCroatia\Shipping\Model\Config $config
      * @param \GLSCroatia\Shipping\Helper\Data $dataHelper
+     * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\CashOnDelivery $cashOnDelivery
+     * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\ExpressDelivery $expressDelivery
+     * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Insurance $insurance
      * @param \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery
-     * @param \GLSCroatia\Shipping\Model\ExpressDelivery\Checker $expressDeliveryChecker
-     * @param \Magento\Framework\Math\FloatComparator $floatComparator
-     * @param \Magento\Directory\Model\CurrencyFactory $currencyFactory
      */
     public function __construct(
         \GLSCroatia\Shipping\Model\Config $config,
         \GLSCroatia\Shipping\Helper\Data $dataHelper,
-        \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery,
-        \GLSCroatia\Shipping\Model\ExpressDelivery\Checker $expressDeliveryChecker,
-        \Magento\Framework\Math\FloatComparator $floatComparator,
-        \Magento\Directory\Model\CurrencyFactory $currencyFactory
+        \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\CashOnDelivery $cashOnDelivery,
+        \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\ExpressDelivery $expressDelivery,
+        \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Insurance $insurance,
+        \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery
     ) {
         $this->config = $config;
         $this->dataHelper = $dataHelper;
+        $this->cashOnDelivery = $cashOnDelivery;
+        $this->expressDelivery = $expressDelivery;
+        $this->insurance = $insurance;
         $this->parcelShopDelivery = $parcelShopDelivery;
-        $this->expressDeliveryChecker = $expressDeliveryChecker;
-        $this->floatComparator = $floatComparator;
-        $this->currencyFactory = $currencyFactory;
     }
 
     /**
@@ -83,18 +84,16 @@ class ShipmentRequestBuilder
             throw new \Magento\Framework\Exception\LocalizedException(__('GLS Client ID is not configured.'));
         }
 
-        $incrementId = $request->getOrderShipment()->getOrder()->getIncrementId();
-        $clientReference = str_replace('{increment_id}', $incrementId, $this->config->getClientReference($storeId));
+        $shipment = $request->getOrderShipment();
+        $order = $shipment->getOrder();
 
 //        $currentTimestamp = round(microtime(true) * 1000); // milliseconds
 
         $parcel = [
             'ClientNumber' => (int)$clientId,
-            'ClientReference' => $clientReference,
+            'ClientReference' => $this->generateReference($shipment),
             'Count' => count($request->getPackages() ?: []) ?: 1,
-//            'CODAmount', todo
-//            'CODReference', todo
-//            'Content', todo
+//            'Content',
 //            'PickupDate' => "/Date({$currentTimestamp})/",
             'PickupAddress' => [
                 'Name' => $request->getShipperContactCompanyName(),
@@ -122,11 +121,6 @@ class ShipmentRequestBuilder
             ]
         ];
 
-        $customsValue = 0;
-        foreach ($request->getPackages() as $packageData) {
-            $customsValue += $packageData['params']['customs_value'] ?? 0;
-        }
-
         $recipientPhoneNumber = $this->formatPhoneNumber(
             (string)$request->getRecipientContactPhoneNumber(),
             (string)$request->getRecipientAddressCountryCode()
@@ -134,18 +128,21 @@ class ShipmentRequestBuilder
 
         $serviceList = [];
 
+        // Cash on Delivery Service
+        if ($this->cashOnDelivery->isAllowed($shipment)) {
+            $parcel['CODAmount'] = $this->cashOnDelivery->calculateAmount($shipment);
+            $parcel['CODReference'] = $this->cashOnDelivery->generateReference($shipment);
+            $serviceList[] = ['Code' => 'COD'];
+        }
+
         // Parcel Shop Delivery Service
         $isShopDeliveryService = $this->isShopDeliveryService((string)$request->getShippingMethod());
         if ($isShopDeliveryService) {
-            $deliveryPointData = $this->parcelShopDelivery->getParcelShopDeliveryPointData(
-                $request->getOrderShipment()->getOrder()
-            );
+            $deliveryPointData = $this->parcelShopDelivery->getParcelShopDeliveryPointData($order);
 
             $serviceList[] = [
                 'Code' => 'PSD',
-                'PSDParameter' => [
-                    'StringValue' => (string)$deliveryPointData->getData('id')
-                ]
+                'PSDParameter' => ['StringValue' => (string)$deliveryPointData->getData('id')]
             ];
         }
 
@@ -153,16 +150,14 @@ class ShipmentRequestBuilder
         if ($this->config->isEnabledGuaranteed24hService($storeId)
             && $request->getRecipientAddressCountryCode() !== 'RS'
         ) {
-            $serviceList[] = [
-                'Code' => '24H'
-            ];
+            $serviceList[] = ['Code' => '24H'];
         }
 
         // Express Delivery Service
         $expressDeliverCode = $this->config->getExpressDeliveryServiceCode($storeId);
         $isExpressDeliveryAllowed = !$isShopDeliveryService
             && $expressDeliverCode
-            && $this->expressDeliveryChecker->isAllowed(
+            && $this->expressDelivery->isAllowed(
                 $expressDeliverCode,
                 (string)$request->getShipperAddressCountryCode(),
                 (string)$request->getRecipientAddressCountryCode(),
@@ -180,9 +175,7 @@ class ShipmentRequestBuilder
         ) {
             $serviceList[] = [
                 'Code' => 'CS1',
-                'CS1Parameter' => [
-                    'Value' => $recipientPhoneNumber
-                ]
+                'CS1Parameter' => ['Value' => $recipientPhoneNumber]
             ];
         }
 
@@ -193,9 +186,7 @@ class ShipmentRequestBuilder
         ) {
             $serviceList[] = [
                 'Code' => 'FDS',
-                'FDSParameter' => [
-                    'Value' => (string)$request->getRecipientEmail()
-                ]
+                'FDSParameter' => ['Value' => (string)$request->getRecipientEmail()]
             ];
         }
 
@@ -207,9 +198,7 @@ class ShipmentRequestBuilder
         ) {
             $serviceList[] = [
                 'Code' => 'FSS',
-                'FSSParameter' => [
-                    'Value' => $recipientPhoneNumber
-                ]
+                'FSSParameter' => ['Value' => $recipientPhoneNumber]
             ];
         }
 
@@ -219,18 +208,14 @@ class ShipmentRequestBuilder
         ) {
             $serviceList[] = [
                 'Code' => 'SM1',
-                'SM1Parameter' => [
-                    'Value' => "{$recipientPhoneNumber}|$sm1Text"
-                ]
+                'SM1Parameter' => ['Value' => "{$recipientPhoneNumber}|$sm1Text"]
             ];
         }
         // SMS Pre-advice Service
         if ($this->config->isEnabledSmsPreAdviceService($storeId)) {
             $serviceList[] = [
                 'Code' => 'SM2',
-                'SM2Parameter' => [
-                    'Value' => $recipientPhoneNumber
-                ]
+                'SM2Parameter' => ['Value' => $recipientPhoneNumber]
             ];
         }
 
@@ -240,26 +225,21 @@ class ShipmentRequestBuilder
         ) {
             $serviceList[] = [
                 'Code' => 'AOS',
-                'AOSParameter' => [
-                    'Value' => (string)$request->getRecipientContactPersonName()
-                ]
+                'AOSParameter' => ['Value' => (string)$request->getRecipientContactPersonName()]
             ];
         }
 
         // Insurance Service
         $isInsuranceAllowed = $this->config->isEnabledInsuranceService($storeId)
-            && $this->isInsuranceAllowed(
-                (float)$customsValue,
-                (string)$request->getOrderShipment()->getOrder()->getOrderCurrencyCode(),
+            && $this->insurance->isAllowed(
+                $shipment,
                 (string)$request->getShipperAddressCountryCode(),
                 (string)$request->getRecipientAddressCountryCode()
             );
         if ($isInsuranceAllowed) {
             $serviceList[] = [
                 'Code' => 'INS',
-                'INSParameter' => [
-                    'Value' => $customsValue
-                ]
+                'INSParameter' => ['Value' => $this->insurance->calculateValue($shipment)]
             ];
         }
 
@@ -309,34 +289,17 @@ class ShipmentRequestBuilder
     }
 
     /**
-     * Check if insurance is allowed for package value.
+     * Generate "ClientReference" value.
      *
-     * @param float $packageValue
-     * @param string $packageValueCurrency
-     * @param string $originCountry
-     * @param string $destinationCountry
-     * @return bool
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @param Shipment $shipment
+     * @return string
      */
-    protected function isInsuranceAllowed(
-        float $packageValue,
-        string $packageValueCurrency,
-        string $originCountry,
-        string $destinationCountry
-    ): bool {
-        if (!$originCurrencyCode = $this->dataHelper->getConfigCode('country_currency_code', $originCountry)) {
-            return false;
-        }
-
-        $type = $originCountry === $destinationCountry ? 'country_domestic_insurance' : 'country_export_insurance';
-        if (!$minMax = $this->dataHelper->getConfigCode($type, $originCountry)) {
-            return false;
-        }
-
-        $currencyModel = $this->currencyFactory->create()->load($packageValueCurrency);
-        $packageValue = (float)$currencyModel->convert($packageValue, $originCurrencyCode);
-
-        return $this->floatComparator->greaterThanOrEqual($packageValue, (float)$minMax['min'])
-            && $this->floatComparator->greaterThanOrEqual((float)$minMax['max'], $packageValue);
+    protected function generateReference(Shipment $shipment): string
+    {
+        return str_replace(
+            '{increment_id}',
+            (string)$shipment->getOrder()->getIncrementId(),
+            $this->config->getClientReference($shipment->getStoreId())
+        );
     }
 }
