@@ -36,7 +36,6 @@ Title,Cím
 "Delivery to Address Specific Countries","Címre szállítás különleges országai"
 "Delivery to Parcel Location Method Name","Kézbesítési címre szállítás módszer neve"
 "Delivery to Parcel Location Method Price","Kézbesítési címre szállítás módszer ára"
-"Delivery to Parcel Location Applicable Countries","Kézbesítési címre szállításkor választható országok"
 "Delivery to Parcel Location Specific Countries","Kézbesítési címre szállítá különleges országai"
 "Client Reference","Ügyfél referencia"
 "Type of Printer","Nyomtató típusa"
@@ -53,3 +52,5 @@ Title,Cím
 "Maximum text length is 130. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.","A maximális szöveghossz 130 karakter. Az SMS szövegében használható változók: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 "SMS Pre-advice Service","SMS előzetes értesítés szolgáltatás"
 "Addressee Only Service","Bizalmas küldemény szolgáltatás"
+"Insurance Service","Biztosítási szolgáltatás"
+"Magento currency converter needs to be configured.","A Magento valutaváltót konfigurálni kell."

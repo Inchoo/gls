@@ -36,7 +36,6 @@ Title,Naziv
 "Delivery to Address Specific Countries","Specifične zemlje za dostavu na adresu"
 "Delivery to Parcel Location Method Name","Naziv metode dostave na lokaciju paketa"
 "Delivery to Parcel Location Method Price","Cijena metode dostave na lokaciju paketa"
-"Delivery to Parcel Location Applicable Countries","Primjenjive zemlje za dostavu na lokaciju paketa"
 "Delivery to Parcel Location Specific Countries","Specifične zemlje za dostavu na lokaciju paketa"
 "Client Reference","Referenca klijenta"
 "Type of Printer","Vrsta pisača"
@@ -53,3 +52,5 @@ Title,Naziv
 "Maximum text length is 130. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.","Maksimalna duljina teksta iznosi 130 znakova. Varijable koje se mogu koristiti u tekstu SMS-a: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 "SMS Pre-advice Service","SMS usluga prethodnog savjetovanja"
 "Addressee Only Service","Usluga samo za primatelja"
+"Insurance Service","Usluga osiguranja"
+"Magento currency converter needs to be configured.","Magento pretvarač valuta treba konfigurirati."

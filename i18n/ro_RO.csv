@@ -36,7 +36,6 @@ Title,Titlu
 "Delivery to Address Specific Countries","Țările specifice pentru livrarea la adresă"
 "Delivery to Parcel Location Method Name","Numele metodei de livrare la locația coletului"
 "Delivery to Parcel Location Method Price","Prețul metodei de livrare la locația coletului"
-"Delivery to Parcel Location Applicable Countries","Țările permise pentru livrarea la locația coletului"
 "Delivery to Parcel Location Specific Countries","Țările specifice pentru livrarea la locația coletului"
 "Client Reference","Referința clientului"
 "Type of Printer","Tipul de imprimantă"
@@ -53,3 +52,5 @@ Title,Titlu
 "Maximum text length is 130. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.","Lungimea maximă a textului este de 130 de caractere. Variabile care pot fi utilizate în textul SMS-ului: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 "SMS Pre-advice Service","Serviciul de preaviz SMS"
 "Addressee Only Service","Serviciul doar pentru destinatar"
+"Insurance Service","Serviciul de asigurare"
+"Magento currency converter needs to be configured.","Convertorul valutar Magento trebuie configurat."
