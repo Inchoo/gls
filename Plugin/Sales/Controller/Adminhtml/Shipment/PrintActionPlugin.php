@@ -31,23 +31,26 @@ class PrintActionPlugin
      * Add GLS parcel shop delivery data to the shipment PDF.
      *
      * @param \Magento\Sales\Model\Order\Pdf\Shipment $subject
-     * @param \Magento\Sales\Model\Order\Shipment[] $result
+     * @param \Magento\Sales\Model\Order\Shipment[]|\Magento\Sales\Model\ResourceModel\Order\Shipment\Collection $result
      * @return array
      */
-    public function beforeGetPdf(Shipment $subject, array $result): array
+    public function beforeGetPdf(Shipment $subject, $result): array
     {
         foreach ($result as $shipment) {
             $order = $shipment->getOrder();
 
-            if (!$this->parcelShopDelivery->isParcelShopDeliveryMethod($order->getShippingMethod())
-                || !$deliveryPointData = $this->parcelShopDelivery->getParcelShopDeliveryPointData($order)
-            ) {
+            if (!$this->parcelShopDelivery->isParcelShopDeliveryMethod($order->getShippingMethod())) {
                 continue;
             }
 
-            $shippingDescription =  $order->getShippingDescription();
-            $parcelShopId = $deliveryPointData['id'] ?? '';
-            if (!str_contains($shippingDescription, $parcelShopId)) {
+            $deliveryPointData = $this->parcelShopDelivery->getParcelShopDeliveryPointData($order);
+            if (!$deliveryPointData->getData()) {
+                continue;
+            }
+
+            $shippingDescription = $order->getShippingDescription();
+            $parcelShopId = (string)$deliveryPointData->getData('id');
+            if ($parcelShopId && strpos($shippingDescription, $parcelShopId) === false) {
                 $order->setShippingDescription("{$shippingDescription} {$parcelShopId}");
             }
         }

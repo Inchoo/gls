@@ -14,11 +14,13 @@ $parcelShopDelivery = $block->getData('parcel_shop_delivery');
 /** @var \Magento\Sales\Model\Order $order */
 $order = $block->getParentBlock()->getOrder();
 
-$isParcelShopDeliveryMethod = $parcelShopDelivery->isParcelShopDeliveryMethod($order->getShippingMethod());
-$deliveryData = $isParcelShopDeliveryMethod ? $parcelShopDelivery->getParcelShopDeliveryPointData($order) : [];
+$isParcelShopDeliveryMethod = $order && $parcelShopDelivery->isParcelShopDeliveryMethod($order->getShippingMethod());
+if ($isParcelShopDeliveryMethod) {
+    $deliveryData = $parcelShopDelivery->getParcelShopDeliveryPointData($order);
+}
 ?>
 
-<?php if ($deliveryData): ?>
+<?php if ($isParcelShopDeliveryMethod && $deliveryData->getData()): ?>
     <script type="text/x-magento-init">
         {
             "*": {
@@ -29,9 +31,9 @@ $deliveryData = $isParcelShopDeliveryMethod ? $parcelShopDelivery->getParcelShop
 
     <script id="parcel-shop-delivery-template" type="text/x-magento-template">
         <br><br>
-        <?= $block->escapeHtml($deliveryData['name'] ?? '') ?><br>
-        <?= $block->escapeHtml($deliveryData['contact']['address'] ?? '') ?><br>
-        <?= $block->escapeHtml($deliveryData['contact']['city'] ?? '') ?>, <?= $block->escapeHtml($deliveryData['contact']['postalCode'] ?? '') // phpcs:ignore ?><br>
-        <?= $block->escapeHtml($deliveryData['contact']['countryCode'] ?? '') ?><br>
+        <?= $block->escapeHtml((string)$deliveryData->getData('name')) ?><br>
+        <?= $block->escapeHtml((string)$deliveryData->getData('contact/address')) ?><br>
+        <?= $block->escapeHtml((string)$deliveryData->getData('contact/city')) ?>, <?= $block->escapeHtml((string)$deliveryData->getData('contact/postalCode')) // phpcs:ignore ?><br>
+        <?= $block->escapeHtml((string)$deliveryData->getData('contact/countryCode')) ?><br>
     </script>
 <?php endif; ?>

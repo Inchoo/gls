@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace GLSCroatia\Shipping\Model\ExpressDelivery;
+namespace GLSCroatia\Shipping\Model\Carrier\ShipmentRequest;
 
-class Checker
+class ExpressDelivery
 {
     /**
      * @var \GLSCroatia\Shipping\Model\ExpressDelivery\Filesystem

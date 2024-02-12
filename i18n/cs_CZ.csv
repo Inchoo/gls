@@ -36,7 +36,6 @@ Title,Název
 "Delivery to Address Specific Countries","Specifické země pro doručení na adresu"
 "Delivery to Parcel Location Method Name","Název metody doručení do výdejního místa"
 "Delivery to Parcel Location Method Price","Cena metody doručení do výdejního místa"
-"Delivery to Parcel Location Applicable Countries","Volitelné země pro doručení do výdejního místa"
 "Delivery to Parcel Location Specific Countries","Specifické země pro doručení do výdejního místa"
 "Client Reference","Reference klienta"
 "Type of Printer","Typ tiskárny"
@@ -53,3 +52,5 @@ Title,Název
 "Maximum text length is 130. Variables that can be used in the text of the SMS: #ParcelNr#,  #COD#,  #PickupDate#,  #From_Name#,  #ClientRef#.","Minimální délka textu je 130 znaků. Proměnné, které mohou být použity v textu SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 "SMS Pre-advice Service","SMSPreadviceService"
 "Addressee Only Service","AddresseeOnlyService"
+"Insurance Service","Pojišťovací služba"
+"Magento currency converter needs to be configured.","Převodník měn Magento je třeba nakonfigurovat."
