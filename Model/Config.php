@@ -135,6 +135,28 @@ class Config
     }
 
     /**
+     * Get SenderIdentityCardNumber.
+     *
+     * @param int|string|null $scopeCode
+     * @return string
+     */
+    public function getSenderIdentityCardNumber($scopeCode = null): string
+    {
+        return (string)$this->getConfigValue('sender_identity_card_number', $scopeCode);
+    }
+
+    /**
+     * Get Content.
+     *
+     * @param int|string|null $scopeCode
+     * @return string
+     */
+    public function getContent($scopeCode = null): string
+    {
+        return (string)$this->getConfigValue('content', $scopeCode);
+    }
+
+    /**
      * Is debug log enabled.
      *
      * @param int|string|null $scopeCode

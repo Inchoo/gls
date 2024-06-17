@@ -35,6 +35,20 @@
                     <label>API Country</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
                 </field>
+                <field id="sender_identity_card_number" translate="label comment" type="text" sortOrder="47" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Sender Identity Card Number</label>
+                    <comment>Only in Serbia! REQUIRED.</comment>
+                    <depends>
+                        <field id="api_country">RS</field>
+                    </depends>
+                </field>
+                <field id="content" translate="label comment" type="text" sortOrder="48" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Content</label>
+                    <comment>Parcel info printed on label.</comment>
+                    <depends>
+                        <field id="api_country">RS</field>
+                    </depends>
+                </field>
                 <field id="debug" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Debug</label>
                     <comment>In production mode, debug logging needs to be enabled.</comment>

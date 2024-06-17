@@ -54,3 +54,7 @@ Title,Cím
 "Addressee Only Service","Bizalmas küldemény szolgáltatás"
 "Insurance Service","Biztosítási szolgáltatás"
 "Magento currency converter needs to be configured.","A Magento valutaváltót konfigurálni kell."
+"Sender Identity Card Number","Küldő személyi igazolvány száma"
+"Only in Serbia! REQUIRED.","Csak Szerbiában! KÖTELEZŐ."
+"Content","Megjegyzés"
+"Parcel info printed on label.","Csomag adatai a címkén nyomtatva."

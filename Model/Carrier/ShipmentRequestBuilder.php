@@ -93,7 +93,6 @@ class ShipmentRequestBuilder
             'ClientNumber' => (int)$clientId,
             'ClientReference' => $this->generateReference($shipment),
             'Count' => count($request->getPackages() ?: []) ?: 1,
-//            'Content',
 //            'PickupDate' => "/Date({$currentTimestamp})/",
             'PickupAddress' => [
                 'Name' => $request->getShipperContactCompanyName(),
@@ -120,6 +119,11 @@ class ShipmentRequestBuilder
                 'ContactEmail' => $request->getRecipientEmail()
             ]
         ];
+
+        if ($request->getRecipientAddressCountryCode() === 'RS') {
+            $parcel['SenderIdentityCardNumber'] = $this->config->getSenderIdentityCardNumber($storeId);
+            $parcel['Content'] = $this->config->getContent($storeId);
+        }
 
         $recipientPhoneNumber = $this->formatPhoneNumber(
             (string)$request->getRecipientContactPhoneNumber(),
