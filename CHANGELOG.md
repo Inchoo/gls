@@ -1,3 +1,7 @@
+### [1.1.1] - 2022-06-17
+- Implemented SenderIdentityCardNumber and Content config options.
+- Added `WebshopEngine` param to API requests.
+
 ### [1.1.0] - 2022-02-12
 - Implemented Cash on Delivery Service.
 
