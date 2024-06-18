@@ -76,13 +76,7 @@ class Service
         $request->setUri($this->getUrl('ParcelService', 'PrepareLabels'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
-        if (!isset($params['Username'])) {
-            $params['Username'] = $this->getUsername();
-        }
-        if (!isset($params['Password'])) {
-            $params['Password'] = $this->getPassword();
-        }
-
+        $params = $this->prepareParams($params);
         $request->setParams($this->json->serialize($params));
 
         return $this->makeRequest($request);
@@ -103,13 +97,7 @@ class Service
         $request->setUri($this->getUrl('ParcelService', 'GetPrintedLabels'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
-        if (!isset($params['Username'])) {
-            $params['Username'] = $this->getUsername();
-        }
-        if (!isset($params['Password'])) {
-            $params['Password'] = $this->getPassword();
-        }
-
+        $params = $this->prepareParams($params);
         $request->setParams($this->json->serialize($params));
 
         return $this->makeRequest($request);
@@ -130,13 +118,7 @@ class Service
         $request->setUri($this->getUrl('ParcelService', 'PrintLabels'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
-        if (!isset($params['Username'])) {
-            $params['Username'] = $this->getUsername();
-        }
-        if (!isset($params['Password'])) {
-            $params['Password'] = $this->getPassword();
-        }
-
+        $params = $this->prepareParams($params);
         $request->setParams($this->json->serialize($params));
 
         return $this->makeRequest($request);
@@ -157,13 +139,7 @@ class Service
         $request->setUri($this->getUrl('ParcelService', 'DeleteLabels'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
-        if (!isset($params['Username'])) {
-            $params['Username'] = $this->getUsername();
-        }
-        if (!isset($params['Password'])) {
-            $params['Password'] = $this->getPassword();
-        }
-
+        $params = $this->prepareParams($params);
         $request->setParams($this->json->serialize($params));
 
         return $this->makeRequest($request);
@@ -184,13 +160,7 @@ class Service
         $request->setUri($this->getUrl('ParcelService', 'ModifyCOD'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
-        if (!isset($params['Username'])) {
-            $params['Username'] = $this->getUsername();
-        }
-        if (!isset($params['Password'])) {
-            $params['Password'] = $this->getPassword();
-        }
-
+        $params = $this->prepareParams($params);
         $request->setParams($this->json->serialize($params));
 
         return $this->makeRequest($request);
@@ -211,13 +181,7 @@ class Service
         $request->setUri($this->getUrl('ParcelService', 'GetParcelList'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
-        if (!isset($params['Username'])) {
-            $params['Username'] = $this->getUsername();
-        }
-        if (!isset($params['Password'])) {
-            $params['Password'] = $this->getPassword();
-        }
-
+        $params = $this->prepareParams($params);
         $request->setParams($this->json->serialize($params));
 
         return $this->makeRequest($request);
@@ -238,13 +202,7 @@ class Service
         $request->setUri($this->getUrl('ParcelService', 'GetParcelStatuses'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
-        if (!isset($params['Username'])) {
-            $params['Username'] = $this->getUsername();
-        }
-        if (!isset($params['Password'])) {
-            $params['Password'] = $this->getPassword();
-        }
-
+        $params = $this->prepareParams($params);
         $request->setParams($this->json->serialize($params));
 
         return $this->makeRequest($request);
@@ -297,6 +255,26 @@ class Service
         }
 
         throw new \Magento\Framework\Exception\LocalizedException(__('API password is not configured.'));
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function prepareParams(array $params): array
+    {
+        if (!isset($params['Username'])) {
+            $params['Username'] = $this->getUsername();
+        }
+        if (!isset($params['Password'])) {
+            $params['Password'] = $this->getPassword();
+        }
+        if (!isset($params['WebshopEngine'])) {
+            $params['WebshopEngine'] = 'magentohr';
+        }
+
+        return $params;
     }
 
     /**
