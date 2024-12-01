@@ -16,149 +16,248 @@
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="client_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1">
-                    <label>Client ID</label>
-                    <comment>This is required for API usage.</comment>
-                </field>
-                <field id="api_mode" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>API Mode</label>
-                    <source_model>GLSCroatia\Shipping\Model\Config\Source\Mode</source_model>
-                </field>
-                <field id="api_username" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>API Username</label>
-                </field>
-                <field id="api_password" translate="label" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>API Password</label>
-                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                </field>
-                <field id="api_country" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>API Country</label>
-                    <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
-                </field>
-                <field id="sender_identity_card_number" translate="label comment" type="text" sortOrder="47" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Sender Identity Card Number</label>
-                    <comment>Only in Serbia! REQUIRED.</comment>
-                    <depends>
-                        <field id="api_country">RS</field>
-                    </depends>
-                </field>
-                <field id="content" translate="label comment" type="text" sortOrder="48" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Content</label>
-                    <comment>Parcel info printed on label.</comment>
-                    <depends>
-                        <field id="api_country">RS</field>
-                    </depends>
-                </field>
-                <field id="debug" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Debug</label>
-                    <comment>In production mode, debug logging needs to be enabled.</comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="title" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Title</label>
                 </field>
-                <field id="max_package_weight" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="max_package_weight" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Maximum Package Weight</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
-                <field id="sort_order" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1">
+                <field id="sort_order" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1">
                     <label>Sort Order</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
-                <field id="allowed_methods" translate="label" type="multiselect" sortOrder="500" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="exclude_discount_amount" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Exclude Discount Amount From Price Calculation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="include_virtual_price" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Include Virtual Products in Price Calculation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="allowed_methods" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Allowed Methods</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\Method</source_model>
                     <can_be_empty>1</can_be_empty>
                 </field>
-                <field id="standard_method_name" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Delivery to Address Method Name</label>
-                </field>
-                <field id="standard_method_price" translate="label" type="text" sortOrder="510" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Delivery to Address Method Price</label>
-                    <validate>validate-number validate-zero-or-greater</validate>
-                </field>
-                <field id="standard_sallowspecific" translate="label" type="select" sortOrder="520" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Delivery to Address Applicable Countries</label>
-                    <frontend_class>shipping-applicable-country</frontend_class>
-                    <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
-                </field>
-                <field id="standard_specificcountry" translate="label" type="multiselect" sortOrder="521" showInDefault="1" showInWebsite="1">
-                    <label>Delivery to Address Specific Countries</label>
-                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
-                    <can_be_empty>1</can_be_empty>
-                </field>
-                <field id="psd_method_name" translate="label" type="text" sortOrder="600" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Delivery to Parcel Location Method Name</label>
-                </field>
-                <field id="psd_method_price" translate="label" type="text" sortOrder="610" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Delivery to Parcel Location Method Price</label>
-                    <validate>validate-number validate-zero-or-greater</validate>
-                </field>
-                <field id="psd_specificcountry" translate="label" type="multiselect" sortOrder="620" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Delivery to Parcel Location Specific Countries</label>
-                    <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
-                    <can_be_empty>1</can_be_empty>
-                </field>
-                <field id="client_reference" translate="label" type="text" sortOrder="1000" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Client Reference</label>
-                    <comment><![CDATA[Variables that can be used: {increment_id}.]]></comment>
-                </field>
-                <field id="printer_type" translate="label" type="select" sortOrder="1010" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Type of Printer</label>
-                    <source_model>GLSCroatia\Shipping\Model\Config\Source\PrinterType</source_model>
-                </field>
-                <field id="print_position" translate="label" type="select" sortOrder="1020" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Print Position</label>
-                    <source_model>GLSCroatia\Shipping\Model\Config\Source\PrintPosition</source_model>
-                </field>
-                <field id="guaranteed_24h" translate="label comment" type="select" sortOrder="1500" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Guaranteed 24h Service</label>
-                    <comment>Not available in Serbia.</comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="express_delivery" translate="label" type="select" sortOrder="1510" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Express Delivery Service</label>
-                    <source_model>GLSCroatia\Shipping\Model\Config\Source\ExpressDeliveryCode</source_model>
-                </field>
-                <field id="cs1" translate="label" type="select" sortOrder="1520" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Contact Service</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="fds" translate="label" type="select" sortOrder="1530" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Flexible Delivery Service</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="fss" translate="label comment" type="select" sortOrder="1540" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Flexible Delivery SMS Service</label>
-                    <comment><![CDATA[Not available without Flexible Delivery Service.]]></comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="sm1" translate="label" type="select" sortOrder="1550" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>SMS Service</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="sm1_text" translate="label comment" type="text" sortOrder="1551" showInDefault="1" showInWebsite="1">
-                    <label>SMS Service Text</label>
-                    <validate>validate-length maximum-length-130</validate>
-                    <comment><![CDATA[Maximum text length is 130. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.]]></comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <depends>
-                        <field id="sm1">1</field>
-                    </depends>
-                </field>
-                <field id="sm2" translate="label" type="select" sortOrder="1560" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>SMS Pre-advice Service</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="aos" translate="label" type="select" sortOrder="1570" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Addressee Only Service</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="ins" translate="label comment" type="select" sortOrder="1580" showInDefault="1" showInWebsite="1" canRestore="1">
-                    <label>Insurance Service</label>
-                    <comment><![CDATA[Magento currency converter needs to be configured.]]></comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
+
+                <group id="standard_method" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Delivery to Address Method</label>
+                    <field id="name" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Method Name</label>
+                        <config_path>carriers/gls/standard_method_name</config_path>
+                    </field>
+                    <field id="price" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Method Price</label>
+                        <comment>Used only when the table rates are not configured, or as a fallback if table rates are not found.</comment>
+                        <validate>validate-number validate-zero-or-greater</validate>
+                        <config_path>carriers/gls/standard_method_price</config_path>
+                    </field>
+                    <field id="export" translate="label" type="GLSCroatia\Shipping\Block\Adminhtml\Form\Field\Export" sortOrder="40" showInWebsite="1">
+                        <label>Export</label>
+                    </field>
+                    <field id="import" translate="label" type="GLSCroatia\Shipping\Block\Adminhtml\Form\Field\Import" sortOrder="41" showInWebsite="1">
+                        <label>Import</label>
+                        <backend_model>GLSCroatia\Shipping\Model\Config\Backend\Tablerate</backend_model>
+                    </field>
+                    <field id="sallowspecific" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Applicable Countries</label>
+                        <frontend_class>shipping-applicable-country</frontend_class>
+                        <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>carriers/gls/standard_sallowspecific</config_path>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="101" showInDefault="1" showInWebsite="1">
+                        <label>Specific Countries</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <can_be_empty>1</can_be_empty>
+                        <config_path>carriers/gls/standard_specificcountry</config_path>
+                    </field>
+                </group>
+
+                <group id="locker_method" translate="label" type="text" sortOrder="600" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Delivery to Parcel Locker Method</label>
+                    <field id="name" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Method Name</label>
+                        <config_path>carriers/gls/locker_method_name</config_path>
+                    </field>
+                    <field id="price" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Method Price</label>
+                        <validate>validate-number validate-zero-or-greater</validate>
+                        <config_path>carriers/gls/locker_method_price</config_path>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Specific Countries</label>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
+                        <can_be_empty>1</can_be_empty>
+                        <config_path>carriers/gls/locker_method_specificcountry</config_path>
+                    </field>
+                </group>
+
+                <group id="shop_method" translate="label" type="text" sortOrder="700" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Delivery to Parcel Shop Method</label>
+                    <field id="name" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Method Name</label>
+                        <config_path>carriers/gls/shop_method_name</config_path>
+                    </field>
+                    <field id="price" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Method Price</label>
+                        <validate>validate-number validate-zero-or-greater</validate>
+                        <config_path>carriers/gls/shop_method_price</config_path>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Specific Countries</label>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
+                        <can_be_empty>1</can_be_empty>
+                        <config_path>carriers/gls/shop_method_specificcountry</config_path>
+                    </field>
+                </group>
+
+                <group id="free_shipping" translate="label" type="text" sortOrder="800" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Free Shipping</label>
+                    <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enabled</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>carriers/gls/free_shipping_enabled</config_path>
+                    </field>
+                    <field id="subtotal" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Amount Threshold</label>
+                        <validate>validate-number validate-greater-than-zero</validate>
+                        <config_path>carriers/gls/free_shipping_subtotal</config_path>
+                    </field>
+                    <field id="methods" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Allowed Methods</label>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Method</source_model>
+                        <can_be_empty>1</can_be_empty>
+                        <config_path>carriers/gls/free_shipping_methods</config_path>
+                    </field>
+                </group>
+
+                <group id="api" translate="label" type="text" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API</label>
+                    <field id="client_id" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                        <label>Client ID</label>
+                        <comment>This is required for API usage.</comment>
+                        <config_path>carriers/gls/client_id</config_path>
+                    </field>
+                    <field id="mode" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Mode</label>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Mode</source_model>
+                        <config_path>carriers/gls/api_mode</config_path>
+                    </field>
+                    <field id="username" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Username</label>
+                        <config_path>carriers/gls/api_username</config_path>
+                    </field>
+                    <field id="password" translate="label" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Password</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        <config_path>carriers/gls/api_password</config_path>
+                    </field>
+                    <field id="country" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Country</label>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
+                        <config_path>carriers/gls/api_country</config_path>
+                    </field>
+                    <field id="client_reference" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Client Reference</label>
+                        <comment><![CDATA[Variables that can be used: {increment_id}.]]></comment>
+                        <config_path>carriers/gls/client_reference</config_path>
+                    </field>
+                    <field id="sender_identity_card_number" translate="label comment" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Sender Identity Card Number</label>
+                        <comment>Only in Serbia! REQUIRED.</comment>
+                        <depends>
+                            <field id="country">RS</field>
+                        </depends>
+                        <config_path>carriers/gls/sender_identity_card_number</config_path>
+                    </field>
+                    <field id="content" translate="label comment" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Content</label>
+                        <comment>Only in Serbia! Parcel info printed on label.</comment>
+                        <depends>
+                            <field id="country">RS</field>
+                        </depends>
+                        <config_path>carriers/gls/content</config_path>
+                    </field>
+                    <field id="printer_type" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Type of Printer</label>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\PrinterType</source_model>
+                        <config_path>carriers/gls/printer_type</config_path>
+                    </field>
+                    <field id="print_position" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Print Position</label>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\PrintPosition</source_model>
+                        <config_path>carriers/gls/print_position</config_path>
+                    </field>
+                    <field id="debug" translate="label comment" type="select" sortOrder="1000" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Debug</label>
+                        <comment>In production mode, debug logging needs to be enabled.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>carriers/gls/debug</config_path>
+                    </field>
+                </group>
+
+                <group id="service" translate="label" type="text" sortOrder="1100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Services</label>
+                    <field id="guaranteed_24h" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Guaranteed 24h Service</label>
+                        <comment>Not available in Serbia.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>carriers/gls/guaranteed_24h</config_path>
+                    </field>
+                    <field id="express_delivery" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Express Delivery Service</label>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\ExpressDeliveryCode</source_model>
+                        <config_path>carriers/gls/express_delivery</config_path>
+                    </field>
+                    <field id="cs1" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Contact Service</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>carriers/gls/cs1</config_path>
+                    </field>
+                    <field id="fds" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Flexible Delivery Service</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>carriers/gls/fds</config_path>
+                    </field>
+                    <field id="fss" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Flexible Delivery SMS Service</label>
+                        <comment><![CDATA[Not available without Flexible Delivery Service.]]></comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>carriers/gls/fss</config_path>
+                    </field>
+                    <field id="sm1" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>SMS Service</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>carriers/gls/sm1</config_path>
+                    </field>
+                    <field id="sm1_text" translate="label comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="1">
+                        <label>SMS Service Text</label>
+                        <validate>validate-length maximum-length-130</validate>
+                        <comment><![CDATA[Maximum text length is 130. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#.]]></comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="sm1">1</field>
+                        </depends>
+                        <config_path>carriers/gls/sm1_text</config_path>
+                    </field>
+                    <field id="sm2" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>SMS Pre-advice Service</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>carriers/gls/sm2</config_path>
+                    </field>
+                    <field id="aos" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Addressee Only Service</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>carriers/gls/aos</config_path>
+                    </field>
+                    <field id="ins" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Insurance Service</label>
+                        <comment><![CDATA[Magento currency converter needs to be configured.]]></comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>carriers/gls/ins</config_path>
+                    </field>
+                </group>
             </group>
         </section>
     </system>

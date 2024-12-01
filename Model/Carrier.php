@@ -10,13 +10,8 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model;
 
-use Magento\Framework\DataObject;
-use Magento\Quote\Model\Quote\Address\RateRequest;
-use Magento\Shipping\Model\Carrier\AbstractCarrierOnline;
-use Magento\Shipping\Model\Carrier\CarrierInterface;
-use Magento\Shipping\Model\Tracking\Result;
-
-class Carrier extends AbstractCarrierOnline implements CarrierInterface
+class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline implements
+    \Magento\Shipping\Model\Carrier\CarrierInterface
 {
     public const CODE = 'gls';
 
@@ -44,6 +39,11 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
     protected \GLSCroatia\Shipping\Helper\Data $dataHelper;
 
     /**
+     * @var \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate
+     */
+    protected \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate $tablerateResource;
+
+    /**
      * @var \Magento\Framework\DataObjectFactory
      */
     protected \Magento\Framework\DataObjectFactory $dataObjectFactory;
@@ -54,9 +54,10 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
     protected \Magento\Framework\App\State $appState;
 
     /**
-     * @param \GLSCroatia\Shipping\Model\Api\Service $apiService
+     * @param Api\Service $apiService
      * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequestBuilder $shipmentRequestBuilder
      * @param \GLSCroatia\Shipping\Helper\Data $dataHelper
+     * @param \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate $tablerateResource
      * @param \Magento\Framework\DataObjectFactory $dataObjectFactory
      * @param \Magento\Framework\App\State $appState
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
@@ -80,6 +81,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
         \GLSCroatia\Shipping\Model\Api\Service $apiService,
         \GLSCroatia\Shipping\Model\Carrier\ShipmentRequestBuilder $shipmentRequestBuilder,
         \GLSCroatia\Shipping\Helper\Data $dataHelper,
+        \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate $tablerateResource,
         \Magento\Framework\DataObjectFactory $dataObjectFactory,
         \Magento\Framework\App\State $appState,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
@@ -102,6 +104,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
         $this->apiService = $apiService;
         $this->shipmentRequestBuilder = $shipmentRequestBuilder;
         $this->dataHelper = $dataHelper;
+        $this->tablerateResource = $tablerateResource;
         $this->dataObjectFactory = $dataObjectFactory;
         $this->appState = $appState;
         parent::__construct(
@@ -128,18 +131,71 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
      * Collect and get GLS rates.
      *
      * @param \Magento\Quote\Model\Quote\Address\RateRequest $request
-     * @return DataObject|bool|null
+     * @return \Magento\Framework\DataObject|bool|null
      */
-    public function collectRates(RateRequest $request)
+    public function collectRates(\Magento\Quote\Model\Quote\Address\RateRequest $request)
     {
         if (!$this->isActive() || !$allowedMethods = $this->getValidatedMethods($request)) {
             return false;
         }
 
+        $packageValue = $request->getPackageValue();
+        $packageValueWithDiscount = $request->getPackageValueWithDiscount();
+
+        // exclude virtual products from package value
+        if (!$this->getConfigFlag('include_virtual_price') && $request->getAllItems()) {
+            foreach ($request->getAllItems() as $item) {
+                if ($item->getParentItem()) {
+                    continue;
+                }
+                if ($item->getHasChildren() && $item->isShipSeparately()) {
+                    foreach ($item->getChildren() as $child) {
+                        if ($child->getProduct()->isVirtual()) {
+                            $packageValue -= $child->getBaseRowTotal();
+                            $packageValueWithDiscount -= $child->getBaseRowTotal() - $child->getBaseDiscountAmount();
+                        }
+                    }
+                } elseif ($item->getProduct()->isVirtual()) {
+                    $packageValue -= $item->getBaseRowTotal();
+                    $packageValueWithDiscount -= $item->getBaseRowTotal() - $item->getBaseDiscountAmount();
+                }
+            }
+        }
+
+        $excludeDiscount = $this->getConfigFlag('exclude_discount_amount');
+        $freeShippingThreshold = (float)$this->getConfigData('free_shipping_subtotal_threshold');
+        $freeShippingMethods = $this->getConfigData('free_shipping_methods');
+        $freeShippingMethods = $freeShippingMethods ? explode(',', $freeShippingMethods) : [];
+
         $result = $this->_rateFactory->create();
 
         foreach ($allowedMethods as $methodCode => $methodTitle) {
-            $price = $this->getConfigData("{$methodCode}_method_price") ?: 0;
+            $packageSubtotal = $excludeDiscount ? $packageValueWithDiscount : $packageValue;
+
+            if ($methodCode === static::STANDARD_DELIVERY_METHOD) {
+                $request->setData('gls_package_subtotal', $packageSubtotal);
+                $request->setData('gls_package_weight', $request->getPackageWeight());
+                $request->setData('gls_package_qty', $request->getPackageQty());
+                $request->setData('gls_conditions', ['weight', 'subtotal', 'quantity']);
+
+                $rate = $this->tablerateResource->getRate($request);
+
+                $price = $rate ? (float)$rate['price'] : $this->getConfigData("{$methodCode}_method_price");
+            } else {
+                $price = $this->getConfigData("{$methodCode}_method_price");
+            }
+
+            // free shipping
+            if ($freeShippingThreshold > 0
+                && $packageSubtotal >= $freeShippingThreshold
+                && in_array($methodCode, $freeShippingMethods, true)
+            ) {
+                $price = 0;
+            }
+
+            if ($price === null || $price === false || $price === '') {
+                continue; // skip the method without a price
+            }
 
             $method = $this->_rateMethodFactory->create();
             $method->setData([
@@ -163,7 +219,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
      * @param \Magento\Quote\Model\Quote\Address\RateRequest $request
      * @return array
      */
-    protected function getValidatedMethods(RateRequest $request): array
+    protected function getValidatedMethods(\Magento\Quote\Model\Quote\Address\RateRequest $request): array
     {
         if (!$allowedMethods = $this->getAllowedMethods()) {
             return [];
@@ -214,7 +270,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
      * Do request to shipment.
      *
      * @param \Magento\Shipping\Model\Shipment\Request $request
-     * @return DataObject
+     * @return \Magento\Framework\DataObject
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function requestToShipment($request)
@@ -251,9 +307,9 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
      * Do shipment request to carrier web service, obtain Print Shipping Labels and process errors in response.
      *
      * @param \Magento\Shipping\Model\Shipment\Request $request
-     * @return DataObject
+     * @return \Magento\Framework\DataObject
      */
-    protected function _doShipmentRequest(DataObject $request)
+    protected function _doShipmentRequest(\Magento\Framework\DataObject $request)
     {
         $this->_prepareShipmentRequest($request);
 
@@ -292,7 +348,7 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
      * @param string $trackingNumber
      * @return \Magento\Shipping\Model\Tracking\Result
      */
-    public function getTracking(string $trackingNumber): Result
+    public function getTracking(string $trackingNumber): \Magento\Shipping\Model\Tracking\Result
     {
         $countryCode = $this->getConfigData('api_country');
 

@@ -12,29 +12,42 @@
         <carriers>
             <gls>
                 <active>0</active>
+                <title>GLS</title>
+                <max_package_weight>40</max_package_weight>
+                <sort_order/>
+                <exclude_discount_amount>1</exclude_discount_amount>
+                <include_virtual_price>1</include_virtual_price>
+                <allowed_methods>standard,locker,shop</allowed_methods>
+
+                <standard_method_name>Delivery to Address</standard_method_name>
+                <standard_method_price/>
+                <standard_method_sallowspecific>0</standard_method_sallowspecific>
+                <standard_method_specificcountry/>
+                <locker_method_name>Delivery to Parcel Locker</locker_method_name>
+                <locker_method_price/>
+                <locker_method_sallowspecific>1</locker_method_sallowspecific>
+                <locker_method_specificcountry>CZ,HR,HU,RO,SI,SK</locker_method_specificcountry>
+                <shop_method_name>Delivery to Parcel Shop</shop_method_name>
+                <shop_method_price/>
+                <shop_method_sallowspecific>1</shop_method_sallowspecific>
+                <shop_method_specificcountry>CZ,HR,HU,RO,SI,SK</shop_method_specificcountry>
+
+                <free_shipping_enabled>0</free_shipping_enabled>
+                <free_shipping_subtotal_threshold/>
+                <free_shipping_methods>standard,locker,shop</free_shipping_methods>
+
                 <client_id/>
                 <api_mode>sandbox</api_mode>
                 <api_username/>
                 <api_password backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
                 <api_country>HR</api_country>
+                <client_reference>Order #{increment_id}</client_reference>
                 <sender_identity_card_number/>
                 <content/>
-                <debug>0</debug>
-                <title>GLS</title>
-                <max_package_weight>40</max_package_weight>
-                <sort_order/>
-                <allowed_methods>standard,psd</allowed_methods>
-                <standard_method_name>Delivery to Address</standard_method_name>
-                <standard_method_price>0</standard_method_price>
-                <psd_sallowspecific>0</psd_sallowspecific>
-                <psd_specificcountry/>
-                <psd_method_name>Delivery to Parcel Location</psd_method_name>
-                <psd_method_price>0</psd_method_price>
-                <psd_sallowspecific>1</psd_sallowspecific>
-                <psd_specificcountry>CZ,HR,HU,RO,SI,SK</psd_specificcountry>
-                <client_reference>Order #{increment_id}</client_reference>
                 <printer_type>A4_2x2</printer_type>
                 <print_position>1</print_position>
+                <debug>0</debug>
+
                 <guaranteed_24h>0</guaranteed_24h>
                 <express_delivery/>
                 <cs1>0</cs1>
@@ -45,8 +58,10 @@
                 <sm2>0</sm2>
                 <aos>0</aos>
                 <ins>0</ins>
+
                 <supported_countries>CZ,HR,HU,RO,SI,SK,RS</supported_countries>
                 <model>GLSCroatia\Shipping\Model\Carrier</model>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
             </gls>
         </carriers>
     </default>

@@ -258,6 +258,8 @@ class Service
     }
 
     /**
+     * Prepare the common API parameters.
+     *
      * @param array $params
      * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
