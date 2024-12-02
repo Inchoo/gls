@@ -119,10 +119,10 @@
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                         <config_path>carriers/gls/free_shipping_enabled</config_path>
                     </field>
-                    <field id="subtotal" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <field id="threshold" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Amount Threshold</label>
                         <validate>validate-number validate-greater-than-zero</validate>
-                        <config_path>carriers/gls/free_shipping_subtotal</config_path>
+                        <config_path>carriers/gls/free_shipping_threshold</config_path>
                     </field>
                     <field id="methods" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Allowed Methods</label>

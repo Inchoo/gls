@@ -164,10 +164,6 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         }
 
         $excludeDiscount = $this->getConfigFlag('exclude_discount_amount');
-        $freeShippingThreshold = (float)$this->getConfigData('free_shipping_subtotal_threshold');
-        $freeShippingMethods = $this->getConfigData('free_shipping_methods');
-        $freeShippingMethods = $freeShippingMethods ? explode(',', $freeShippingMethods) : [];
-
         $result = $this->_rateFactory->create();
 
         foreach ($allowedMethods as $methodCode => $methodTitle) {
@@ -187,10 +183,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
             }
 
             // free shipping
-            if ($freeShippingThreshold > 0
-                && $packageSubtotal >= $freeShippingThreshold
-                && in_array($methodCode, $freeShippingMethods, true)
-            ) {
+            if ($this->isFreeShipping($methodCode, $packageSubtotal)) {
                 $price = 0;
             }
 
@@ -403,5 +396,27 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
     public function getCode(string $type, $code = null)
     {
         return $this->dataHelper->getConfigCode($type, $code);
+    }
+
+    /**
+     * Check if free shipping is available.
+     *
+     * @param string $methodCode
+     * @param float $packageSubtotal
+     * @return bool
+     */
+    protected function isFreeShipping(string $methodCode, float $packageSubtotal): bool
+    {
+        if (!$this->getConfigFlag('free_shipping_enabled')) {
+            return false;
+        }
+
+        $freeShippingThreshold = (float)$this->getConfigData('free_shipping_threshold');
+        $freeShippingMethods = $this->getConfigData('free_shipping_methods');
+        $freeShippingMethods = $freeShippingMethods ? explode(',', $freeShippingMethods) : [];
+
+        return $freeShippingThreshold > 0
+            && $packageSubtotal >= $freeShippingThreshold
+            && in_array($methodCode, $freeShippingMethods, true);
     }
 }

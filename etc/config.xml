@@ -33,7 +33,7 @@
                 <shop_method_specificcountry>CZ,HR,HU,RO,SI,SK</shop_method_specificcountry>
 
                 <free_shipping_enabled>0</free_shipping_enabled>
-                <free_shipping_subtotal_threshold/>
+                <free_shipping_threshold/>
                 <free_shipping_methods>standard,locker,shop</free_shipping_methods>
 
                 <client_id/>

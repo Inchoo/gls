@@ -25,8 +25,7 @@ class Data
             'method' => [
                 \GLSCroatia\Shipping\Model\Carrier::STANDARD_DELIVERY_METHOD => __('Delivery to Address'),
                 \GLSCroatia\Shipping\Model\Carrier::PARCEL_LOCKER_DELIVERY_METHOD => __('Delivery to Parcel Locker'),
-                \GLSCroatia\Shipping\Model\Carrier::PARCEL_SHOP_DELIVERY_METHOD => __('Delivery to Parcel Shop'),
-                'psd' => __('Delivery to Parcel Location') // legacy
+                \GLSCroatia\Shipping\Model\Carrier::PARCEL_SHOP_DELIVERY_METHOD => __('Delivery to Parcel Shop')
             ],
             'country_calling_code' => [
                 'CZ' => '+420',
