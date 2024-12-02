@@ -24,7 +24,9 @@ class Data
         $data = [
             'method' => [
                 \GLSCroatia\Shipping\Model\Carrier::STANDARD_DELIVERY_METHOD => __('Delivery to Address'),
-                \GLSCroatia\Shipping\Model\Carrier::PARCEL_SHOP_DELIVERY_METHOD => __('Delivery to Parcel Location')
+                \GLSCroatia\Shipping\Model\Carrier::PARCEL_LOCKER_DELIVERY_METHOD => __('Delivery to Parcel Locker'),
+                \GLSCroatia\Shipping\Model\Carrier::PARCEL_SHOP_DELIVERY_METHOD => __('Delivery to Parcel Shop'),
+                'psd' => __('Delivery to Parcel Location') // legacy
             ],
             'country_calling_code' => [
                 'CZ' => '+420',
@@ -80,5 +82,30 @@ class Data
     public function generateTrackingUrl(string $trackingNumber, string $countryCode = 'HR'): string
     {
         return "https://gls-group.eu/{$countryCode}/en/parcel-tracking/?match={$trackingNumber}";
+    }
+
+    /**
+     * Check if the method is parcel locker/shop delivery method.
+     *
+     * @param string $code
+     * @return bool
+     */
+    public function isLockerShopDeliveryMethod(string $code): bool
+    {
+        $methodCodes = [
+            \GLSCroatia\Shipping\Model\Carrier::PARCEL_LOCKER_DELIVERY_METHOD,
+            \GLSCroatia\Shipping\Model\Carrier::PARCEL_SHOP_DELIVERY_METHOD,
+            'psd' // legacy code
+        ];
+
+        $carrierCode = \GLSCroatia\Shipping\Model\Carrier::CODE;
+
+        foreach ($methodCodes as $methodCode) {
+            if ($code === $methodCode || $code === "{$carrierCode}_{$methodCode}") {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

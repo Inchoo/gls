@@ -267,7 +267,7 @@ class ShipmentRequestBuilder
      */
     protected function isShopDeliveryService(string $shippingMethod): bool
     {
-        return $shippingMethod === \GLSCroatia\Shipping\Model\Carrier::PARCEL_SHOP_DELIVERY_METHOD;
+        return $this->dataHelper->isLockerShopDeliveryMethod($shippingMethod);
     }
 
     /**

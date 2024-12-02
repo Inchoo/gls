@@ -21,7 +21,8 @@ define([
             template: 'GLSCroatia_Shipping/checkout/parcel-shop-delivery',
             mapElementId: 'gls-map-dialog',
             mapScriptUrl: 'https://map.gls-croatia.com/widget/gls-dpm.js',
-            shippingMethodCode: null,
+            shippingMethodCodes: [],
+            mapTypeFilters: {},
             supportedCountries: [],
 
             listens: {
@@ -33,6 +34,7 @@ define([
         isShippingMethodSelected: glsData.isParcelShopDeliverySelected,
         selectorTitle: ko.observable(null),
         deliveryPoint: glsData.parcelShopDeliveryPoint,
+        typeFilter: ko.observable(null),
 
         initialize: function () {
             var checkoutConfig = window.checkoutConfig.glsData;
@@ -48,7 +50,10 @@ define([
                 this.mapScriptUrl = checkoutConfig.mapScriptUrl;
             }
 
-            this.shippingMethodCode = checkoutConfig.parcelShopDelivery.shippingMethodCode;
+            this.shippingMethodCodes = checkoutConfig.parcelShopDelivery.shippingMethodCodes;
+            if (checkoutConfig.parcelShopDelivery.mapTypeFilters) {
+                this.mapTypeFilters = checkoutConfig.parcelShopDelivery.mapTypeFilters;
+            }
 
             if (Array.isArray(checkoutConfig.supportedCountries)) {
                 this.supportedCountries = checkoutConfig.supportedCountries;
@@ -98,11 +103,17 @@ define([
         },
 
         shippingMethodChanged: function (newShippingMethodCode) {
-            var isShippingMethodSelected = newShippingMethodCode === this.shippingMethodCode,
-                shippingMethod = quote.shippingMethod();
+            var isShippingMethodSelected = this.shippingMethodCodes.includes(newShippingMethodCode),
+                shippingMethod = quote.shippingMethod(),
+                newTypeFilter = this.mapTypeFilters[newShippingMethodCode] ? this.mapTypeFilters[newShippingMethodCode] : null;
+
+            if (isShippingMethodSelected && this.typeFilter() && this.typeFilter() !== newTypeFilter) {
+                this.removeDeliveryPoint();
+            }
 
             if (isShippingMethodSelected) {
                 scriptLoader.createMapScript(this.mapScriptUrl);
+                this.typeFilter(newShippingMethodCode in this.mapTypeFilters ? this.mapTypeFilters[newShippingMethodCode] : null);
                 this.selectorTitle(shippingMethod.carrier_title + ' ' + shippingMethod.method_title);
             } else {
                 this.selectorTitle(null);

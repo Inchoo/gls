@@ -19,5 +19,5 @@
     <button type="button" class="action" data-bind="i18n: 'Select Delivery Point', click: openMap">Select Delivery Point</button>
     <button type="button" class="action" data-bind="i18n: 'Remove Delivery Point', visible: deliveryPoint, click: removeDeliveryPoint"></button>
 
-    <gls-dpm-dialog data-bind="{attr: {id: mapElementId, country: countryCode}, afterRender: initMap}"></gls-dpm-dialog>
+    <gls-dpm-dialog data-bind="{attr: {id: mapElementId, country: countryCode, 'filter-type': typeFilter}, afterRender: initMap}"></gls-dpm-dialog>
 </div>

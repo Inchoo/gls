@@ -15,8 +15,9 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
 {
     public const CODE = 'gls';
 
-    public const STANDARD_DELIVERY_METHOD    = 'standard';
-    public const PARCEL_SHOP_DELIVERY_METHOD = 'psd';
+    public const STANDARD_DELIVERY_METHOD      = 'standard';
+    public const PARCEL_LOCKER_DELIVERY_METHOD = 'locker'; // todo
+    public const PARCEL_SHOP_DELIVERY_METHOD   = 'shop'; // todo
 
     /**
      * @var string
@@ -227,7 +228,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
 
         $result = [];
         foreach ($allowedMethods as $methodCode => $methodTitle) {
-            if ($methodCode === self::PARCEL_SHOP_DELIVERY_METHOD
+            if ($this->dataHelper->isLockerShopDeliveryMethod($methodCode)
                 && $this->appState->getAreaCode() === \Magento\Framework\App\Area::AREA_ADMINHTML
             ) {
                 continue; // PSD not available in adminhtml

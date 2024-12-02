@@ -10,13 +10,13 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\ViewModel;
 
-use GLSCroatia\Shipping\Model\Carrier;
-use Magento\Framework\DataObject;
-use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Magento\Sales\Model\Order;
-
-class ParcelShopDelivery implements ArgumentInterface
+class ParcelShopDelivery implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
+    /**
+     * @var \GLSCroatia\Shipping\Helper\Data
+     */
+    protected \GLSCroatia\Shipping\Helper\Data $dataHelper;
+
     /**
      * @var \Magento\Framework\Serialize\Serializer\Json
      */
@@ -28,26 +28,29 @@ class ParcelShopDelivery implements ArgumentInterface
     protected \Magento\Framework\DataObjectFactory $dataObjectFactory;
 
     /**
+     * @param \GLSCroatia\Shipping\Helper\Data $dataHelper
      * @param \Magento\Framework\Serialize\Serializer\Json $json
      * @param \Magento\Framework\DataObjectFactory $dataObjectFactory
      */
     public function __construct(
+        \GLSCroatia\Shipping\Helper\Data $dataHelper,
         \Magento\Framework\Serialize\Serializer\Json $json,
         \Magento\Framework\DataObjectFactory $dataObjectFactory
     ) {
+        $this->dataHelper = $dataHelper;
         $this->json = $json;
         $this->dataObjectFactory = $dataObjectFactory;
     }
 
     /**
-     * Check if it is GLS parcel shop delivery method.
+     * Check if it is GLS parcel locker/shop delivery method.
      *
      * @param string $shippingMethod
      * @return bool
      */
     public function isParcelShopDeliveryMethod(string $shippingMethod): bool
     {
-        return $shippingMethod === Carrier::CODE . '_' . Carrier::PARCEL_SHOP_DELIVERY_METHOD;
+        return $this->dataHelper->isLockerShopDeliveryMethod($shippingMethod);
     }
 
     /**
@@ -56,7 +59,7 @@ class ParcelShopDelivery implements ArgumentInterface
      * @param \Magento\Sales\Model\Order $order
      * @return \Magento\Framework\DataObject
      */
-    public function getParcelShopDeliveryPointData(Order $order): DataObject
+    public function getParcelShopDeliveryPointData(\Magento\Sales\Model\Order $order): \Magento\Framework\DataObject
     {
         $dataObject = $this->dataObjectFactory->create();
 
