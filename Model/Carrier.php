@@ -16,8 +16,8 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
     public const CODE = 'gls';
 
     public const STANDARD_DELIVERY_METHOD      = 'standard';
-    public const PARCEL_LOCKER_DELIVERY_METHOD = 'locker'; // todo
-    public const PARCEL_SHOP_DELIVERY_METHOD   = 'shop'; // todo
+    public const PARCEL_LOCKER_DELIVERY_METHOD = 'locker';
+    public const PARCEL_SHOP_DELIVERY_METHOD   = 'shop';
 
     /**
      * @var string
