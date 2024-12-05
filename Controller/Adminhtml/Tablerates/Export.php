@@ -69,8 +69,8 @@ class Export extends \Magento\Config\Controller\Adminhtml\System\AbstractConfig
         $directory = $this->filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::VAR_DIR);
         $directory->create('export');
 
-        $name = md5(microtime()); // phpcs:ignore
-        $filePath = "export/{$name}.csv";
+        $name = time(); // phpcs:ignore
+        $filePath = "export/gls_{$name}.csv";
 
         $stream = $directory->openFile($filePath, 'w+');
         $stream->lock();

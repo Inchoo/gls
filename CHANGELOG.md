@@ -1,3 +1,6 @@
+### [1.2.1] - 2024-12-05
+- Remove `md5` hashing from code.
+
 ### [1.2.0] - 2024-12-05
 - Table rates for Delivery to Address shipping method.
 - Separated Delivery to Parcel Location shipping method (Locker and Shop).
