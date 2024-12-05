@@ -1,3 +1,8 @@
+### [1.2.0] - 2024-12-05
+- Table rates for Delivery to Address shipping method.
+- Separated Delivery to Parcel Location shipping method (Locker and Shop).
+- Free shipping functionality.
+
 ### [1.1.1] - 2022-06-17
 - Implemented SenderIdentityCardNumber and Content config options.
 - Added `WebshopEngine` param to API requests.

@@ -14,4 +14,27 @@
     <table name="sales_order">
         <column xsi:type="json" name="gls_data" nullable="true" comment="GLS Data"/>
     </table>
+    <table name="gls_shipping_tablerate" resource="default" engine="innodb" comment="GLS Shipping Tablerate">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="int" name="website_id" unsigned="false" nullable="false" identity="false" default="0" comment="Website ID"/>
+        <column xsi:type="varchar" name="country_code" nullable="false" length="3" default="*" comment="Destination Country (ISO 3166-1 alpha-2)"/>
+        <column xsi:type="varchar" name="region_code" nullable="false" length="6" default="*" comment="Destination Region Code (ISO 3166-2)"/>
+        <column xsi:type="varchar" name="postcode" nullable="false" length="10" default="*" comment="Destination Postcode (Zip)"/>
+        <column xsi:type="decimal" name="weight" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Weight Condition Value"/>
+        <column xsi:type="decimal" name="subtotal" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Subtotal Condition Value"/>
+        <column xsi:type="decimal" name="quantity" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Quantity Condition Value"/>
+        <column xsi:type="decimal" name="price" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Shipping Price"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="UNQ_481C2DB3723AF75348D9A8E08E394CF2">
+            <column name="website_id"/>
+            <column name="country_code"/>
+            <column name="region_code"/>
+            <column name="postcode"/>
+            <column name="weight"/>
+            <column name="subtotal"/>
+            <column name="quantity"/>
+        </constraint>
+    </table>
 </schema>

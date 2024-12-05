@@ -10,11 +10,7 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Checkout;
 
-use GLSCroatia\Shipping\Model\Carrier;
-use Magento\Checkout\Model\ConfigProviderInterface;
-use Magento\Quote\Model\Quote\Address;
-
-class ConfigProvider implements ConfigProviderInterface
+class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
 {
     /**
      * @var \GLSCroatia\Shipping\Model\Config
@@ -60,11 +56,22 @@ class ConfigProvider implements ConfigProviderInterface
         $quote = $this->checkoutSession->getQuote();
         $quoteGlsData = $this->extractGlsData($quote->getShippingAddress());
 
+        $carrierCode = \GLSCroatia\Shipping\Model\Carrier::CODE;
+        $lockerShippingMethod = "{$carrierCode}_" . \GLSCroatia\Shipping\Model\Carrier::PARCEL_LOCKER_DELIVERY_METHOD;
+        $shopShippingMethod = "{$carrierCode}_" . \GLSCroatia\Shipping\Model\Carrier::PARCEL_SHOP_DELIVERY_METHOD;
+
         $configData = [
             'mapScriptUrl' => $this->config->getMapScriptUrl(),
             'supportedCountries' => array_values($this->config->getSupportedCountries()),
             'parcelShopDelivery' => [
-                'shippingMethodCode' => Carrier::CODE . '_' . Carrier::PARCEL_SHOP_DELIVERY_METHOD,
+                'shippingMethodCodes' => [
+                    $lockerShippingMethod,
+                    $shopShippingMethod
+                ],
+                'mapTypeFilters' => [
+                    $lockerShippingMethod => 'parcel-locker',
+                    $shopShippingMethod => 'parcel-shop',
+                ],
                 'deliveryPoint' => $quoteGlsData['parcelShopDeliveryPoint'] ?? null
             ]
         ];
@@ -75,10 +82,10 @@ class ConfigProvider implements ConfigProviderInterface
     /**
      * Extract GLS data from the shipping address.
      *
-     * @param Address $shippingAddress
+     * @param \Magento\Quote\Model\Quote\Address $shippingAddress
      * @return array
      */
-    protected function extractGlsData(Address $shippingAddress): array
+    protected function extractGlsData(\Magento\Quote\Model\Quote\Address $shippingAddress): array
     {
         if (!$deliveryLocation = $shippingAddress->getData('gls_data')) {
             return [];

@@ -27,4 +27,17 @@
             <argument name="logger" xsi:type="object">Magento\Shipping\Model\Method\VirtualLogger</argument>
         </arguments>
     </type>
+    <type name="GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate">
+        <arguments>
+            <argument name="csvHeaderColumns" xsi:type="array">
+                <item name="0" xsi:type="string">country_code</item>
+                <item name="1" xsi:type="string">region_code</item>
+                <item name="2" xsi:type="string">postcode</item>
+                <item name="3" xsi:type="string">weight</item>
+                <item name="4" xsi:type="string">subtotal</item>
+                <item name="5" xsi:type="string">quantity</item>
+                <item name="6" xsi:type="string">price</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
