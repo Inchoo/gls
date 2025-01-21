@@ -227,8 +227,8 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
                 continue; // PSD not available in adminhtml
             }
 
-            $countryAllowSpecific = $this->getConfigData("{$methodCode}_sallowspecific");
-            $specificCountry = $this->getConfigData("{$methodCode}_specificcountry");
+            $countryAllowSpecific = $this->getConfigData("{$methodCode}_method_sallowspecific");
+            $specificCountry = $this->getConfigData("{$methodCode}_method_specificcountry");
             $availableCountries = $specificCountry ? explode(',', (string)$specificCountry) : [];
 
             if ($countryAllowSpecific && $countryAllowSpecific == 1
