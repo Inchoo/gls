@@ -1,3 +1,7 @@
+### [1.2.2] - 2025-01-21
+- Fixed method `Specific Countries` config.
+- Updated translate files.
+
 ### [1.2.1] - 2024-12-05
 - Remove `md5` hashing from code.
 
