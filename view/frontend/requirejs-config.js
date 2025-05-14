@@ -13,6 +13,16 @@ var config = {
             },
             'Magento_Checkout/js/view/shipping': {
                 'GLSCroatia_Shipping/js/checkout/view/shipping-mixin': true
+            },
+
+            'Bss_OneStepCheckout/js/model/shipping-save-processor/payload-extender': {
+                'GLSCroatia_Shipping/js/checkout/model/shipping-save-processor/payload-extender-mixin': true
+            },
+            'Bss_OneStepCheckout/js/view/shipping': {
+                'GLSCroatia_Shipping/js/checkout/view/shipping-mixin': true
+            },
+            'Bss_OneStepCheckout/js/model/shipping-save-processor': {
+                'GLSCroatia_Shipping/js/checkout/model/shipping-save-processor-mixin': true
             }
         }
     }

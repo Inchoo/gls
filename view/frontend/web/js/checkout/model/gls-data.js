@@ -12,6 +12,7 @@ define([
 
     return {
         parcelShopDeliveryPoint: ko.observable(),
-        isParcelShopDeliverySelected: ko.observable(false)
+        isParcelShopDeliverySelected: ko.observable(false),
+        shippingSaveProcessorCallback: null
     };
 });

@@ -136,6 +136,10 @@ define([
             mapElement.addEventListener('change', (e) => {
                 if (this.isShippingMethodSelected()) {
                     this.deliveryPoint(e.detail);
+
+                    if (glsData.shippingSaveProcessorCallback) {
+                        glsData.shippingSaveProcessorCallback();
+                    }
                 }
             });
         },
