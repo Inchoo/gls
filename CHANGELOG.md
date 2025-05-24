@@ -1,3 +1,6 @@
+### [1.2.3] - 2025-05-24
+- Implemented adapter for BSS Commerce One Step Checkout.
+
 ### [1.2.2] - 2025-01-21
 - Fixed method `Specific Countries` config.
 - Updated translate files.
