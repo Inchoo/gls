@@ -30,6 +30,7 @@ define([
 
                 return deferred.resolve();
             } else {
+                glsData.shippingSaveProcessorCallback = null;
                 return originSaveShippingInformation.call(shippingSaveProcessor, type);
             }
         };
