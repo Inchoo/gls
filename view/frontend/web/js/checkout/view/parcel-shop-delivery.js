@@ -104,18 +104,16 @@ define([
 
         shippingMethodChanged: function (newShippingMethodCode) {
             var isShippingMethodSelected = this.shippingMethodCodes.includes(newShippingMethodCode),
-                shippingMethod = quote.shippingMethod(),
-                newTypeFilter = this.mapTypeFilters[newShippingMethodCode] ? this.mapTypeFilters[newShippingMethodCode] : null;
+                shippingMethod = quote.shippingMethod();
 
-            if (isShippingMethodSelected && this.typeFilter() && this.typeFilter() !== newTypeFilter) {
-                this.removeDeliveryPoint();
-            }
+            this.removeDeliveryPoint();
 
             if (isShippingMethodSelected) {
                 scriptLoader.createMapScript(this.mapScriptUrl);
                 this.typeFilter(newShippingMethodCode in this.mapTypeFilters ? this.mapTypeFilters[newShippingMethodCode] : null);
                 this.selectorTitle(shippingMethod.carrier_title + ' ' + shippingMethod.method_title);
             } else {
+                this.typeFilter(null);
                 this.selectorTitle(null);
             }
 
