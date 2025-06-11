@@ -1,3 +1,6 @@
+### [1.2.4] - 2025-06-11
+- Implemented reset of parcel locker/shop delivery point data after the shipping method is changed.
+
 ### [1.2.3] - 2025-05-24
 - Implemented adapter for BSS Commerce One Step Checkout.
 
