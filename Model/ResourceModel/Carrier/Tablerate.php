@@ -32,7 +32,7 @@ class Tablerate extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate\RateQueryFactory $rateQueryFactory,
         array $csvHeaderColumns,
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
-        string $connectionName = null
+        ?string $connectionName = null
     ) {
         $this->rateQueryFactory = $rateQueryFactory;
         $this->csvHeaderColumns = $csvHeaderColumns;

@@ -40,10 +40,10 @@ class Filesystem
      * Open express delivery CSV file.
      *
      * @param string $countryCode
-     * @param string|null $dirPath
+     * @param string $dirPath
      * @return ReadInterface
      */
-    public function openFile(string $countryCode, string $dirPath = null): ReadInterface
+    public function openFile(string $countryCode, string $dirPath): ReadInterface
     {
         $dirPath = $dirPath ?: $this->getDefaultDirPath();
         $fileName = strtolower($countryCode) . '.csv';
