@@ -25,5 +25,19 @@
             "PRIMARY": true,
             "UNQ_481C2DB3723AF75348D9A8E08E394CF2": true
         }
+    },
+    "gls_shipping_account": {
+        "column": {
+            "entity_id": true,
+            "client_id": true,
+            "username": true,
+            "password": true,
+            "country_code": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "GLS_SHIPPING_ACCOUNT_CLIENT_ID": true,
+            "GLS_SHIPPING_ACCOUNT_USERNAME": true
+        }
     }
 }
