@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023-present GLS Croatia. All rights reserved.
+ * See LICENSE.txt for license details.
+ *
+ * @author Inchoo (https://inchoo.net)
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">gls_account_listing.gls_account_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/*/edit"/>
+                <class>primary</class>
+                <label translate="true">Add New Account</label>
+            </button>
+        </buttons>
+        <spinner>gls_account_columns</spinner>
+        <deps>
+            <dep>gls_account_listing.gls_account_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="gls_account_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">entity_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>GLSCroatia_Shipping::shipping_account</aclResource>
+        <dataProvider class="GLSCroatia\Shipping\Ui\DataProvider\Listing\AccountDataProvider" name="gls_account_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <paging name="listing_paging"/>
+        <filters name="listing_filters"/>
+    </listingToolbar>
+    <columns name="gls_account_columns">
+        <selectionsColumn name="ids" sortOrder="0">
+            <settings>
+                <indexField>entity_id</indexField>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>55</resizeDefaultWidth>
+            </settings>
+        </selectionsColumn>
+        <column name="entity_id" sortOrder="10">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="client_id" sortOrder="20">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Client ID</label>
+            </settings>
+        </column>
+        <column name="username" sortOrder="30">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Username</label>
+            </settings>
+        </column>
+        <column name="country_code" sortOrder="40" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <label translate="true">Country</label>
+                <options class="GLSCroatia\Shipping\Model\Config\Source\Country"/>
+                <dataType>select</dataType>
+                <filter>select</filter>
+            </settings>
+        </column>
+        <actionsColumn name="actions" sortOrder="200" class="GLSCroatia\Shipping\Ui\Component\Listing\Columns\AccountActions">
+            <settings>
+                <indexField>entity_id</indexField>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>107</resizeDefaultWidth>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>
