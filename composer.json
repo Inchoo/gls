@@ -2,7 +2,7 @@
     "name": "gls-croatia/module-shipping",
     "description": "GLS Croatia Shipping",
     "type": "magento2-module",
-    "version": "1.2.4",
+    "version": "1.3.0",
     "license": [
         "OSL-3.0"
     ],
