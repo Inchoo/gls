@@ -62,7 +62,7 @@ class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
 
         $configData = [
             'mapScriptUrl' => $this->config->getMapScriptUrl(),
-            'supportedCountries' => array_values($this->config->getSupportedCountries()),
+            'supportedCountries' => array_values($this->config->getSupportedCountries('map_supported_countries')),
             'parcelShopDelivery' => [
                 'shippingMethodCodes' => [
                     $lockerShippingMethod,

@@ -20,6 +20,11 @@ class Country implements OptionSourceInterface
     private ?array $options = null;
 
     /**
+     * @var string
+     */
+    protected string $configField;
+
+    /**
      * @var \GLSCroatia\Shipping\Model\Config
      */
     protected \GLSCroatia\Shipping\Model\Config $config;
@@ -32,13 +37,16 @@ class Country implements OptionSourceInterface
     /**
      * @param \GLSCroatia\Shipping\Model\Config $config
      * @param \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $collectionFactory
+     * @param string $configField
      */
     public function __construct(
         \GLSCroatia\Shipping\Model\Config $config,
-        \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $collectionFactory
+        \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $collectionFactory,
+        string $configField = 'supported_countries'
     ) {
         $this->config = $config;
         $this->collectionFactory = $collectionFactory;
+        $this->configField = $configField;
     }
 
     /**
@@ -54,7 +62,7 @@ class Country implements OptionSourceInterface
 
         $this->options = [];
 
-        if ($countryIds = $this->config->getSupportedCountries()) {
+        if ($countryIds = $this->config->getSupportedCountries($this->configField)) {
             $collection = $this->collectionFactory->create();
             $collection->addCountryIdFilter($countryIds);
             $this->options = $collection->toOptionArray(false);

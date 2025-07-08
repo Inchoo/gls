@@ -87,7 +87,7 @@
                     </field>
                     <field id="specificcountry" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Specific Countries</label>
-                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\MapCountry</source_model>
                         <can_be_empty>1</can_be_empty>
                         <config_path>carriers/gls/locker_method_specificcountry</config_path>
                     </field>
@@ -106,7 +106,7 @@
                     </field>
                     <field id="specificcountry" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Specific Countries</label>
-                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\MapCountry</source_model>
                         <can_be_empty>1</can_be_empty>
                         <config_path>carriers/gls/shop_method_specificcountry</config_path>
                     </field>

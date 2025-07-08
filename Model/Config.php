@@ -381,11 +381,12 @@ class Config
     /**
      * List of currently supported countries.
      *
+     * @param string $field
      * @return string[]
      */
-    public function getSupportedCountries(): array
+    public function getSupportedCountries(string $field = 'supported_countries'): array
     {
-        $value = (string)$this->getConfigValue('supported_countries');
+        $value = (string)$this->getConfigValue($field);
         return $value ? explode(',', $value) : [];
     }
 }
