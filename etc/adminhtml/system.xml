@@ -134,29 +134,18 @@
 
                 <group id="api" translate="label" type="text" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>API</label>
-                    <field id="client_id" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
-                        <label>Client ID</label>
-                        <comment>This is required for API usage.</comment>
-                        <config_path>carriers/gls/client_id</config_path>
+                    <field id="account_id" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Account</label>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Account</source_model>
+                        <comment>
+                            <model>GLSCroatia\Shipping\Model\Config\Comment\Account</model>
+                        </comment>
+                        <config_path>carriers/gls/account_id</config_path>
                     </field>
                     <field id="mode" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Mode</label>
                         <source_model>GLSCroatia\Shipping\Model\Config\Source\Mode</source_model>
                         <config_path>carriers/gls/api_mode</config_path>
-                    </field>
-                    <field id="username" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Username</label>
-                        <config_path>carriers/gls/api_username</config_path>
-                    </field>
-                    <field id="password" translate="label" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Password</label>
-                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                        <config_path>carriers/gls/api_password</config_path>
-                    </field>
-                    <field id="country" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Country</label>
-                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
-                        <config_path>carriers/gls/api_country</config_path>
                     </field>
                     <field id="client_reference" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Client Reference</label>

@@ -46,11 +46,14 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>
-        <constraint xsi:type="unique" referenceId="GLS_SHIPPING_ACCOUNT_CLIENT_ID">
+        <constraint xsi:type="unique" referenceId="GLS_SHIPPING_ACCOUNT_CLIENT_ID_USERNAME_COUNTRY_CODE">
             <column name="client_id"/>
-        </constraint>
-        <constraint xsi:type="unique" referenceId="GLS_SHIPPING_ACCOUNT_USERNAME">
             <column name="username"/>
+            <column name="country_code"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="GLS_SHIPPING_ACCOUNT_USERNAME_COUNTRY_CODE">
+            <column name="username"/>
+            <column name="country_code"/>
         </constraint>
     </table>
 </schema>

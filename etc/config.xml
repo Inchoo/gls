@@ -36,11 +36,8 @@
                 <free_shipping_threshold/>
                 <free_shipping_methods>standard,locker,shop</free_shipping_methods>
 
-                <client_id/>
+                <account_id/>
                 <api_mode>sandbox</api_mode>
-                <api_username/>
-                <api_password backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
-                <api_country>HR</api_country>
                 <client_reference>Order #{increment_id}</client_reference>
                 <sender_identity_card_number/>
                 <content/>

@@ -15,6 +15,11 @@ use GLSCroatia\Shipping\Model\Config\Source\Mode;
 class Config
 {
     /**
+     * @var \GLSCroatia\Shipping\Model\AccountRepository
+     */
+    protected \GLSCroatia\Shipping\Model\AccountRepository $accountRepository;
+
+    /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
@@ -25,13 +30,16 @@ class Config
     protected string $carrierCode;
 
     /**
+     * @param \GLSCroatia\Shipping\Model\AccountRepository $accountRepository
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param string $carrierCode
      */
     public function __construct(
+        \GLSCroatia\Shipping\Model\AccountRepository $accountRepository,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         string $carrierCode = \GLSCroatia\Shipping\Model\Carrier::CODE
     ) {
+        $this->accountRepository = $accountRepository;
         $this->scopeConfig = $scopeConfig;
         $this->carrierCode = $carrierCode;
     }
@@ -80,6 +88,17 @@ class Config
     }
 
     /**
+     * Get GLS account ID.
+     *
+     * @param int|string|null $scopeCode
+     * @return string
+     */
+    public function getAccountId($scopeCode = null): string
+    {
+        return (string)$this->getConfigValue('account_id', $scopeCode);
+    }
+
+    /**
      * Get GLS Client ID.
      *
      * @param int|string|null $scopeCode
@@ -87,7 +106,12 @@ class Config
      */
     public function getClientId($scopeCode = null): string
     {
-        return $this->getConfigValue('client_id', $scopeCode);
+        $accountId = $this->getAccountId($scopeCode);
+        if (!$accountId || !$account = $this->getAccount((int)$accountId)) {
+            return '';
+        }
+
+        return (string)$account->getClientId();
     }
 
     /**
@@ -109,7 +133,12 @@ class Config
      */
     public function getApiUsername($scopeCode = null): string
     {
-        return (string)$this->getConfigValue('api_username', $scopeCode);
+        $accountId = $this->getAccountId($scopeCode);
+        if (!$accountId || !$account = $this->getAccount((int)$accountId)) {
+            return '';
+        }
+
+        return (string)$account->getUsername();
     }
 
     /**
@@ -120,7 +149,12 @@ class Config
      */
     public function getApiPassword($scopeCode = null): string
     {
-        return (string)$this->getConfigValue('api_password', $scopeCode);
+        $accountId = $this->getAccountId($scopeCode);
+        if (!$accountId || !$account = $this->getAccount((int)$accountId)) {
+            return '';
+        }
+
+        return (string)$account->getPassword();
     }
 
     /**
@@ -131,7 +165,12 @@ class Config
      */
     public function getApiCountryCode($scopeCode = null): string
     {
-        return (string)$this->getConfigValue('api_country', $scopeCode);
+        $accountId = $this->getAccountId($scopeCode);
+        if (!$accountId || !$account = $this->getAccount((int)$accountId)) {
+            return '';
+        }
+
+        return (string)$account->getCountryCode();
     }
 
     /**
@@ -388,5 +427,20 @@ class Config
     {
         $value = (string)$this->getConfigValue($field);
         return $value ? explode(',', $value) : [];
+    }
+
+    /**
+     * Get account object.
+     *
+     * @param int $accountId
+     * @return \GLSCroatia\Shipping\Model\Account|null
+     */
+    protected function getAccount(int $accountId): ?\GLSCroatia\Shipping\Model\Account
+    {
+        try {
+            return $this->accountRepository->get($accountId);
+        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            return null;
+        }
     }
 }

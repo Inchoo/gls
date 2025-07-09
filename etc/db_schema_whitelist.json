@@ -36,8 +36,8 @@
         },
         "constraint": {
             "PRIMARY": true,
-            "GLS_SHIPPING_ACCOUNT_CLIENT_ID": true,
-            "GLS_SHIPPING_ACCOUNT_USERNAME": true
+            "GLS_SHIPPING_ACCOUNT_CLIENT_ID_USERNAME_COUNTRY_CODE": true,
+            "GLS_SHIPPING_ACCOUNT_USERNAME_COUNTRY_CODE": true
         }
     }
 }
