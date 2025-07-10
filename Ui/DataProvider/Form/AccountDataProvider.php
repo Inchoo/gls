@@ -28,11 +28,6 @@ class AccountDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     protected \Magento\Framework\App\RequestInterface $request;
 
     /**
-     * @var \GLSCroatia\Shipping\Model\ResourceModel\Account\CollectionFactory
-     */
-    protected \GLSCroatia\Shipping\Model\ResourceModel\Account\CollectionFactory $collectionFactory;
-
-    /**
      * @param \GLSCroatia\Shipping\Model\AccountRepository $accountRepository
      * @param \Magento\Framework\App\RequestInterface $request
      * @param string $name

@@ -40,7 +40,12 @@
             </argument>
         </arguments>
     </type>
-    <virtualType name="GLSCroatia\Shipping\Model\Config\Source\MapCountry" type="GLSCroatia\Shipping\Model\Config\Source\Country">
+    <virtualType name="GLSCroatia\Shipping\Model\Config\Source\SupportedCountries" type="GLSCroatia\Shipping\Model\Config\Source\Country">
+        <arguments>
+            <argument name="configField" xsi:type="string">supported_countries</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GLSCroatia\Shipping\Model\Config\Source\MapCountries" type="GLSCroatia\Shipping\Model\Config\Source\Country">
         <arguments>
             <argument name="configField" xsi:type="string">map_supported_countries</argument>
         </arguments>

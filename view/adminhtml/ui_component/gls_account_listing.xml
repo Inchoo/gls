@@ -57,29 +57,29 @@
         </selectionsColumn>
         <column name="entity_id" sortOrder="10">
             <settings>
-                <filter>textRange</filter>
                 <label translate="true">ID</label>
+                <filter>textRange</filter>
                 <sorting>asc</sorting>
             </settings>
         </column>
         <column name="client_id" sortOrder="20">
             <settings>
-                <filter>text</filter>
                 <label translate="true">Client ID</label>
+                <filter>text</filter>
             </settings>
         </column>
         <column name="username" sortOrder="30">
             <settings>
-                <filter>text</filter>
                 <label translate="true">Username</label>
+                <filter>text</filter>
             </settings>
         </column>
-        <column name="country_code" sortOrder="40" component="Magento_Ui/js/grid/columns/select">
+        <column name="country_code" component="Magento_Ui/js/grid/columns/select" sortOrder="40">
             <settings>
                 <label translate="true">Country</label>
-                <options class="GLSCroatia\Shipping\Model\Config\Source\Country"/>
                 <dataType>select</dataType>
                 <filter>select</filter>
+                <options class="GLSCroatia\Shipping\Model\Config\Source\Country"/>
             </settings>
         </column>
         <actionsColumn name="actions" sortOrder="200" class="GLSCroatia\Shipping\Ui\Component\Listing\Columns\AccountActions">

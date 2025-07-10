@@ -92,7 +92,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="GLSCroatia\Shipping\Model\Config\Source\Country"/>
+                        <options class="GLSCroatia\Shipping\Model\Config\Source\SupportedCountries"/>
                         <caption translate="true">-- Please Select --</caption>
                     </settings>
                 </select>

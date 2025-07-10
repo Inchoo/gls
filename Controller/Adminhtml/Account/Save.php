@@ -53,9 +53,7 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
             return $resultRedirect->setRefererOrBaseUrl();
         }
 
-        $request = $this->getRequest();
-
-        if ($id = $request->getParam('entity_id')) {
+        if ($id = $this->getRequest()->getParam('entity_id')) {
             try {
                 $account = $this->accountRepository->get((int)$id);
             } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
@@ -85,11 +83,10 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
      */
     protected function prepareData(): array
     {
-        $request = $this->getRequest();
-
         $result = [];
+
         foreach (['client_id', 'username', 'password', 'country_code'] as $param) {
-            $value = trim((string)$request->getParam($param, ''));
+            $value = trim((string)$this->getRequest()->getParam($param, ''));
             if ($value === '') {
                 return [];
             }

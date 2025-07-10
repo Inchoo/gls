@@ -10,9 +10,7 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Config\Source;
 
-use Magento\Framework\Data\OptionSourceInterface;
-
-class Country implements OptionSourceInterface
+class Country implements \Magento\Framework\Data\OptionSourceInterface
 {
     /**
      * @var array|null
@@ -42,7 +40,7 @@ class Country implements OptionSourceInterface
     public function __construct(
         \GLSCroatia\Shipping\Model\Config $config,
         \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $collectionFactory,
-        string $configField = 'supported_countries'
+        string $configField = ''
     ) {
         $this->config = $config;
         $this->collectionFactory = $collectionFactory;
@@ -50,7 +48,7 @@ class Country implements OptionSourceInterface
     }
 
     /**
-     * Option source for the currently supported countries.
+     * Option source for countries.
      *
      * @return array
      */
@@ -60,14 +58,12 @@ class Country implements OptionSourceInterface
             return $this->options;
         }
 
-        $this->options = [];
+        $collection = $this->collectionFactory->create();
 
-        if ($countryIds = $this->config->getSupportedCountries($this->configField)) {
-            $collection = $this->collectionFactory->create();
+        if ($this->configField && $countryIds = $this->config->getSupportedCountries($this->configField)) {
             $collection->addCountryIdFilter($countryIds);
-            $this->options = $collection->toOptionArray(false);
         }
 
-        return $this->options;
+        return $this->options = $collection->toOptionArray(false);
     }
 }

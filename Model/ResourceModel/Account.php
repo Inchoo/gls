@@ -102,10 +102,7 @@ class Account extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     public function generateOptionsData(): array
     {
         $select = $this->getConnection()->select();
-        $select->from(
-            $this->getMainTable(),
-            ['entity_id', 'client_id', 'username']
-        );
+        $select->from($this->getMainTable(), ['entity_id', 'client_id', 'username']);
 
         $stmt = $this->getConnection()->query($select);
 
