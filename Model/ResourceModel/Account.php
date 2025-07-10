@@ -13,20 +13,28 @@ namespace GLSCroatia\Shipping\Model\ResourceModel;
 class Account extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     /**
+     * @var \Magento\Framework\App\Cache\TypeListInterface
+     */
+    protected \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList;
+
+    /**
      * @var \Magento\Framework\Encryption\EncryptorInterface
      */
     protected \Magento\Framework\Encryption\EncryptorInterface $encryptor;
 
     /**
+     * @param \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList
      * @param \Magento\Framework\Encryption\EncryptorInterface $encryptor
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      * @param string|null $connectionName
      */
     public function __construct(
+        \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
         \Magento\Framework\Encryption\EncryptorInterface $encryptor,
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         ?string $connectionName = null
     ) {
+        $this->cacheTypeList = $cacheTypeList;
         $this->encryptor = $encryptor;
         parent::__construct($context, $connectionName);
     }
@@ -86,10 +94,14 @@ class Account extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         parent::_afterDelete($object);
 
         // clean up the "core_config_data" table.
-        $this->getConnection()->delete(
+        $deletedRows = $this->getConnection()->delete(
             $this->getTable('core_config_data'),
             ['path = ?' => 'carriers/gls/account_id', 'value = ?' => $object->getId()]
         );
+
+        if ($deletedRows) {
+            $this->cacheTypeList->invalidate(\Magento\Framework\App\Cache\Type\Config::TYPE_IDENTIFIER);
+        }
 
         return $this;
     }

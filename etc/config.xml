@@ -14,6 +14,7 @@
                 <active>0</active>
                 <title>GLS</title>
                 <max_package_weight>40</max_package_weight>
+                <address_id/>
                 <sort_order/>
                 <exclude_discount_amount>1</exclude_discount_amount>
                 <include_virtual_price>1</include_virtual_price>

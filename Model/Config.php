@@ -174,6 +174,17 @@ class Config
     }
 
     /**
+     * Get GLS address ID.
+     *
+     * @param int|string|null $scopeCode
+     * @return string
+     */
+    public function getAddressId($scopeCode = null): string
+    {
+        return (string)$this->getConfigValue('address_id', $scopeCode);
+    }
+
+    /**
      * Get SenderIdentityCardNumber.
      *
      * @param int|string|null $scopeCode

@@ -27,6 +27,13 @@
                     <label>Sort Order</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
+                <field id="address_id" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Address</label>
+                    <source_model>GLSCroatia\Shipping\Model\Config\Source\Address</source_model>
+                    <comment>
+                        <model>\GLSCroatia\Shipping\Model\Config\Comment\Address</model>
+                    </comment>
+                </field>
                 <field id="exclude_discount_amount" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Exclude Discount Amount From Price Calculation</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -134,7 +141,7 @@
 
                 <group id="api" translate="label" type="text" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>API</label>
-                    <field id="account_id" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <field id="account_id" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Account</label>
                         <source_model>GLSCroatia\Shipping\Model\Config\Source\Account</source_model>
                         <comment>
