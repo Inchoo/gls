@@ -58,8 +58,10 @@
     </table>
     <table name="gls_shipping_address" resource="default" engine="innodb" comment="GLS Shipping Address">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
-        <column xsi:type="varchar" name="label" nullable="true" length="255" comment="Label"/>
-        <column xsi:type="varchar" name="country_id" nullable="false" length="255" comment="Country"/>
+        <column xsi:type="varchar" name="label" nullable="false" length="255" comment="Label"/>
+        <column xsi:type="varchar" name="company" nullable="true" length="255" comment="Company"/>
+        <column xsi:type="varchar" name="phone_number" nullable="true" length="255" comment="Phone Number"/>
+        <column xsi:type="varchar" name="country_code" length="3" nullable="false" comment="Country (ISO 3166-1 alpha-2)"/>
         <column xsi:type="int" name="region_id" unsigned="true" nullable="true" identity="false" comment="Region/State"/>
         <column xsi:type="varchar" name="region" nullable="true" length="255" comment="Region/State"/>
         <column xsi:type="varchar" name="postcode" nullable="false" length="255" comment="Zip/Postal Code"/>

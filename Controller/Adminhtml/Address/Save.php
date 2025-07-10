@@ -86,7 +86,7 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
         $result = [];
 
         // required fields
-        foreach (['label', 'country_id', 'postcode', 'city', 'street'] as $param) {
+        foreach (['label', 'country_code', 'postcode', 'city', 'street'] as $param) {
             $value = trim((string)$this->getRequest()->getParam($param, ''));
             if ($value === '') {
                 return [];
@@ -96,7 +96,7 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
         }
 
         // optional fields
-        foreach (['region_id', 'region', 'street_line2'] as $param) {
+        foreach (['company', 'phone_number', 'region_id', 'region', 'street_line2'] as $param) {
             $value = trim((string)$this->getRequest()->getParam($param, ''));
             $result[$param] = $value ?: null;
         }

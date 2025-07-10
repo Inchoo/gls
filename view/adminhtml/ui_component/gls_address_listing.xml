@@ -86,7 +86,7 @@
                 <filter>text</filter>
             </settings>
         </column>
-        <column name="country_id" component="Magento_Ui/js/grid/columns/select" sortOrder="60">
+        <column name="country_code" component="Magento_Ui/js/grid/columns/select" sortOrder="60">
             <settings>
                 <label translate="true">Country</label>
                 <dataType>select</dataType>

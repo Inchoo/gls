@@ -44,7 +44,9 @@
         "column": {
             "entity_id": true,
             "label": true,
-            "country_id": true,
+            "company": true,
+            "phone_number": true,
+            "country_code": true,
             "region_id": true,
             "region": true,
             "postcode": true,

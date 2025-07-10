@@ -91,24 +91,66 @@ class Address extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * Get country ID.
+     * Get company.
      *
      * @return string|null
      */
-    public function getCountryId(): string|null
+    public function getCompany(): string|null
     {
-        return $this->_getData('country_id');
+        return $this->_getData('company');
     }
 
     /**
-     * Set country ID.
+     * Set company.
      *
-     * @param string|null $countryId
+     * @param string|null $company
      * @return self
      */
-    public function setCountryId(string|null $countryId): self
+    public function setCompany(string|null $company): self
     {
-        return $this->setData('country_id', $countryId);
+        return $this->setData('company', $company);
+    }
+
+    /**
+     * Get phone number.
+     *
+     * @return string|null
+     */
+    public function getPhoneNumber(): string|null
+    {
+        return $this->_getData('phone_number');
+    }
+
+    /**
+     * Set phone number.
+     *
+     * @param string|null $phoneNumber
+     * @return self
+     */
+    public function setPhoneNumber(string|null $phoneNumber): self
+    {
+        return $this->setData('phone_number', $phoneNumber);
+    }
+
+    /**
+     * Get country code.
+     *
+     * @return string|null
+     */
+    public function getCountryCode(): string|null
+    {
+        return $this->_getData('country_code');
+    }
+
+    /**
+     * Set country code.
+     *
+     * @param string|null $countryCode
+     * @return self
+     */
+    public function setCountryCode(string|null $countryCode): self
+    {
+        return $this->setData('country_code', $countryCode);
     }
 
     /**

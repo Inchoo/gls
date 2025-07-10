@@ -26,6 +26,11 @@ class ShipmentRequestBuilder
     protected \GLSCroatia\Shipping\Helper\Data $dataHelper;
 
     /**
+     * @var \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\AddressSwitcher
+     */
+    protected \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\AddressSwitcher $addressSwitcher;
+
+    /**
      * @var \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\CashOnDelivery
      */
     protected \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\CashOnDelivery $cashOnDelivery;
@@ -48,6 +53,7 @@ class ShipmentRequestBuilder
     /**
      * @param \GLSCroatia\Shipping\Model\Config $config
      * @param \GLSCroatia\Shipping\Helper\Data $dataHelper
+     * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\AddressSwitcher $addressSwitcher
      * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\CashOnDelivery $cashOnDelivery
      * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\ExpressDelivery $expressDelivery
      * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Insurance $insurance
@@ -56,6 +62,7 @@ class ShipmentRequestBuilder
     public function __construct(
         \GLSCroatia\Shipping\Model\Config $config,
         \GLSCroatia\Shipping\Helper\Data $dataHelper,
+        \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\AddressSwitcher $addressSwitcher,
         \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\CashOnDelivery $cashOnDelivery,
         \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\ExpressDelivery $expressDelivery,
         \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Insurance $insurance,
@@ -63,6 +70,7 @@ class ShipmentRequestBuilder
     ) {
         $this->config = $config;
         $this->dataHelper = $dataHelper;
+        $this->addressSwitcher = $addressSwitcher;
         $this->cashOnDelivery = $cashOnDelivery;
         $this->expressDelivery = $expressDelivery;
         $this->insurance = $insurance;
@@ -82,6 +90,11 @@ class ShipmentRequestBuilder
 
         if (!$clientId = $this->config->getClientId($storeId)) {
             throw new \Magento\Framework\Exception\LocalizedException(__('GLS Client ID is not configured.'));
+        }
+
+        // use GLS address if available
+        if ($addressId = $this->config->getAddressId($storeId)) {
+            $request = $this->addressSwitcher->switchShipperAddress((int)$addressId, $request);
         }
 
         $shipment = $request->getOrderShipment();
