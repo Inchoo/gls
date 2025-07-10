@@ -56,4 +56,18 @@
             <column name="country_code"/>
         </constraint>
     </table>
+    <table name="gls_shipping_address" resource="default" engine="innodb" comment="GLS Shipping Address">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="varchar" name="label" nullable="true" length="255" comment="Label"/>
+        <column xsi:type="varchar" name="country_id" nullable="false" length="255" comment="Country"/>
+        <column xsi:type="int" name="region_id" unsigned="true" nullable="true" identity="false" comment="Region/State"/>
+        <column xsi:type="varchar" name="region" nullable="true" length="255" comment="Region/State"/>
+        <column xsi:type="varchar" name="postcode" nullable="false" length="255" comment="Zip/Postal Code"/>
+        <column xsi:type="varchar" name="city" nullable="false" length="255" comment="City"/>
+        <column xsi:type="varchar" name="street" nullable="false" length="255" comment="Street Address"/>
+        <column xsi:type="varchar" name="street_line2" nullable="true" length="255" comment="Street Address Line 2"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
 </schema>

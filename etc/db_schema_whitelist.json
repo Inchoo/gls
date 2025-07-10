@@ -39,5 +39,21 @@
             "GLS_SHIPPING_ACCOUNT_CLIENT_ID_USERNAME_COUNTRY_CODE": true,
             "GLS_SHIPPING_ACCOUNT_USERNAME_COUNTRY_CODE": true
         }
+    },
+    "gls_shipping_address": {
+        "column": {
+            "entity_id": true,
+            "label": true,
+            "country_id": true,
+            "region_id": true,
+            "region": true,
+            "postcode": true,
+            "city": true,
+            "street": true,
+            "street_line2": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
     }
 }
