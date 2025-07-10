@@ -11,6 +11,7 @@
     <menu>
         <add id="GLSCroatia_Shipping::root" title="GLS" translate="title" module="GLSCroatia_Shipping" sortOrder="65" resource="GLSCroatia_Shipping::shipping"/>
         <add id="GLSCroatia_Shipping::shipping" title="Shipping" translate="title" module="GLSCroatia_Shipping" sortOrder="10" parent="GLSCroatia_Shipping::root" resource="GLSCroatia_Shipping::shipping"/>
-        <add id="GLSCroatia_Shipping::shipping_accounts" title="Accounts" translate="title" module="GLSCroatia_Shipping" sortOrder="10" parent="GLSCroatia_Shipping::shipping" action="gls/account/grid" resource="GLSCroatia_Shipping::shipping_account"/>
+        <add id="GLSCroatia_Shipping::shipping_account" title="Accounts" translate="title" module="GLSCroatia_Shipping" sortOrder="10" parent="GLSCroatia_Shipping::shipping" action="gls/account/grid" resource="GLSCroatia_Shipping::shipping_account"/>
+        <add id="GLSCroatia_Shipping::shipping_address" title="Addresses" translate="title" module="GLSCroatia_Shipping" sortOrder="20" parent="GLSCroatia_Shipping::shipping" action="gls/address/grid" resource="GLSCroatia_Shipping::shipping_address"/>
     </menu>
 </config>

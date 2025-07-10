@@ -13,6 +13,7 @@
             <resource id="Magento_Backend::admin">
                 <resource id="GLSCroatia_Shipping::shipping" title="GLS" translate="title" sortOrder="75">
                     <resource id="GLSCroatia_Shipping::shipping_account" title="Account" translate="title" sortOrder="10"/>
+                    <resource id="GLSCroatia_Shipping::shipping_address" title="Address" translate="title" sortOrder="20"/>
                 </resource>
             </resource>
         </resources>
