@@ -78,10 +78,6 @@ class AddressRepository
         try {
             $this->addressResource->save($address);
             return $this->get((int)$address->getId(), true);
-        } catch (\Magento\Framework\Exception\AlreadyExistsException $e) {
-            throw new \Magento\Framework\Exception\CouldNotSaveException(
-                __('An address with the same data already exists.') // todo treba li?
-            );
         } catch (\Exception $e) {
             throw new \Magento\Framework\Exception\CouldNotSaveException(
                 __('Could not save the address: %1', $e->getMessage())
