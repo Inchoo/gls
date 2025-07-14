@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023-present GLS Croatia. All rights reserved.
+ * See LICENSE.txt for license details.
+ *
+ * @author Inchoo (https://inchoo.net)
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">gls_pickup_form.gls_pickup_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">GLS Pickup Request</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back">
+                <label translate="true">Back</label>
+                <url path="*/*/grid"/>
+                <class>back</class>
+            </button>
+            <button name="reset">
+                <label translate="true">Reset</label>
+                <class>reset</class>
+            </button>
+            <button name="save">
+                <label translate="true">Request</label>
+                <class>save primary</class>
+            </button>
+        </buttons>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>gls_pickup_form.gls_pickup_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="gls_pickup_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="*/*/request"/>
+        </settings>
+        <dataProvider class="GLSCroatia\Shipping\Ui\DataProvider\Form\PickupDataProvider" name="gls_pickup_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label/>
+        </settings>
+        <field name="account_id" formElement="select" sortOrder="10">
+            <settings>
+                <label translate="true">Account</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="GLSCroatia\Shipping\Model\Config\Source\Account"/>
+                        <caption translate="true">-- Please Select --</caption>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="address_id" formElement="select" sortOrder="20">
+            <settings>
+                <label translate="true">Address</label>
+                <notice translate="true">Leave this field empty to apply the default origin address.</notice>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="GLSCroatia\Shipping\Model\Config\Source\Address"/>
+                        <captionValue>0</captionValue>
+                        <caption translate="true">-- Please Select --</caption>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="website_id" formElement="select" sortOrder="30">
+            <settings>
+                <label translate="true">Website</label>
+                <notice translate="true">The default origin address may vary by website.</notice>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="GLSCroatia\Shipping\Model\Config\Source\Website"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="count" formElement="input" sortOrder="40">
+            <settings>
+                <label translate="true">Package Count</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="validate-greater-than-zero" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="pickup_time_from" formElement="date" sortOrder="50">
+            <settings>
+                <label translate="true">Pickup Time From</label>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <date>
+                    <settings>
+                        <options>
+                            <option name="showsTime" xsi:type="boolean">true</option>
+                        </options>
+                    </settings>
+                </date>
+            </formElements>
+        </field>
+        <field name="pickup_time_to" formElement="date" sortOrder="51">
+            <settings>
+                <label translate="true">Pickup Time To</label>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <date>
+                    <settings>
+                        <options>
+                            <option name="showsTime" xsi:type="boolean">true</option>
+                        </options>
+                    </settings>
+                </date>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

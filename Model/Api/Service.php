@@ -209,6 +209,27 @@ class Service
     }
 
     /**
+     * Create pickup request.
+     *
+     * @param array $params
+     * @return \GLSCroatia\Shipping\Model\Api\Client\Response
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function createPickupRequest(array $params): Response
+    {
+        /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
+        $request = $this->requestFactory->create();
+        $request->setMethod('POST');
+        $request->setUri($this->getUrl('ParcelService', 'CreatePickupRequest'));
+        $request->setHeaders(['Content-Type' => 'application/json']);
+
+        $params = $this->prepareParams($params);
+        $request->setParams($this->json->serialize($params));
+
+        return $this->makeRequest($request);
+    }
+
+    /**
      * Generate API URL.
      *
      * @param string $serviceName
