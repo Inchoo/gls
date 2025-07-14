@@ -72,4 +72,15 @@
             <column name="entity_id"/>
         </constraint>
     </table>
+    <table name="gls_shipping_pickup_request" resource="default" engine="innodb" comment="GLS Pickup Request">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="varchar" name="account" nullable="false" length="255" comment="Account"/>
+        <column xsi:type="varchar" name="count" nullable="false" length="8" comment="Package Count"/>
+        <column xsi:type="varchar" name="time_from" nullable="false" length="255" comment="Pickup Time From"/>
+        <column xsi:type="varchar" name="time_to" nullable="false" length="255" comment="Pickup Time To"/>
+        <column xsi:type="json" name="address" nullable="false" comment="Address"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
 </schema>

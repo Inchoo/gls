@@ -57,5 +57,18 @@
         "constraint": {
             "PRIMARY": true
         }
+    },
+    "gls_shipping_pickup_request": {
+        "column": {
+            "entity_id": true,
+            "account": true,
+            "count": true,
+            "time_from": true,
+            "time_to": true,
+            "address": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
     }
 }
