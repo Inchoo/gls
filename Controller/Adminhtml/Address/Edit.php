@@ -47,7 +47,10 @@ class Edit extends \Magento\Backend\App\Action implements \Magento\Framework\App
                 return $resultPage;
             } catch (\Exception $e) {
                 $this->messageManager->addExceptionMessage($e);
-                return $this->resultRedirectFactory->create()->setRefererOrBaseUrl();
+                $resultRedirect = $this->resultFactory->create(
+                    \Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT
+                );
+                return $resultRedirect->setRefererOrBaseUrl();
             }
         }
 
