@@ -10,10 +10,8 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="order_additional_info">
-            <block name="gls_parcel_shop_delivery" template="GLSCroatia_Shipping::sales/view/parcel-shop-delivery.phtml" before="-">
-                <arguments>
-                    <argument name="parcel_shop_delivery" xsi:type="object">GLSCroatia\Shipping\ViewModel\ParcelShopDelivery</argument>
-                </arguments>
+            <block class="GLSCroatia\Shipping\Block\Adminhtml\Sales\View\ParcelShopDelivery" name="gls_parcel_shop_delivery" before="-">
+                <block class="GLSCroatia\Shipping\Block\Adminhtml\Sales\View\ParcelShopDelivery\Address" name="gls_parcel_shop_delivery_address" as="address"/>
             </block>
         </referenceContainer>
     </body>

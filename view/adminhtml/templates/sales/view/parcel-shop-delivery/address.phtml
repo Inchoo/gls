@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright (c) 2023-present GLS Croatia. All rights reserved.
+ * See LICENSE.txt for license details.
+ *
+ * @author Inchoo (https://inchoo.net)
+ */
+
+/** @var \GLSCroatia\Shipping\Block\Adminhtml\Sales\View\ParcelShopDelivery\Address $block */
+
+/** @var \Magento\Framework\DataObject $deliverData */
+$deliveryData = $block->getDeliveryData();
+?>
+
+<address>
+    <?php if ($deliveryData && $deliveryData->getData()): ?>
+        <strong><?= $block->escapeHtml((string)$deliveryData->getData('id')) ?></strong><br>
+        <?= $block->escapeHtml((string)$deliveryData->getData('name')) ?><br>
+        <?= $block->escapeHtml((string)$deliveryData->getData('contact/address')) ?><br>
+        <?= $block->escapeHtml((string)$deliveryData->getData('contact/city')) ?>, <?= $block->escapeHtml((string)$deliveryData->getData('contact/postalCode')) // phpcs:ignore ?><br>
+        <?= $block->escapeHtml((string)$deliveryData->getData('contact/countryCode')) ?><br>
+    <?php else: ?>
+        <?= $block->escapeHtml(__('ParcelShop delivery data is missing.')) ?>
+    <?php endif; ?>
+</address>

@@ -410,7 +410,18 @@ class Config
      */
     public function getMapScriptUrl($scopeCode = null): string
     {
-        switch ($this->getApiCountryCode($scopeCode)) {
+        return $this->getMapScriptUrlByCountryCode($this->getApiCountryCode($scopeCode));
+    }
+
+    /**
+     * Get GLS map script URL by country code.
+     *
+     * @param string $countryCode
+     * @return string
+     */
+    public function getMapScriptUrlByCountryCode(string $countryCode): string
+    {
+        switch ($countryCode) {
             case 'CZ':
                 return 'https://map.gls-czech.com/widget/gls-dpm.js';
             case 'HU':
@@ -426,6 +437,23 @@ class Config
             default:
                 return 'https://map.gls-croatia.com/widget/gls-dpm.js';
         }
+    }
+
+    /**
+     * Get GLS map language code.
+     *
+     * @param string $countryCode
+     * @return string
+     */
+    public function getMapLanguageCode(string $countryCode): string
+    {
+        $allowedCodes = ['CS', 'HR', 'HU', 'RO', 'SR', 'SL', 'SK', 'PL', 'EN', 'DE', 'FR', 'ES', 'IT'];
+
+        if (in_array($countryCode, $allowedCodes, true)) {
+            return $countryCode;
+        }
+
+        return 'EN';
     }
 
     /**

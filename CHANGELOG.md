@@ -2,6 +2,7 @@
 - Added support for more countries with parcel locker/shop services.
 - Added support for multiple GLS accounts.
 - Added support for multiple custom origin addresses.
+- Implemented the parcel shop delivery point change for the admin.
 
 ### [1.2.4] - 2025-06-11
 - Implemented reset of parcel locker/shop delivery point data after the shipping method is changed.
