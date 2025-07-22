@@ -27,11 +27,11 @@
                 <locker_method_name>Delivery to Parcel Locker</locker_method_name>
                 <locker_method_price/>
                 <locker_method_sallowspecific>1</locker_method_sallowspecific>
-                <locker_method_specificcountry>AT,BE,BG,CZ,DE,DK,ES,FI,FR,GR,HR,HU,IT,LU,NL,PL,PT,RO,RS,SI,SK</locker_method_specificcountry>
+                <locker_method_specificcountry>AT,BE,CZ,DE,ES,FI,FR,GR,HR,HU,NL,PL,RO,SI,SK</locker_method_specificcountry>
                 <shop_method_name>Delivery to Parcel Shop</shop_method_name>
                 <shop_method_price/>
                 <shop_method_sallowspecific>1</shop_method_sallowspecific>
-                <shop_method_specificcountry>AT,BE,BG,CZ,DE,DK,ES,FI,FR,GR,HR,HU,IT,LU,NL,PL,PT,RO,RS,SI,SK</shop_method_specificcountry>
+                <shop_method_specificcountry>AT,BE,BG,CZ,DE,DK,ES,FI,GR,HR,HU,IT,LU,NL,PL,PT,RO,SI,SK</shop_method_specificcountry>
 
                 <free_shipping_enabled>0</free_shipping_enabled>
                 <free_shipping_threshold/>
