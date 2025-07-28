@@ -33,6 +33,11 @@ class Context implements \Magento\Framework\ObjectManager\ContextInterface
     protected \GLSCroatia\Shipping\Model\Carrier\ShipmentRequestBuilder $shipmentRequestBuilder;
 
     /**
+     * @var \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\AddressSwitcher
+     */
+    protected \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\AddressSwitcher $addressSwitcher;
+
+    /**
      * @var \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate
      */
     protected \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate $tablerateResource;
@@ -53,6 +58,7 @@ class Context implements \Magento\Framework\ObjectManager\ContextInterface
      * @param \GLSCroatia\Shipping\Model\Config $config
      * @param \GLSCroatia\Shipping\Model\Api\Service $apiService
      * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequestBuilder $shipmentRequestBuilder
+     * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\AddressSwitcher $addressSwitcher
      * @param \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate $tablerateResource
      * @param \Magento\Framework\DataObjectFactory $dataObjectFactory
      * @param \Magento\Framework\App\State $appState
@@ -62,6 +68,7 @@ class Context implements \Magento\Framework\ObjectManager\ContextInterface
         \GLSCroatia\Shipping\Model\Config $config,
         \GLSCroatia\Shipping\Model\Api\Service $apiService,
         \GLSCroatia\Shipping\Model\Carrier\ShipmentRequestBuilder $shipmentRequestBuilder,
+        \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\AddressSwitcher $addressSwitcher,
         \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate $tablerateResource,
         \Magento\Framework\DataObjectFactory $dataObjectFactory,
         \Magento\Framework\App\State $appState
@@ -70,6 +77,7 @@ class Context implements \Magento\Framework\ObjectManager\ContextInterface
         $this->config = $config;
         $this->apiService = $apiService;
         $this->shipmentRequestBuilder = $shipmentRequestBuilder;
+        $this->addressSwitcher = $addressSwitcher;
         $this->tablerateResource = $tablerateResource;
         $this->dataObjectFactory = $dataObjectFactory;
         $this->appState = $appState;
@@ -113,6 +121,16 @@ class Context implements \Magento\Framework\ObjectManager\ContextInterface
     public function getShipmentRequestBuilder(): \GLSCroatia\Shipping\Model\Carrier\ShipmentRequestBuilder
     {
         return $this->shipmentRequestBuilder;
+    }
+
+    /**
+     * Get address switcher.
+     *
+     * @return \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\AddressSwitcher
+     */
+    public function getAddressSwitcher(): \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\AddressSwitcher
+    {
+        return $this->addressSwitcher;
     }
 
     /**

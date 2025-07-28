@@ -10,19 +10,12 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Carrier\ShipmentRequest;
 
-use Magento\Sales\Model\Order\Shipment;
-
 class Insurance
 {
     /**
      * @var \GLSCroatia\Shipping\Helper\Data
      */
     protected \GLSCroatia\Shipping\Helper\Data $dataHelper;
-
-    /**
-     * @var \GLSCroatia\Shipping\Model\Config
-     */
-    protected \GLSCroatia\Shipping\Model\Config $config;
 
     /**
      * @var \Magento\Framework\Math\FloatComparator
@@ -36,18 +29,15 @@ class Insurance
 
     /**
      * @param \GLSCroatia\Shipping\Helper\Data $dataHelper
-     * @param \GLSCroatia\Shipping\Model\Config $config
      * @param \Magento\Framework\Math\FloatComparator $floatComparator
      * @param \Magento\Directory\Model\CurrencyFactory $currencyFactory
      */
     public function __construct(
         \GLSCroatia\Shipping\Helper\Data $dataHelper,
-        \GLSCroatia\Shipping\Model\Config $config,
         \Magento\Framework\Math\FloatComparator $floatComparator,
         \Magento\Directory\Model\CurrencyFactory $currencyFactory
     ) {
         $this->dataHelper = $dataHelper;
-        $this->config = $config;
         $this->floatComparator = $floatComparator;
         $this->currencyFactory = $currencyFactory;
     }
@@ -55,14 +45,18 @@ class Insurance
     /**
      * Check if insurance is allowed for package value.
      *
+     * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::isInsuranceAllowed()
+     *
      * @param \Magento\Sales\Model\Order\Shipment $shipment
      * @param string $originCountry
      * @param string $destinationCountry
      * @return bool
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function isAllowed(Shipment $shipment, string $originCountry, string $destinationCountry): bool
-    {
+    public function isAllowed(
+        \Magento\Sales\Model\Order\Shipment $shipment,
+        string $originCountry,
+        string $destinationCountry
+    ): bool {
         if (!$originCurrencyCode = $this->dataHelper->getConfigCode('country_currency_code', $originCountry)) {
             return false;
         }
@@ -72,9 +66,13 @@ class Insurance
             return false;
         }
 
-        $currencyModel = $this->currencyFactory->create()->load($shipment->getOrder()->getOrderCurrencyCode());
-        // convert package value amount from order currency to target currency
-        $packageValue = (float)$currencyModel->convert($this->calculateValue($shipment), $originCurrencyCode);
+        try {
+            $currencyModel = $this->currencyFactory->create()->load($shipment->getOrder()->getOrderCurrencyCode());
+            // convert package value amount from order currency to target currency
+            $packageValue = (float)$currencyModel->convert($this->calculateValue($shipment), $originCurrencyCode);
+        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            return false;
+        }
 
         return $this->floatComparator->greaterThanOrEqual($packageValue, (float)$minMax['min'])
             && $this->floatComparator->greaterThanOrEqual((float)$minMax['max'], $packageValue);
@@ -83,10 +81,12 @@ class Insurance
     /**
      * Calculate shipment value.
      *
+     * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::calculateInsuranceValue()
+     *
      * @param \Magento\Sales\Model\Order\Shipment $shipment
      * @return float
      */
-    public function calculateValue(Shipment $shipment): float
+    public function calculateValue(\Magento\Sales\Model\Order\Shipment $shipment): float
     {
         $value = 0;
         foreach ($shipment->getPackages() as $packageData) {

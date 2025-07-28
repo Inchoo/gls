@@ -43,7 +43,7 @@ class Filesystem
      * @param string $dirPath
      * @return ReadInterface
      */
-    public function openFile(string $countryCode, string $dirPath): ReadInterface
+    public function openFile(string $countryCode, string $dirPath = ''): ReadInterface
     {
         $dirPath = $dirPath ?: $this->getDefaultDirPath();
         $fileName = strtolower($countryCode) . '.csv';

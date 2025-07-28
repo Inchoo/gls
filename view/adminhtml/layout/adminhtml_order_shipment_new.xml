@@ -14,5 +14,12 @@
                 <block class="GLSCroatia\Shipping\Block\Adminhtml\Sales\View\ParcelShopDelivery\Address" name="gls_parcel_shop_delivery_address" as="address"/>
             </block>
         </referenceContainer>
+        <referenceBlock name="shipment_packaging">
+            <block name="gls_options" template="GLSCroatia_Shipping::shipping/order/packaging/gls-options.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">GLSCroatia\Shipping\ViewModel\PackagingGlsOptions</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
     </body>
 </page>

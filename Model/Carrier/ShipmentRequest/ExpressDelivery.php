@@ -13,34 +13,39 @@ namespace GLSCroatia\Shipping\Model\Carrier\ShipmentRequest;
 class ExpressDelivery
 {
     /**
+     * @var \GLSCroatia\Shipping\Helper\Data
+     */
+    protected \GLSCroatia\Shipping\Helper\Data $dataHelper;
+
+    /**
      * @var \GLSCroatia\Shipping\Model\ExpressDelivery\Filesystem
      */
     protected \GLSCroatia\Shipping\Model\ExpressDelivery\Filesystem $filesystem;
 
     /**
+     * @param \GLSCroatia\Shipping\Helper\Data $dataHelper
      * @param \GLSCroatia\Shipping\Model\ExpressDelivery\Filesystem $filesystem
      */
-    public function __construct(\GLSCroatia\Shipping\Model\ExpressDelivery\Filesystem $filesystem)
-    {
+    public function __construct(
+        \GLSCroatia\Shipping\Helper\Data $dataHelper,
+        \GLSCroatia\Shipping\Model\ExpressDelivery\Filesystem $filesystem
+    ) {
+        $this->dataHelper = $dataHelper;
         $this->filesystem = $filesystem;
     }
 
     /**
      * Check if express delivery is allowed for country/postcode.
      *
+     * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::isExpressDeliveryAllowed()
+     *
      * @param string $expressDeliverCode
-     * @param string $originCountryCode
-     * @param string $destinationCountryCode
-     * @param string $postcode
+     * @param \Magento\Shipping\Model\Shipment\Request $request
      * @return bool
      */
-    public function isAllowed(
-        string $expressDeliverCode,
-        string $originCountryCode,
-        string $destinationCountryCode,
-        string $postcode
-    ): bool {
-        if ($originCountryCode !== $destinationCountryCode) {
+    public function isAllowed(string $expressDeliverCode, \Magento\Framework\DataObject $request): bool
+    {
+        if (!$this->isAllowedShipmentRequest($request)) {
             return false;
         }
 
@@ -51,7 +56,7 @@ class ExpressDelivery
         }
 
         try {
-            $file = $this->filesystem->openFile($originCountryCode);
+            $file = $this->filesystem->openFile((string)$request->getShipperAddressCountryCode());
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             return false;
         }
@@ -61,6 +66,8 @@ class ExpressDelivery
             return false; // invalid CSV
         }
 
+        $postcode = (string)$request->getRecipientAddressPostalCode();
+
         while ($row = $file->readCsv()) {
             if ((string)$row[1] === $postcode) {
                 return strtolower((string)$row[$columnKey]) === 'x';
@@ -68,5 +75,22 @@ class ExpressDelivery
         }
 
         return false;
+    }
+
+    /**
+     * Check if express delivery is allowed for country/postcode.
+     *
+     * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::isExpressDeliveryAllowed()
+     *
+     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @return bool
+     */
+    public function isAllowedShipmentRequest(\Magento\Framework\DataObject $request): bool
+    {
+        $originCountryCode = (string)$request->getShipperAddressCountryCode();
+        $destinationCountryCode = (string)$request->getRecipientAddressCountryCode();
+
+        return $originCountryCode === $destinationCountryCode
+            && !$this->dataHelper->isLockerShopDeliveryMethod($request->getShippingMethod());
     }
 }

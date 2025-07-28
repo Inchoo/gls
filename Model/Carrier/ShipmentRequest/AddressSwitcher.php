@@ -38,13 +38,13 @@ class AddressSwitcher
      * Switch shipper address.
      *
      * @param int $addressId
-     * @param \Magento\Shipping\Model\Shipment\Request $request
-     * @return \Magento\Shipping\Model\Shipment\Request
+     * @param \Magento\Framework\DataObject $request
+     * @return \Magento\Framework\DataObject
      */
     public function switchShipperAddress(
         int $addressId,
-        \Magento\Shipping\Model\Shipment\Request $request
-    ): \Magento\Shipping\Model\Shipment\Request {
+        \Magento\Framework\DataObject $request
+    ): \Magento\Framework\DataObject {
         try {
             $address = $this->addressRepository->get($addressId);
         } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {

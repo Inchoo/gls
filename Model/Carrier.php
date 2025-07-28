@@ -297,6 +297,26 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
     }
 
     /**
+     * Prepare shipment request. Validate and correct request information.
+     *
+     * @param \Magento\Framework\DataObject $request
+     * @return void
+     */
+    protected function _prepareShipmentRequest(\Magento\Framework\DataObject $request)
+    {
+        parent::_prepareShipmentRequest($request);
+
+        // use GLS address if available
+        if ($addressId = $this->context->getConfig()->getAddressId($request->getStoreId())) {
+            $request = $this->context->getAddressSwitcher()->switchShipperAddress((int)$addressId, $request);
+        }
+
+        if ($shipment = $request->getOrderShipment()) {
+            $request->setData('gls', $shipment->getData('gls') ?: []);
+        }
+    }
+
+    /**
      * Generate tracking info.
      *
      * @param string $trackingNumber
