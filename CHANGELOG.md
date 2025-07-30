@@ -6,6 +6,7 @@
 - Enabled selection of GLS service options per order.
 - Implemented parcel status check functionality.
 - Added support for the "Content" field placeholders.
+- Implemented filtering of parcel locker/shop shipping methods per product.
 
 ### [1.2.4] - 2025-06-11
 - Implemented reset of parcel locker/shop delivery point data after the shipping method is changed.

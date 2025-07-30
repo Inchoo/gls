@@ -197,6 +197,23 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
                 continue; // not available for destination country
             }
 
+            foreach ($request->getAllItems() as $item) {
+                $product = $item->getProduct();
+
+                if ($methodCode === static::PARCEL_LOCKER_DELIVERY_METHOD
+                    && $product->getDisableParcelLockerDelivery()
+                    && !$product->isVirtual()
+                ) {
+                    continue 2; // parcel locker method not allowed with product
+                }
+                if ($methodCode === static::PARCEL_SHOP_DELIVERY_METHOD
+                    && $product->getDisableParcelShopDelivery()
+                    && !$product->isVirtual()
+                ) {
+                    continue 2; // parcel shop method not allowed with product
+                }
+            }
+
             $result[$methodCode] = $methodTitle;
         }
 
