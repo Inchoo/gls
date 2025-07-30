@@ -10,9 +10,6 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Api;
 
-use GLSCroatia\Shipping\Model\Api\Client\Request;
-use GLSCroatia\Shipping\Model\Api\Client\Response;
-
 class Service
 {
     /**
@@ -68,7 +65,7 @@ class Service
      * @return \GLSCroatia\Shipping\Model\Api\Client\Response
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function prepareLabels(array $params): Response
+    public function prepareLabels(array $params): \GLSCroatia\Shipping\Model\Api\Client\Response
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
@@ -89,7 +86,7 @@ class Service
      * @return \GLSCroatia\Shipping\Model\Api\Client\Response
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getPrintedLabels(array $params): Response
+    public function getPrintedLabels(array $params): \GLSCroatia\Shipping\Model\Api\Client\Response
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
@@ -110,7 +107,7 @@ class Service
      * @return \GLSCroatia\Shipping\Model\Api\Client\Response
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function printLabels(array $params): Response
+    public function printLabels(array $params): \GLSCroatia\Shipping\Model\Api\Client\Response
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
@@ -131,7 +128,7 @@ class Service
      * @return \GLSCroatia\Shipping\Model\Api\Client\Response
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function deleteLabels(array $params): Response
+    public function deleteLabels(array $params): \GLSCroatia\Shipping\Model\Api\Client\Response
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
@@ -152,7 +149,7 @@ class Service
      * @return \GLSCroatia\Shipping\Model\Api\Client\Response
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function modifyCOD(array $params): Response
+    public function modifyCOD(array $params): \GLSCroatia\Shipping\Model\Api\Client\Response
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
@@ -173,7 +170,7 @@ class Service
      * @return \GLSCroatia\Shipping\Model\Api\Client\Response
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getParcelList(array $params): Response
+    public function getParcelList(array $params): \GLSCroatia\Shipping\Model\Api\Client\Response
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
@@ -194,12 +191,33 @@ class Service
      * @return \GLSCroatia\Shipping\Model\Api\Client\Response
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getParcelStatuses(array $params): Response
+    public function getParcelStatuses(array $params): \GLSCroatia\Shipping\Model\Api\Client\Response
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
         $request->setMethod('POST');
         $request->setUri($this->getUrl('ParcelService', 'GetParcelStatuses'));
+        $request->setHeaders(['Content-Type' => 'application/json']);
+
+        $params = $this->prepareParams($params);
+        $request->setParams($this->json->serialize($params));
+
+        return $this->makeRequest($request);
+    }
+
+    /**
+     * Get parcel list statuses with POD.
+     *
+     * @param array $params
+     * @return \GLSCroatia\Shipping\Model\Api\Client\Response
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getParcelListStatuses(array $params): \GLSCroatia\Shipping\Model\Api\Client\Response
+    {
+        /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
+        $request = $this->requestFactory->create();
+        $request->setMethod('POST');
+        $request->setUri($this->getUrl('ParcelService', 'GetParcelListStatuses'));
         $request->setHeaders(['Content-Type' => 'application/json']);
 
         $params = $this->prepareParams($params);
@@ -215,7 +233,7 @@ class Service
      * @return \GLSCroatia\Shipping\Model\Api\Client\Response
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function createPickupRequest(array $params): Response
+    public function createPickupRequest(array $params): \GLSCroatia\Shipping\Model\Api\Client\Response
     {
         /** @var \GLSCroatia\Shipping\Model\Api\Client\Request $request */
         $request = $this->requestFactory->create();
@@ -307,8 +325,9 @@ class Service
      * @return \GLSCroatia\Shipping\Model\Api\Client\Response
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function makeRequest(Request $request): Response
-    {
+    public function makeRequest(
+        \GLSCroatia\Shipping\Model\Api\Client\Request $request
+    ): \GLSCroatia\Shipping\Model\Api\Client\Response {
         $this->eventManager->dispatch('gls_before_api_request', [
             'request' => $request,
             'object'  => $request

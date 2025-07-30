@@ -14,5 +14,12 @@
                 <block class="GLSCroatia\Shipping\Block\Adminhtml\Sales\View\ParcelShopDelivery\Address" name="gls_parcel_shop_delivery_address" as="address"/>
             </block>
         </referenceContainer>
+        <referenceBlock name="order_shipping_view">
+            <block name="gls_parcel_status" template="GLSCroatia_Shipping::shipping/view/parcel-status-link.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">GLSCroatia\Shipping\ViewModel\ParcelStatus</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
     </body>
 </page>

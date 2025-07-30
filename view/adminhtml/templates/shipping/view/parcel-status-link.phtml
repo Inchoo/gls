@@ -1,0 +1,36 @@
+<?php
+/**
+ * Copyright (c) 2023-present GLS Croatia. All rights reserved.
+ * See LICENSE.txt for license details.
+ *
+ * @author Inchoo (https://inchoo.net)
+ */
+
+/** @var \Magento\Backend\Block\Template $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+
+/** @var \GLSCroatia\Shipping\ViewModel\ParcelStatus $viewModel */
+$viewModel = $block->getData('view_model');
+
+/** @var \Magento\Sales\Block\Adminhtml\Order\AbstractOrder $parentBlock */
+$parentBlock = $block->getParentBlock();
+
+$shipment = $parentBlock->getShipment();
+$source = $shipment ?: $parentBlock->getOrder();
+$hashKey = $shipment ? 'shipment_id' : 'order_id';
+?>
+
+<p>
+    <a href="#" id="gls-parcel-status-link" title="<?= $block->escapeHtmlAttr(__('Get GLS Parcel Status')) ?>">
+        <?= $block->escapeHtml(__('Get GLS Parcel Status')) ?>
+    </a>
+    <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
+        'onclick',
+        "event.preventDefault(); popWin(
+            '{$block->escapeJs($viewModel->getGlsStatusPopupUrl($source, $hashKey))}',
+            'glsstatus',
+            'width=800,height=600,resizable=yes,scrollbars=yes'
+        )",
+        'a#gls-parcel-status-link'
+    ) ?>
+</p>

@@ -17,4 +17,7 @@
     <type name="Magento\Shipping\Block\Adminhtml\Order\Packaging">
         <plugin name="gls_shipping" type="GLSCroatia\Shipping\Plugin\Shipping\Block\Adminhtml\Order\PackagingPlugin"/>
     </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\AbstractOrder">
+        <plugin name="gls_shipping_parcel_status" type="GLSCroatia\Shipping\Plugin\Shipping\Block\Adminhtml\View\ParcelStatusPlugin"/>
+    </type>
 </config>

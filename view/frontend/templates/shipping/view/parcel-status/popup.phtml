@@ -1,0 +1,128 @@
+<?php
+/**
+ * Copyright (c) 2023-present GLS Croatia. All rights reserved.
+ * See LICENSE.txt for license details.
+ *
+ * @author Inchoo (https://inchoo.net)
+ */
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+
+/** @var \GLSCroatia\Shipping\ViewModel\ParcelStatus $viewModel */
+$viewModel = $block->getData('view_model');
+
+$result = $viewModel->getParcelListStatuses();
+?>
+
+<div class="page tracking">
+    <?php if ($result && $parcelList = $result->getData('parcel_list')): ?>
+        <?php foreach ($parcelList as $parcel): ?>
+            <div class="order subtitle caption">
+                <?= $block->escapeHtml(__('Parcel Number')) ?>: <?= $block->escapeHtml($parcel['ParcelNumber'] ?? '') ?>
+            </div>
+            <div class="table-wrapper">
+                <table class="data table order tracking">
+                    <?php if ($clientNumber = $parcel['ClientNumber'] ?? ''): ?>
+                        <tr>
+                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Client ID')) ?>:</th>
+                            <td class="col value"><?= $block->escapeHtml($clientNumber) ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php if ($clientReference = $parcel['ClientReference'] ?? ''): ?>
+                        <tr>
+                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Client Reference')) ?>:</th>
+                            <td class="col value"><?= $block->escapeHtml($clientReference) ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php if ($deliveryCountryCode = $parcel['DeliveryCountryCode'] ?? ''): ?>
+                        <tr>
+                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Delivery Country Code')) ?>:</th>
+                            <td class="col value"><?= $block->escapeHtml($deliveryCountryCode) ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php if ($deliveryZipCode = $parcel['DeliveryZipCode'] ?? ''): ?>
+                        <tr>
+                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Delivery Postcode')) ?>:</th>
+                            <td class="col value"><?= $block->escapeHtml($deliveryZipCode) ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php if ($parcelNumber = $parcel['ParcelNumber'] ?? ''): ?>
+                        <tr>
+                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Parcel Number')) ?>:</th>
+                            <td class="col value"><?= $block->escapeHtml($parcelNumber) ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php if ($weight = $parcel['Weight'] ?? ''): ?>
+                        <tr>
+                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Weight')) ?>:</th>
+                            <td class="col value"><?= $block->escapeHtml($weight) ?></td>
+                        </tr>
+                    <?php endif; ?>
+                </table>
+                <?php if ($parcelStatusList = $parcel['ParcelStatusList'] ?? []): ?>
+                    <table class="data table order tracking">
+                        <thead>
+                            <tr>
+                                <th class="col" scope="col"><?= $block->escapeHtml(__('Date')) ?></th>
+                                <th class="col" scope="col"><?= $block->escapeHtml(__('Depot City')) ?></th>
+                                <th class="col" scope="col"><?= $block->escapeHtml(__('Depot Number')) ?></th>
+                                <th class="col" scope="col"><?= $block->escapeHtml(__('Status Code')) ?></th>
+                                <th class="col" scope="col"><?= $block->escapeHtml(__('Description')) ?></th>
+                                <th class="col" scope="col"><?= $block->escapeHtml(__('Info')) ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($parcelStatusList as $parcelStatus): ?>
+                                <tr>
+                                    <td class="col">
+                                        <?php if ($statusDate = $parcelStatus['StatusDate'] ?? ''): ?>
+                                            <?= $block->escapeHtml($viewModel->formatDate($statusDate)) ?>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="col"><?= $block->escapeHtml($parcelStatus['DepotCity'] ?? '') ?></td>
+                                    <td class="col"><?= $block->escapeHtml($parcelStatus['DepotNumber'] ?? '') ?></td>
+                                    <td class="col"><?= $block->escapeHtml($parcelStatus['StatusCode'] ?? '') ?></td>
+                                    <td class="col"><?= $block->escapeHtml($parcelStatus['StatusDescription'] ?? '') ?></td>
+                                    <td class="col"><?= $block->escapeHtml($parcelStatus['StatusInfo'] ?? '') ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <div class="message info empty">
+                        <div><?= $block->escapeHtml(__('Parcel status history is not available.')) ?></div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <div class="message info empty">
+            <div><?= $block->escapeHtml(__('Parcel status is currently unavailable.')) ?></div>
+        </div>
+    <?php endif; ?>
+
+    <div class="actions">
+        <button type="button" title="<?= $block->escapeHtml(__('Close Window')) ?>" class="action close">
+            <span><?= $block->escapeHtml(__('Close Window')) ?></span>
+        </button>
+        <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
+            'onclick',
+            "window.close(); window.opener.focus();",
+            'button.action.close'
+        ) ?>
+    </div>
+</div>
+
+<?php $scriptString = <<<script
+    require([
+        'jquery'
+    ], function (jQuery) {
+        /* hide the close button when the content doesn't open in a modal window */
+        if (window.opener === null || typeof window.opener === "undefined") {
+            jQuery('.actions button.close').hide();
+        }
+    });
+script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>

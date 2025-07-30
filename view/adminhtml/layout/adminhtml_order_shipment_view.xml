@@ -21,5 +21,12 @@
                 </arguments>
             </block>
         </referenceBlock>
+        <referenceBlock name="form">
+            <block name="gls_parcel_status" template="GLSCroatia_Shipping::shipping/view/parcel-status-link.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">GLSCroatia\Shipping\ViewModel\ParcelStatus</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
     </body>
 </page>
