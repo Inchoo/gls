@@ -169,10 +169,7 @@
                     </field>
                     <field id="content" translate="label comment" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Content</label>
-                        <comment>Only in Serbia! Parcel info printed on label.</comment>
-                        <depends>
-                            <field id="country">RS</field>
-                        </depends>
+                        <comment><![CDATA[Variables that can be used: {increment_id}.]]></comment>
                         <config_path>carriers/gls/content</config_path>
                     </field>
                     <field id="printer_type" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" canRestore="1">

@@ -73,6 +73,7 @@ class ShipmentRequestBuilder
         $parcel = [
             'ClientNumber' => (int)$clientId,
             'ClientReference' => $this->generateReference($shipment),
+            'Content' => $this->generateContent($shipment),
             'Count' => count($request->getPackages() ?: []) ?: 1,
 //            'PickupDate' => "/Date({$currentTimestamp})/",
             'PickupAddress' => [
@@ -103,7 +104,6 @@ class ShipmentRequestBuilder
 
         if ($request->getRecipientAddressCountryCode() === 'RS') {
             $parcel['SenderIdentityCardNumber'] = $this->config->getSenderIdentityCardNumber($storeId);
-            $parcel['Content'] = $this->config->getContent($storeId);
         }
 
         $recipientPhoneNumber = $this->formatPhoneNumber(
@@ -276,6 +276,21 @@ class ShipmentRequestBuilder
             '{increment_id}',
             (string)$shipment->getOrder()->getIncrementId(),
             $this->config->getClientReference($shipment->getStoreId())
+        );
+    }
+
+    /**
+     * Generate "Content" value.
+     *
+     * @param \Magento\Sales\Model\Order\Shipment $shipment
+     * @return string
+     */
+    protected function generateContent(\Magento\Sales\Model\Order\Shipment $shipment): string
+    {
+        return str_replace(
+            '{increment_id}',
+            (string)$shipment->getOrder()->getIncrementId(),
+            $this->config->getContent($shipment->getStoreId())
         );
     }
 }
