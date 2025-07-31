@@ -267,6 +267,9 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
                 'tracking_number' => $result->getTrackingNumber(),
                 'label_content' => $result->getShippingLabelContent(),
             ];
+
+            // used in the "sales_order_shipment_save_after" observer
+            $request->getOrderShipment()->setData('gls_parcel_id', $result->getParcelId());
         }
 
         $response->setData('info', $data);
@@ -307,6 +310,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         }
 
         if ($printLabelsInfoList = $body['PrintLabelsInfoList'] ?? []) {
+            $result->setParcelId($printLabelsInfoList[0]['ParcelId'] ?? null);
             $result->setTrackingNumber($printLabelsInfoList[0]['ParcelNumber'] ?? null);
         }
 

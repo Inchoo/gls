@@ -83,4 +83,23 @@
             <column name="entity_id"/>
         </constraint>
     </table>
+    <table name="gls_shipping_parcel" resource="default" engine="innodb" comment="GLS Parcel">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="int" name="order_id" unsigned="true" nullable="false" identity="false" comment="Order Id"/>
+        <column xsi:type="int" name="shipment_id" unsigned="true" nullable="false" identity="false" comment="Shipment Id"/>
+        <column xsi:type="int" name="parcel_id" unsigned="true" nullable="false" identity="false" comment="GLS Parcel Id"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="GLS_SHIPPING_PARCEL_ORDER_ID_SHIPMENT_ID">
+            <column name="order_id"/>
+            <column name="shipment_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" table="gls_shipping_parcel" column="order_id"
+                    referenceTable="sales_order" referenceColumn="entity_id" onDelete="CASCADE"
+                    referenceId="GLS_SHIPPING_PARCEL_ORDER_ID_SALES_ORDER_ENTITY_ID"/>
+        <constraint xsi:type="foreign" table="gls_shipping_parcel" column="shipment_id"
+                    referenceTable="sales_shipment" referenceColumn="entity_id" onDelete="CASCADE"
+                    referenceId="GLS_SHIPPING_PARCEL_SHIPMENT_ID_SALES_SHIPMENT_ENTITY_ID"/>
+    </table>
 </schema>

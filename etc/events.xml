@@ -17,4 +17,7 @@
     <event name="gls_after_api_request">
         <observer name="gls_request_logging" instance="GLSCroatia\Shipping\Observer\ApiLogObserver"/>
     </event>
+    <event name="sales_order_shipment_save_after">
+        <observer name="gls_shipping" instance="GLSCroatia\Shipping\Observer\ShipmentSaveAfterObserver"/>
+    </event>
 </config>
