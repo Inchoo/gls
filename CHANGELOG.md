@@ -8,6 +8,7 @@
 - Added support for the "Content" field placeholders.
 - Implemented filtering of parcel locker/shop shipping methods per product.
 - Added "Parcel ID" column to the order and shipment grids.
+- Added the GLS logo to the checkout page.
 
 ### [1.2.4] - 2025-06-11
 - Implemented reset of parcel locker/shop delivery point data after the shipping method is changed.

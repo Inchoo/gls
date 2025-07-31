@@ -19,6 +19,7 @@
                 <exclude_discount_amount>1</exclude_discount_amount>
                 <include_virtual_price>1</include_virtual_price>
                 <allowed_methods>standard,locker,shop</allowed_methods>
+                <enabled_checkout_logo>0</enabled_checkout_logo>
 
                 <standard_method_name>Delivery to Address</standard_method_name>
                 <standard_method_price/>

@@ -383,6 +383,17 @@ class Config
     }
 
     /**
+     * Is enabled GLS on checkout page.
+     *
+     * @param int|string|null $scopeCode
+     * @return bool
+     */
+    public function isEnabledCheckoutLogo($scopeCode = null): bool
+    {
+        return $this->getConfigFlag('enabled_checkout_logo', $scopeCode);
+    }
+
+    /**
      * Get API URL.
      *
      * @param string $serviceName

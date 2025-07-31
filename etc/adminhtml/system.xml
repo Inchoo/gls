@@ -47,6 +47,10 @@
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\Method</source_model>
                     <can_be_empty>1</can_be_empty>
                 </field>
+                <field id="enabled_checkout_logo" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled GLS Logo On Checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
 
                 <group id="standard_method" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Delivery to Address Method</label>
