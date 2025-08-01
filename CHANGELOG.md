@@ -2,6 +2,7 @@
 - Added support for more countries with parcel locker/shop services.
 - Added support for multiple GLS accounts.
 - Added support for multiple custom origin addresses.
+- Implemented the Pickup Request functionality.
 - Implemented the ability for admins to change the parcel shop delivery point.
 - Enabled selection of GLS service options per order.
 - Implemented parcel status check functionality.
