@@ -31,7 +31,7 @@
                     <label>Address</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\Address</source_model>
                     <comment>
-                        <model>\GLSCroatia\Shipping\Model\Config\Comment\Address</model>
+                        <model>GLSCroatia\Shipping\Model\Config\Comment\Address</model>
                     </comment>
                 </field>
                 <field id="exclude_discount_amount" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
