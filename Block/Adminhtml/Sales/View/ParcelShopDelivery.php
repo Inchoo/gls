@@ -78,6 +78,7 @@ class ParcelShopDelivery extends \Magento\Backend\Block\Template
         $deliveryData = $this->parcelShopDelivery->getParcelShopDeliveryPointData($order);
         $countryCode = $deliveryData->getData('contact/countryCode') ?: $order->getShippingAddress()->getCountryId();
 
+        $this->setData('country_code', $countryCode);
         $this->setData('map_script_url', $this->config->getMapScriptUrlByCountryCode($countryCode));
         $this->setData('map_language_code', $this->config->getMapLanguageCode($countryCode));
 
