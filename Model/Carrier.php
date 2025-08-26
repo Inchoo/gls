@@ -269,7 +269,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
             ];
 
             // used in the "sales_order_shipment_save_after" observer
-            $request->getOrderShipment()->setData('gls_parcel_id', $result->getParcelId());
+            $request->getOrderShipment()->setData('gls_parcel_id', $result->getTrackingNumber());
         }
 
         $response->setData('info', $data);
