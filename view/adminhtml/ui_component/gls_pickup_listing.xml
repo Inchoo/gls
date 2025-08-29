@@ -79,6 +79,7 @@
                 <label translate="true">Pickup Time From</label>
                 <dataType>date</dataType>
                 <filter>dateRange</filter>
+                <timezone>false</timezone>
             </settings>
         </column>
         <column name="time_to" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="41">
@@ -86,6 +87,7 @@
                 <label translate="true">Pickup Time To</label>
                 <dataType>date</dataType>
                 <filter>dateRange</filter>
+                <timezone>false</timezone>
             </settings>
         </column>
         <actionsColumn name="actions" sortOrder="200" class="GLSCroatia\Shipping\Ui\Component\Listing\Columns\PickupActions">

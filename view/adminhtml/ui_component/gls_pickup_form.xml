@@ -124,6 +124,7 @@
             <formElements>
                 <date>
                     <settings>
+                        <storeTimeZone>UTC</storeTimeZone>
                         <options>
                             <option name="showsTime" xsi:type="boolean">true</option>
                         </options>
@@ -142,6 +143,7 @@
             <formElements>
                 <date>
                     <settings>
+                        <storeTimeZone>UTC</storeTimeZone>
                         <options>
                             <option name="showsTime" xsi:type="boolean">true</option>
                         </options>
