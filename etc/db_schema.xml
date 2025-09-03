@@ -87,7 +87,7 @@
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
         <column xsi:type="int" name="order_id" unsigned="true" nullable="false" identity="false" comment="Order Id"/>
         <column xsi:type="int" name="shipment_id" unsigned="true" nullable="false" identity="false" comment="Shipment Id"/>
-        <column xsi:type="int" name="parcel_id" unsigned="true" nullable="false" identity="false" comment="GLS Parcel Id"/>
+        <column xsi:type="bigint" name="parcel_id" unsigned="true" nullable="false" identity="false" comment="GLS Parcel Id"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>
