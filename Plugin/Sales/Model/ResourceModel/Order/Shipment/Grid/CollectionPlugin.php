@@ -44,6 +44,10 @@ class CollectionPlugin
         $field,
         $condition
     ): array {
+        if ($field === 'entity_id') {
+            $field = 'main_table.entity_id';
+        }
+
         if ($field === 'order_id') {
             $field = 'main_table.order_id';
         }
