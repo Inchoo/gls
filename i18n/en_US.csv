@@ -72,3 +72,89 @@
 "Used only when the table rates are not configured, or as a fallback if table rates are not found.","Used only when the table rates are not configured, or as a fallback if table rates are not found."
 "Username","Username"
 "Variables that can be used: {increment_id}.","Variables that can be used: {increment_id}."
+"Cannot find a GLS account to delete.","Cannot find a GLS account to delete."
+"The GLS account has been deleted.","The GLS account has been deleted."
+"Edit GLS Account","Edit GLS Account"
+"New GLS Account","New GLS Account"
+"GLS Accounts","GLS Accounts"
+"Cannot find a GLS address to delete.","Cannot find a GLS address to delete."
+"The GLS address has been deleted.","The GLS address has been deleted."
+"Edit GLS Address","Edit GLS Address"
+"New GLS Address","New GLS Address"
+"GLS Addresses","GLS Addresses"
+"Invalid delivery point data.","Invalid delivery point data."
+"New GLS Pickup Request","New GLS Pickup Request"
+"GLS Pickup Requests","GLS Pickup Requests"
+"The GLS pickup request failed.","The GLS pickup request failed."
+"GLS Pickup Request","GLS Pickup Request"
+"GLS Parcel Status","GLS Parcel Status"
+"The account with the Id: ""%1"" does not exist.","The account with the Id: ""%1"" does not exist."
+"An account with the same data already exists.","An account with the same data already exists."
+"Could not save the account: %1","Could not save the account: %1"
+"Could not delete the account: %1.","Could not delete the account: %1."
+"The address with the Id: ""%1"" does not exist.","The address with the Id: ""%1"" does not exist."
+"Could not save the address: %1","Could not save the address: %1"
+"Could not delete the address: %1.","Could not delete the address: %1."
+"This is required for API usage. <a href=""%1"">Create account</a>.","This is required for API usage. <a href=""%1"">Create account</a>."
+"If not selected, the Shipping Settings Origin address will be used. <a href=""%1"">Create address</a>.","If not selected, the Shipping Settings Origin address will be used. <a href=""%1"">Create address</a>."
+"-- Please Select --","-- Please Select --"
+"The pickup request with the Id: ""%1"" does not exist.","The pickup request with the Id: ""%1"" does not exist."
+"Could not save the pickup request: %1","Could not save the pickup request: %1"
+"Could not delete the pickup request: %1.","Could not delete the pickup request: %1."
+"Are you sure you want to delete this record?","Are you sure you want to delete this record?"
+Delete,Delete
+Edit,Edit
+View,View
+"Change Delivery Point","Change Delivery Point"
+"GLS Options","GLS Options"
+"COD Reference","COD Reference"
+"Get GLS Parcel Status","Get GLS Parcel Status"
+"Parcel Number","Parcel Number"
+"Delivery Country Code","Delivery Country Code"
+"Delivery Postcode","Delivery Postcode"
+Weight,Weight
+Date,Date
+"Depot City","Depot City"
+"Depot Number","Depot Number"
+"Status Code","Status Code"
+Description,Description
+Info,Info
+"Parcel status history is not available.","Parcel status history is not available."
+"Parcel status is currently unavailable.","Parcel status is currently unavailable."
+"Close Window","Close Window"
+Account,Account
+Address,Address
+"Pickup Request","Pickup Request"
+Shipping,Shipping
+Accounts,Accounts
+Addresses,Addresses
+"Pickup Requests","Pickup Requests"
+"Enabled GLS Logo On Checkout","Enabled GLS Logo On Checkout"
+GLS Account,GLS Account
+Back,Back
+Reset,Reset
+Save,Save
+"Add New Account","Add New Account"
+ID,ID
+"GLS Address","GLS Address"
+Label,Label
+"Short address label for easier selection.","Short address label for easier selection."
+Company,Company
+"If this field is empty, the default store value will be used.","If this field is empty, the default store value will be used."
+"Phone Number","Phone Number"
+Region/State,Region/State
+"Zip/Postal Code","Zip/Postal Code"
+"Street Address Line 2","Street Address Line 2"
+"Add New Address","Add New Address"
+Region,Region
+Request,Request
+"Leave this field empty to apply the default origin address.","Leave this field empty to apply the default origin address."
+Website,Website
+"The default origin address may vary by website.","The default origin address may vary by website."
+"Package Count","Package Count"
+"Pickup Time From","Pickup Time From"
+"Pickup Time To","Pickup Time To"
+"Request New Pickup","Request New Pickup"
+Count,Count
+"GLS Pickup View","GLS Pickup View"
+"GLS Parcel ID","GLS Parcel ID"
