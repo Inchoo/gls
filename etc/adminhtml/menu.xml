@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023-present GLS Croatia. All rights reserved.
+ * See LICENSE.txt for license details.
+ *
+ * @author Inchoo (https://inchoo.net)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="GLSCroatia_Shipping::root" title="GLS" translate="title" module="GLSCroatia_Shipping" sortOrder="65" resource="GLSCroatia_Shipping::shipping"/>
+        <add id="GLSCroatia_Shipping::shipping" title="Shipping" translate="title" module="GLSCroatia_Shipping" sortOrder="10" parent="GLSCroatia_Shipping::root" resource="GLSCroatia_Shipping::shipping"/>
+        <add id="GLSCroatia_Shipping::shipping_account" title="Accounts" translate="title" module="GLSCroatia_Shipping" sortOrder="10" parent="GLSCroatia_Shipping::shipping" action="gls/account/grid" resource="GLSCroatia_Shipping::shipping_account"/>
+        <add id="GLSCroatia_Shipping::shipping_address" title="Addresses" translate="title" module="GLSCroatia_Shipping" sortOrder="20" parent="GLSCroatia_Shipping::shipping" action="gls/address/grid" resource="GLSCroatia_Shipping::shipping_address"/>
+        <add id="GLSCroatia_Shipping::shipping_pickup_request" title="Pickup Requests" translate="title" module="GLSCroatia_Shipping" sortOrder="30" parent="GLSCroatia_Shipping::shipping" action="gls/pickup/grid" resource="GLSCroatia_Shipping::shipping_pickup_request"/>
+    </menu>
+</config>

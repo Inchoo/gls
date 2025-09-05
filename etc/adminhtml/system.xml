@@ -27,6 +27,13 @@
                     <label>Sort Order</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
+                <field id="address_id" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Address</label>
+                    <source_model>GLSCroatia\Shipping\Model\Config\Source\Address</source_model>
+                    <comment>
+                        <model>GLSCroatia\Shipping\Model\Config\Comment\Address</model>
+                    </comment>
+                </field>
                 <field id="exclude_discount_amount" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Exclude Discount Amount From Price Calculation</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -39,6 +46,10 @@
                     <label>Allowed Methods</label>
                     <source_model>GLSCroatia\Shipping\Model\Config\Source\Method</source_model>
                     <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="enabled_checkout_logo" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled GLS Logo On Checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
 
                 <group id="standard_method" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -87,7 +98,7 @@
                     </field>
                     <field id="specificcountry" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Specific Countries</label>
-                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\MapCountries</source_model>
                         <can_be_empty>1</can_be_empty>
                         <config_path>carriers/gls/locker_method_specificcountry</config_path>
                     </field>
@@ -106,7 +117,7 @@
                     </field>
                     <field id="specificcountry" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Specific Countries</label>
-                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\MapCountries</source_model>
                         <can_be_empty>1</can_be_empty>
                         <config_path>carriers/gls/shop_method_specificcountry</config_path>
                     </field>
@@ -134,29 +145,18 @@
 
                 <group id="api" translate="label" type="text" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>API</label>
-                    <field id="client_id" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
-                        <label>Client ID</label>
-                        <comment>This is required for API usage.</comment>
-                        <config_path>carriers/gls/client_id</config_path>
+                    <field id="account_id" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Account</label>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Account</source_model>
+                        <comment>
+                            <model>GLSCroatia\Shipping\Model\Config\Comment\Account</model>
+                        </comment>
+                        <config_path>carriers/gls/account_id</config_path>
                     </field>
                     <field id="mode" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Mode</label>
                         <source_model>GLSCroatia\Shipping\Model\Config\Source\Mode</source_model>
                         <config_path>carriers/gls/api_mode</config_path>
-                    </field>
-                    <field id="username" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Username</label>
-                        <config_path>carriers/gls/api_username</config_path>
-                    </field>
-                    <field id="password" translate="label" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Password</label>
-                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                        <config_path>carriers/gls/api_password</config_path>
-                    </field>
-                    <field id="country" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" canRestore="1">
-                        <label>Country</label>
-                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Country</source_model>
-                        <config_path>carriers/gls/api_country</config_path>
                     </field>
                     <field id="client_reference" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Client Reference</label>
@@ -173,10 +173,7 @@
                     </field>
                     <field id="content" translate="label comment" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Content</label>
-                        <comment>Only in Serbia! Parcel info printed on label.</comment>
-                        <depends>
-                            <field id="country">RS</field>
-                        </depends>
+                        <comment><![CDATA[Variables that can be used: {increment_id}.]]></comment>
                         <config_path>carriers/gls/content</config_path>
                     </field>
                     <field id="printer_type" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" canRestore="1">

@@ -17,9 +17,9 @@
     <table name="gls_shipping_tablerate" resource="default" engine="innodb" comment="GLS Shipping Tablerate">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
         <column xsi:type="int" name="website_id" unsigned="false" nullable="false" identity="false" default="0" comment="Website ID"/>
-        <column xsi:type="varchar" name="country_code" nullable="false" length="3" default="*" comment="Destination Country (ISO 3166-1 alpha-2)"/>
-        <column xsi:type="varchar" name="region_code" nullable="false" length="6" default="*" comment="Destination Region Code (ISO 3166-2)"/>
-        <column xsi:type="varchar" name="postcode" nullable="false" length="10" default="*" comment="Destination Postcode (Zip)"/>
+        <column xsi:type="varchar" name="country_code" length="3" nullable="false" default="*" comment="Destination Country (ISO 3166-1 alpha-2)"/>
+        <column xsi:type="varchar" name="region_code" length="6" nullable="false" default="*" comment="Destination Region Code (ISO 3166-2)"/>
+        <column xsi:type="varchar" name="postcode" length="10" nullable="false" default="*" comment="Destination Postcode (Zip)"/>
         <column xsi:type="decimal" name="weight" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Weight Condition Value"/>
         <column xsi:type="decimal" name="subtotal" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Subtotal Condition Value"/>
         <column xsi:type="decimal" name="quantity" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Quantity Condition Value"/>
@@ -36,5 +36,70 @@
             <column name="subtotal"/>
             <column name="quantity"/>
         </constraint>
+    </table>
+    <table name="gls_shipping_account" resource="default" engine="innodb" comment="GLS Shipping Account">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="varchar" name="client_id" length="32" nullable="false" comment="Client Id"/>
+        <column xsi:type="varchar" name="username" length="128" nullable="false" comment="Username"/>
+        <column xsi:type="varchar" name="password" length="128" nullable="false" comment="Password"/>
+        <column xsi:type="varchar" name="country_code" length="3" nullable="false" comment="Country (ISO 3166-1 alpha-2)"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="GLS_SHIPPING_ACCOUNT_CLIENT_ID_USERNAME_COUNTRY_CODE">
+            <column name="client_id"/>
+            <column name="username"/>
+            <column name="country_code"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="GLS_SHIPPING_ACCOUNT_USERNAME_COUNTRY_CODE">
+            <column name="username"/>
+            <column name="country_code"/>
+        </constraint>
+    </table>
+    <table name="gls_shipping_address" resource="default" engine="innodb" comment="GLS Shipping Address">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="varchar" name="label" nullable="false" length="255" comment="Label"/>
+        <column xsi:type="varchar" name="company" nullable="true" length="255" comment="Company"/>
+        <column xsi:type="varchar" name="phone_number" nullable="true" length="255" comment="Phone Number"/>
+        <column xsi:type="varchar" name="country_code" length="3" nullable="false" comment="Country (ISO 3166-1 alpha-2)"/>
+        <column xsi:type="int" name="region_id" unsigned="true" nullable="true" identity="false" comment="Region/State"/>
+        <column xsi:type="varchar" name="region" nullable="true" length="255" comment="Region/State"/>
+        <column xsi:type="varchar" name="postcode" nullable="false" length="255" comment="Zip/Postal Code"/>
+        <column xsi:type="varchar" name="city" nullable="false" length="255" comment="City"/>
+        <column xsi:type="varchar" name="street" nullable="false" length="255" comment="Street Address"/>
+        <column xsi:type="varchar" name="street_line2" nullable="true" length="255" comment="Street Address Line 2"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+    <table name="gls_shipping_pickup_request" resource="default" engine="innodb" comment="GLS Pickup Request">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="varchar" name="account" nullable="false" length="255" comment="Account"/>
+        <column xsi:type="varchar" name="count" nullable="false" length="8" comment="Package Count"/>
+        <column xsi:type="varchar" name="time_from" nullable="false" length="255" comment="Pickup Time From"/>
+        <column xsi:type="varchar" name="time_to" nullable="false" length="255" comment="Pickup Time To"/>
+        <column xsi:type="json" name="address" nullable="false" comment="Address"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+    <table name="gls_shipping_parcel" resource="default" engine="innodb" comment="GLS Parcel">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="int" name="order_id" unsigned="true" nullable="false" identity="false" comment="Order Id"/>
+        <column xsi:type="int" name="shipment_id" unsigned="true" nullable="false" identity="false" comment="Shipment Id"/>
+        <column xsi:type="bigint" name="parcel_id" unsigned="true" nullable="false" identity="false" comment="GLS Parcel Id"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="GLS_SHIPPING_PARCEL_ORDER_ID_SHIPMENT_ID">
+            <column name="order_id"/>
+            <column name="shipment_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" table="gls_shipping_parcel" column="order_id"
+                    referenceTable="sales_order" referenceColumn="entity_id" onDelete="CASCADE"
+                    referenceId="GLS_SHIPPING_PARCEL_ORDER_ID_SALES_ORDER_ENTITY_ID"/>
+        <constraint xsi:type="foreign" table="gls_shipping_parcel" column="shipment_id"
+                    referenceTable="sales_shipment" referenceColumn="entity_id" onDelete="CASCADE"
+                    referenceId="GLS_SHIPPING_PARCEL_SHIPMENT_ID_SALES_SHIPMENT_ENTITY_ID"/>
     </table>
 </schema>

@@ -1,3 +1,16 @@
+### [1.3.0] - 2025-07-08
+- Added support for more countries with parcel locker/shop services.
+- Added support for multiple GLS accounts.
+- Added support for multiple custom origin addresses.
+- Implemented the Pickup Request functionality.
+- Implemented the ability for admins to change the parcel shop delivery point.
+- Enabled selection of GLS service options per order.
+- Implemented parcel status check functionality.
+- Added support for the "Content" field placeholders.
+- Implemented filtering of parcel locker/shop shipping methods per product.
+- Added "Parcel ID" column to the order and shipment grids.
+- Added the GLS logo to the checkout page.
+
 ### [1.2.4] - 2025-06-11
 - Implemented reset of parcel locker/shop delivery point data after the shipping method is changed.
 

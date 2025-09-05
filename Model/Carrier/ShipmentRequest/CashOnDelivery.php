@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Carrier\ShipmentRequest;
 
-use Magento\Sales\Model\Order\Shipment;
-
 class CashOnDelivery
 {
     /**
@@ -53,12 +51,14 @@ class CashOnDelivery
     }
 
     /**
-     * Check if Cash on Delivery is allowed for shipment.
+     * Is the "Cash on Delivery Service" allowed.
+     *
+     * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::isCashOnDeliveryAllowed()
      *
      * @param \Magento\Sales\Model\Order\Shipment $shipment
      * @return bool
      */
-    public function isAllowed(Shipment $shipment): bool
+    public function isAllowed(\Magento\Sales\Model\Order\Shipment $shipment): bool
     {
         $order = $shipment->getOrder();
 
@@ -76,11 +76,13 @@ class CashOnDelivery
     /**
      * Calculate "CODAmount" value.
      *
+     * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::getCashOnDeliveryAmount()
+     *
      * @param \Magento\Sales\Model\Order\Shipment $shipment
      * @return float
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function calculateAmount(Shipment $shipment): float
+    public function calculateAmount(\Magento\Sales\Model\Order\Shipment $shipment): float
     {
         $targetCurrencyCode = $this->dataHelper->getConfigCode(
             'country_currency_code',
@@ -110,10 +112,12 @@ class CashOnDelivery
     /**
      * Generate "CODReference" value.
      *
+     * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::getCashOnDeliveryReference()
+     *
      * @param \Magento\Sales\Model\Order\Shipment $shipment
      * @return string
      */
-    public function generateReference(Shipment $shipment): string
+    public function generateReference(\Magento\Sales\Model\Order\Shipment $shipment): string
     {
         return "#{$shipment->getOrder()->getIncrementId()}";
     }

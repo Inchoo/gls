@@ -11,4 +11,22 @@
     <type name="Magento\Sales\Model\Order\Pdf\Shipment">
         <plugin name="gls_parcel_shop_delivery" type="GLSCroatia\Shipping\Plugin\Sales\Controller\Adminhtml\Shipment\PrintActionPlugin"/>
     </type>
+    <type name="Magento\Shipping\Model\Shipping\LabelGenerator">
+        <plugin name="gls_shipping" type="GLSCroatia\Shipping\Plugin\Shipping\Model\Shipping\LabelGeneratorPlugin"/>
+    </type>
+    <type name="Magento\Shipping\Block\Adminhtml\Order\Packaging">
+        <plugin name="gls_shipping" type="GLSCroatia\Shipping\Plugin\Shipping\Block\Adminhtml\Order\PackagingPlugin"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\AbstractOrder">
+        <plugin name="gls_shipping_parcel_status" type="GLSCroatia\Shipping\Plugin\Shipping\Block\Adminhtml\View\ParcelStatusPlugin"/>
+    </type>
+    <type name="Magento\Sales\Model\ResourceModel\Order\Shipment\Grid\Collection">
+        <plugin name="gls_shipping" type="GLSCroatia\Shipping\Plugin\Sales\Model\ResourceModel\Order\Shipment\Grid\CollectionPlugin"/>
+    </type>
+    <type name="Magento\Sales\Model\ResourceModel\Order\Shipment\Order\Grid\Collection">
+        <plugin name="gls_shipping" type="GLSCroatia\Shipping\Plugin\Sales\Model\ResourceModel\Order\Shipment\Grid\CollectionPlugin"/>
+    </type>
+    <type name="Magento\Sales\Model\ResourceModel\Order\Grid\Collection">
+        <plugin name="gls_shipping" type="GLSCroatia\Shipping\Plugin\Sales\Model\ResourceModel\Order\Grid\CollectionPlugin"/>
+    </type>
 </config>

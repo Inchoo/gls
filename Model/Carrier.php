@@ -25,42 +25,12 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
     protected $_code = self::CODE;
 
     /**
-     * @var \GLSCroatia\Shipping\Model\Api\Service
+     * @var \GLSCroatia\Shipping\Model\Carrier\Context
      */
-    protected \GLSCroatia\Shipping\Model\Api\Service $apiService;
+    protected \GLSCroatia\Shipping\Model\Carrier\Context $context;
 
     /**
-     * @var \GLSCroatia\Shipping\Model\Carrier\ShipmentRequestBuilder
-     */
-    protected \GLSCroatia\Shipping\Model\Carrier\ShipmentRequestBuilder $shipmentRequestBuilder;
-
-    /**
-     * @var \GLSCroatia\Shipping\Helper\Data
-     */
-    protected \GLSCroatia\Shipping\Helper\Data $dataHelper;
-
-    /**
-     * @var \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate
-     */
-    protected \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate $tablerateResource;
-
-    /**
-     * @var \Magento\Framework\DataObjectFactory
-     */
-    protected \Magento\Framework\DataObjectFactory $dataObjectFactory;
-
-    /**
-     * @var \Magento\Framework\App\State
-     */
-    protected \Magento\Framework\App\State $appState;
-
-    /**
-     * @param Api\Service $apiService
-     * @param \GLSCroatia\Shipping\Model\Carrier\ShipmentRequestBuilder $shipmentRequestBuilder
-     * @param \GLSCroatia\Shipping\Helper\Data $dataHelper
-     * @param \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate $tablerateResource
-     * @param \Magento\Framework\DataObjectFactory $dataObjectFactory
-     * @param \Magento\Framework\App\State $appState
+     * @param \GLSCroatia\Shipping\Model\Carrier\Context $context
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
@@ -79,12 +49,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
      * @param array $data
      */
     public function __construct(
-        \GLSCroatia\Shipping\Model\Api\Service $apiService,
-        \GLSCroatia\Shipping\Model\Carrier\ShipmentRequestBuilder $shipmentRequestBuilder,
-        \GLSCroatia\Shipping\Helper\Data $dataHelper,
-        \GLSCroatia\Shipping\Model\ResourceModel\Carrier\Tablerate $tablerateResource,
-        \Magento\Framework\DataObjectFactory $dataObjectFactory,
-        \Magento\Framework\App\State $appState,
+        \GLSCroatia\Shipping\Model\Carrier\Context $context,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
         \Psr\Log\LoggerInterface $logger,
@@ -102,12 +67,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         \Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry,
         array $data = []
     ) {
-        $this->apiService = $apiService;
-        $this->shipmentRequestBuilder = $shipmentRequestBuilder;
-        $this->dataHelper = $dataHelper;
-        $this->tablerateResource = $tablerateResource;
-        $this->dataObjectFactory = $dataObjectFactory;
-        $this->appState = $appState;
+        $this->context = $context;
         parent::__construct(
             $scopeConfig,
             $rateErrorFactory,
@@ -175,7 +135,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
                 $request->setData('gls_package_qty', $request->getPackageQty());
                 $request->setData('gls_conditions', ['weight', 'subtotal', 'quantity']);
 
-                $rate = $this->tablerateResource->getRate($request);
+                $rate = $this->context->getTablerateResource()->getRate($request);
 
                 $price = $rate ? (float)$rate['price'] : $this->getConfigData("{$methodCode}_method_price");
             } else {
@@ -221,8 +181,8 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
 
         $result = [];
         foreach ($allowedMethods as $methodCode => $methodTitle) {
-            if ($this->dataHelper->isLockerShopDeliveryMethod($methodCode)
-                && $this->appState->getAreaCode() === \Magento\Framework\App\Area::AREA_ADMINHTML
+            if ($this->context->getDataHelper()->isLockerShopDeliveryMethod($methodCode)
+                && $this->context->getAppState()->getAreaCode() === \Magento\Framework\App\Area::AREA_ADMINHTML
             ) {
                 continue; // PSD not available in adminhtml
             }
@@ -235,6 +195,23 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
                 && !in_array($request->getDestCountryId(), $availableCountries, true)
             ) {
                 continue; // not available for destination country
+            }
+
+            foreach ($request->getAllItems() as $item) {
+                $product = $item->getProduct();
+
+                if ($methodCode === static::PARCEL_LOCKER_DELIVERY_METHOD
+                    && $product->getDisableParcelLockerDelivery()
+                    && !$product->isVirtual()
+                ) {
+                    continue 2; // parcel locker method not allowed with product
+                }
+                if ($methodCode === static::PARCEL_SHOP_DELIVERY_METHOD
+                    && $product->getDisableParcelShopDelivery()
+                    && !$product->isVirtual()
+                ) {
+                    continue 2; // parcel shop method not allowed with product
+                }
             }
 
             $result[$methodCode] = $methodTitle;
@@ -279,7 +256,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         }
 
         $result = $this->_doShipmentRequest($request);
-        $response = $this->dataObjectFactory->create();
+        $response = $this->context->getDataObjectFactory()->create();
 
         $data = [];
         if ($errors = $result->getErrors()) {
@@ -290,6 +267,9 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
                 'tracking_number' => $result->getTrackingNumber(),
                 'label_content' => $result->getShippingLabelContent(),
             ];
+
+            // used in the "sales_order_shipment_save_after" observer
+            $request->getOrderShipment()->setData('gls_parcel_id', $result->getTrackingNumber());
         }
 
         $response->setData('info', $data);
@@ -307,15 +287,15 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
     {
         $this->_prepareShipmentRequest($request);
 
-        $result = $this->dataObjectFactory->create();
+        $result = $this->context->getDataObjectFactory()->create();
 
         try {
-            $params = $this->shipmentRequestBuilder->getParams($request);
+            $params = $this->context->getShipmentRequestBuilder()->getParams($request);
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             return $result->setErrors($e->getMessage());
         }
 
-        $response = $this->apiService->printLabels($params);
+        $response = $this->context->getApiService()->printLabels($params);
         $body = $response->getDecodedBody();
 
         if ($printLabelsErrorList = $body['PrintLabelsErrorList'] ?? []) {
@@ -330,10 +310,31 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         }
 
         if ($printLabelsInfoList = $body['PrintLabelsInfoList'] ?? []) {
+            $result->setParcelId($printLabelsInfoList[0]['ParcelId'] ?? null);
             $result->setTrackingNumber($printLabelsInfoList[0]['ParcelNumber'] ?? null);
         }
 
         return $result;
+    }
+
+    /**
+     * Prepare shipment request. Validate and correct request information.
+     *
+     * @param \Magento\Framework\DataObject $request
+     * @return void
+     */
+    protected function _prepareShipmentRequest(\Magento\Framework\DataObject $request)
+    {
+        parent::_prepareShipmentRequest($request);
+
+        // use GLS address if available
+        if ($addressId = $this->context->getConfig()->getAddressId($request->getStoreId())) {
+            $request = $this->context->getAddressSwitcher()->switchShipperAddress((int)$addressId, $request);
+        }
+
+        if ($shipment = $request->getOrderShipment()) {
+            $request->setData('gls', $shipment->getData('gls') ?: []);
+        }
     }
 
     /**
@@ -344,7 +345,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
      */
     public function getTracking(string $trackingNumber): \Magento\Shipping\Model\Tracking\Result
     {
-        $countryCode = $this->getConfigData('api_country');
+        $countryCode = $this->context->getConfig()->getApiCountryCode($this->getStore());
 
 //        $response = $this->apiService->getParcelStatuses([
 //            'ParcelNumber' => $trackingNumber,
@@ -357,7 +358,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         $tracking->setCarrier($this->getCarrierCode());
         $tracking->setCarrierTitle($this->getConfigData('title'));
         $tracking->setTracking($trackingNumber);
-        $tracking->setUrl($this->dataHelper->generateTrackingUrl($trackingNumber, $countryCode));
+        $tracking->setUrl($this->context->getDataHelper()->generateTrackingUrl($trackingNumber, $countryCode));
 
 //        $tracking->setTrackSummary(null);
 //        $tracking->setStatus(null);
@@ -395,7 +396,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
      */
     public function getCode(string $type, $code = null)
     {
-        return $this->dataHelper->getConfigCode($type, $code);
+        return $this->context->getDataHelper()->getConfigCode($type, $code);
     }
 
     /**
