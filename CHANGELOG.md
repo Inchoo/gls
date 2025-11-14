@@ -1,3 +1,6 @@
+### [1.3.1] - 2025-11-14
+- Fixed the “Applicable Countries” and “Specific Countries” configurations for the “Delivery to Address” method.
+
 ### [1.3.0] - 2025-07-08
 - Added support for more countries with parcel locker/shop services.
 - Added support for multiple GLS accounts.

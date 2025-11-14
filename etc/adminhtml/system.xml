@@ -75,13 +75,13 @@
                         <label>Applicable Countries</label>
                         <frontend_class>shipping-applicable-country</frontend_class>
                         <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
-                        <config_path>carriers/gls/standard_sallowspecific</config_path>
+                        <config_path>carriers/gls/standard_method_sallowspecific</config_path>
                     </field>
                     <field id="specificcountry" translate="label" type="multiselect" sortOrder="101" showInDefault="1" showInWebsite="1">
                         <label>Specific Countries</label>
                         <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                         <can_be_empty>1</can_be_empty>
-                        <config_path>carriers/gls/standard_specificcountry</config_path>
+                        <config_path>carriers/gls/standard_method_specificcountry</config_path>
                     </field>
                 </group>
 
