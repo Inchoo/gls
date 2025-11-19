@@ -70,18 +70,23 @@ class RateQuery
         ];
         $select->where(implode(' OR ', $destinationOrWhere));
 
-        $conditionOrWhere = [];
-        foreach ($request->getData('gls_conditions') ?: [] as $conditionName) {
-            $conditionOrWhere[] = "{$conditionName} <= :{$conditionName}";
+        $conditions = $request->getData('gls_conditions') ?: []; // the order of values in the array is important
+        if ($conditionsWhere = $this->prepareConditionsWhere($conditions)) {
+            $select->where($conditionsWhere);
         }
-        $select->where(implode(' OR ', $conditionOrWhere));
 
-        $select->order([
+        $orderBy = [
             $this->expressionFactory->create(['expression' => 'CASE WHEN postcode = "*" THEN 0 ELSE 1 END DESC']),
             $this->expressionFactory->create(['expression' => 'CASE WHEN region_code = "*" THEN 0 ELSE 1 END DESC']),
-            $this->expressionFactory->create(['expression' => 'CASE WHEN country_code = "*" THEN 0 ELSE 1 END DESC']),
-            'price ASC'
-        ]);
+            $this->expressionFactory->create(['expression' => 'CASE WHEN country_code = "*" THEN 0 ELSE 1 END DESC'])
+        ];
+
+        if ($conditionsOrderBy = $this->prepareConditionsOrderBy($conditions)) {
+            array_push($orderBy, ...$conditionsOrderBy);
+        }
+
+        $orderBy[] = 'price ASC';
+        $select->order($orderBy);
 
         return $select;
     }
@@ -116,5 +121,33 @@ class RateQuery
         }
 
         return $bindings;
+    }
+
+    /**
+     * @param array $conditions
+     * @return string
+     */
+    public function prepareConditionsWhere(array $conditions): string
+    {
+        $conditionsWhere = [];
+        foreach ($conditions as $conditionName) {
+            $conditionsWhere[] = "{$conditionName} <= :{$conditionName}";
+        }
+
+        return implode(' AND ', $conditionsWhere);
+    }
+
+    /**
+     * @param array $conditions
+     * @return array
+     */
+    public function prepareConditionsOrderBy(array $conditions): array
+    {
+        $conditionsOrderBy = [];
+        foreach ($conditions as $conditionName) {
+            $conditionsOrderBy[] = "{$conditionName} DESC";
+        }
+
+        return $conditionsOrderBy;
     }
 }

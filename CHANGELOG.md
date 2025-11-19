@@ -1,3 +1,6 @@
+### [1.3.2] - 2025-11-14
+- Fixed the table rate shipping price calculation.
+
 ### [1.3.1] - 2025-11-14
 - Fixed the “Applicable Countries” and “Specific Countries” configurations for the “Delivery to Address” method.
 
