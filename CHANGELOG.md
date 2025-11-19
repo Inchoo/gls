@@ -1,4 +1,4 @@
-### [1.3.2] - 2025-11-14
+### [1.3.2] - 2025-11-19
 - Fixed the table rate shipping price calculation.
 
 ### [1.3.1] - 2025-11-14
