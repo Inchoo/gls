@@ -72,7 +72,8 @@ class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
                     $lockerShippingMethod => 'parcel-locker',
                     $shopShippingMethod => 'parcel-shop',
                 ],
-                'deliveryPoint' => $quoteGlsData['parcelShopDeliveryPoint'] ?? null
+                'deliveryPoint' => $quoteGlsData['parcelShopDeliveryPoint'] ?? null,
+                'lockerMapSaturation' => $this->config->getConfigValue("locker_method_map_saturation") ?: null
             ]
         ];
 

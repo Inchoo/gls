@@ -24,9 +24,14 @@ define([
             shippingMethodCodes: [],
             mapTypeFilters: {},
             supportedCountries: [],
+            lockerMapSaturation: null,
 
             listens: {
                 '${ $.parentName }:isSelected': 'shippingMethodChanged'
+            },
+
+            imports: {
+                currentShippingMethodCode: '${ $.parentName }:isSelected'
             }
         },
 
@@ -35,6 +40,7 @@ define([
         selectorTitle: ko.observable(null),
         deliveryPoint: glsData.parcelShopDeliveryPoint,
         typeFilter: ko.observable(null),
+        filterSaturation: ko.observable(null),
 
         initialize: function () {
             var checkoutConfig = window.checkoutConfig.glsData;
@@ -54,6 +60,9 @@ define([
             if (checkoutConfig.parcelShopDelivery.mapTypeFilters) {
                 this.mapTypeFilters = checkoutConfig.parcelShopDelivery.mapTypeFilters;
             }
+            if (checkoutConfig.parcelShopDelivery.lockerMapSaturation) {
+                this.lockerMapSaturation = checkoutConfig.parcelShopDelivery.lockerMapSaturation;
+            }
 
             if (Array.isArray(checkoutConfig.supportedCountries)) {
                 this.supportedCountries = checkoutConfig.supportedCountries;
@@ -68,6 +77,10 @@ define([
             });
 
             this._initCountryCode();
+
+            if (this.currentShippingMethodCode) {
+                this.isShippingMethodSelected(this.isLockerShopShippingMethod(this.currentShippingMethodCode));
+            }
 
             return this;
         },
@@ -100,10 +113,12 @@ define([
             } else {
                 this.countryCode(null);
             }
+
+            this.filterSaturation(this.getFilterSaturation(this.typeFilter(), this.countryCode()));
         },
 
         shippingMethodChanged: function (newShippingMethodCode) {
-            var isShippingMethodSelected = this.shippingMethodCodes.includes(newShippingMethodCode),
+            var isShippingMethodSelected = this.isLockerShopShippingMethod(newShippingMethodCode),
                 shippingMethod = quote.shippingMethod();
 
             this.removeDeliveryPoint();
@@ -112,12 +127,18 @@ define([
                 scriptLoader.createMapScript(this.mapScriptUrl);
                 this.typeFilter(newShippingMethodCode in this.mapTypeFilters ? this.mapTypeFilters[newShippingMethodCode] : null);
                 this.selectorTitle(shippingMethod.carrier_title + ' ' + shippingMethod.method_title);
+                this.filterSaturation(this.getFilterSaturation(this.typeFilter(), this.countryCode()));
             } else {
                 this.typeFilter(null);
                 this.selectorTitle(null);
+                this.filterSaturation(null);
             }
 
             this.isShippingMethodSelected(isShippingMethodSelected);
+        },
+
+        isLockerShopShippingMethod: function (shippingMethodCode) {
+            return this.shippingMethodCodes.includes(shippingMethodCode);
         },
 
         openMap: function () {
@@ -145,6 +166,14 @@ define([
         getCountryName: function (countryId) {
             var countryData = customerData.get('directory-data')();
             return countryData[countryId] ? countryData[countryId].name : '';
+        },
+
+        getFilterSaturation: function (typeFilter, countryId) {
+            if (typeFilter === 'parcel-locker' && countryId === 'hu') {
+                return this.lockerMapSaturation;
+            }
+
+            return null;
         }
     });
 });

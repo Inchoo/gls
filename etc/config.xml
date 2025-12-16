@@ -29,6 +29,7 @@
                 <locker_method_price/>
                 <locker_method_sallowspecific>1</locker_method_sallowspecific>
                 <locker_method_specificcountry>AT,BE,CZ,DE,ES,FI,FR,GR,HR,HU,NL,PL,RO,SI,SK</locker_method_specificcountry>
+                <locker_method_map_saturation>1,2,3</locker_method_map_saturation>
                 <shop_method_name>Delivery to Parcel Shop</shop_method_name>
                 <shop_method_price/>
                 <shop_method_sallowspecific>1</shop_method_sallowspecific>
