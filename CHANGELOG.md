@@ -1,3 +1,7 @@
+### [1.3.3] - 2026-01-21
+- Added a parcel locker map saturation filter for Hungary.
+- Fixed `getFreeShipping` shipping request check.
+
 ### [1.3.2] - 2025-11-19
 - Fixed the table rate shipping price calculation.
 
