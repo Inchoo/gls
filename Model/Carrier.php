@@ -143,7 +143,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
             }
 
             // free shipping
-            if ($this->isFreeShipping($methodCode, $packageSubtotal)) {
+            if ($request->getFreeShipping() || $this->isFreeShipping($methodCode, $packageSubtotal)) {
                 $price = 0;
             }
 

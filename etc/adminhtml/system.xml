@@ -96,6 +96,13 @@
                         <validate>validate-number validate-zero-or-greater</validate>
                         <config_path>carriers/gls/locker_method_price</config_path>
                     </field>
+                    <field id="map_saturation" translate="label comment" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" canRestore="1">
+                        <label>Map Saturation</label>
+                        <validate>required-entry</validate>
+                        <comment>Supported only in Hungary.</comment>
+                        <source_model>GLSCroatia\Shipping\Model\Config\Source\Saturation</source_model>
+                        <config_path>carriers/gls/locker_method_map_saturation</config_path>
+                    </field>
                     <field id="specificcountry" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" canRestore="1">
                         <label>Specific Countries</label>
                         <source_model>GLSCroatia\Shipping\Model\Config\Source\MapCountries</source_model>
