@@ -1,6 +1,7 @@
 ### [1.3.4] - 2026-08-28
 - Fixed the map selector state after reloading the checkout page.
 - Added `font-src` CSP policies.
+- Implemented parcel dimensions and packaging properties.
 - Fixed static code analysis errors.
 
 ### [1.3.3] - 2026-01-21
