@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Plugin\Sales\Model\ResourceModel\Order\Grid;
 
@@ -27,9 +28,9 @@ class CollectionPlugin
         $subSelect = $subject->getConnection()->select();
         $subSelect->from(
             ['gls_parcel' => $subject->getTable('gls_shipping_parcel')],
-            ['order_id', 'gls_parcel_id' => new \Zend_Db_Expr('GROUP_CONCAT(gls_parcel.parcel_id SEPARATOR ",")')]
+            ['order_id', 'gls_parcel_id' => new \Zend_Db_Expr('GROUP_CONCAT(gls_parcel.parcel_id SEPARATOR ",")')] // phpcs:ignore
         );
-        $subSelect->group('gls_parcel.order_id');
+        $subSelect->group('gls_parcel.order_id'); // phpcs:ignore
 
         $subject->getSelect()->joinLeft(
             ['gls_parcel_agg' => $subSelect],

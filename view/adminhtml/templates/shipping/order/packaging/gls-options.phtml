@@ -7,6 +7,7 @@
  */
 
 /** @var \Magento\Backend\Block\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
 
 /** @var \GLSCroatia\Shipping\ViewModel\PackagingGlsOptions $viewModel */
 $viewModel = $block->getData('view_model');
@@ -33,7 +34,7 @@ $shipment = $block->getParentBlock()->getShipment();
     ?>
     <section class="admin__page-section" data-mage-init='{"GLSCroatia_Shipping/js/shipping/order/packaging/gls-options": {}}'>
         <div class="admin__page-section-title">
-            <span class="title"><?= $block->escapeHtml(__('GLS Options')) ?></span>
+            <span class="title"><?= $escaper->escapeHtml(__('GLS Options')) ?></span>
         </div>
 
         <div class="admin__control-table-wrapper admin__page-subsection">
@@ -41,36 +42,36 @@ $shipment = $block->getParentBlock()->getShipment();
                 <thead>
                     <tr>
                         <?php if ($isCodAllowed): ?>
-                            <th><?= $block->escapeHtml(__('COD Reference')) ?></th>
+                            <th><?= $escaper->escapeHtml(__('COD Reference')) ?></th>
                         <?php endif; ?>
                         <?php if ($isGuaranteed24hAllowed): ?>
-                            <th><?= $block->escapeHtml(__('Guaranteed 24h Service')) ?></th>
+                            <th><?= $escaper->escapeHtml(__('Guaranteed 24h Service')) ?></th>
                         <?php endif; ?>
                         <?php if ($isExpressDeliveryAllowed): ?>
-                            <th><?= $block->escapeHtml(__('Express Delivery Service')) ?></th>
+                            <th><?= $escaper->escapeHtml(__('Express Delivery Service')) ?></th>
                         <?php endif; ?>
                         <?php if ($isContactAllowed): ?>
-                            <th><?= $block->escapeHtml(__('Contact Service')) ?></th>
+                            <th><?= $escaper->escapeHtml(__('Contact Service')) ?></th>
                         <?php endif; ?>
                         <?php if ($isFlexibleDeliveryAllowed): ?>
-                            <th><?= $block->escapeHtml(__('Flexible Delivery Service')) ?></th>
+                            <th><?= $escaper->escapeHtml(__('Flexible Delivery Service')) ?></th>
                         <?php endif; ?>
                         <?php if ($isFlexibleDeliverySmsAllowed): ?>
-                            <th><?= $block->escapeHtml(__('Flexible Delivery SMS Service')) ?></th>
+                            <th><?= $escaper->escapeHtml(__('Flexible Delivery SMS Service')) ?></th>
                         <?php endif; ?>
                         <?php if ($isSmsAllowed): ?>
-                            <th><?= $block->escapeHtml(__('SMS Service')) ?></th>
+                            <th><?= $escaper->escapeHtml(__('SMS Service')) ?></th>
                         <?php endif; ?>
                         <?php if ($isSmsPreAdviceAllowed): ?>
-                            <th><?= $block->escapeHtml(__('SMS Pre-advice Service')) ?></th>
+                            <th><?= $escaper->escapeHtml(__('SMS Pre-advice Service')) ?></th>
                         <?php endif; ?>
                         <?php if ($isAddresseeOnlyAllowed): ?>
-                            <th><?= $block->escapeHtml(__('Addressee Only Service')) ?></th>
+                            <th><?= $escaper->escapeHtml(__('Addressee Only Service')) ?></th>
                         <?php endif; ?>
                         <?php if ($isInsuranceAllowed): ?>
-                            <th><?= $block->escapeHtml(__('Insurance Service')) ?></th>
+                            <th><?= $escaper->escapeHtml(__('Insurance Service')) ?></th>
                         <?php endif; ?>
-                        <th><?= $block->escapeHtml(__('Print Position')) ?></th>
+                        <th><?= $escaper->escapeHtml(__('Print Position')) ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,7 +79,7 @@ $shipment = $block->getParentBlock()->getShipment();
                         <?php if ($isCodAllowed): ?>
                             <td>
                                 <input type="text" name="cod_reference" class="input-text admin__control-text"
-                                       value="<?= $block->escapeHtmlAttr($viewModel->getCodReference($shipmentRequest)) ?>">
+                                       value="<?= $escaper->escapeHtmlAttr($viewModel->getCodReference($shipmentRequest)) ?>">
                             </td>
                         <?php endif; ?>
                         <?php if ($isGuaranteed24hAllowed): ?>
@@ -87,7 +88,7 @@ $shipment = $block->getParentBlock()->getShipment();
                                     <?php $configValue = $viewModel->getFieldConfigFlag('guaranteed_24h', $storeId) ?>
                                     <?php foreach ($viewModel->getYesNoOptions() as $optionData): ?>
                                         <?php $isSelected = $configValue === (bool)$optionData['value'] ?>
-                                        <option value="<?= $block->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $block->escapeHtml($optionData['label']) ?></option>
+                                        <option value="<?= $escaper->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $escaper->escapeHtml($optionData['label']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
@@ -98,7 +99,7 @@ $shipment = $block->getParentBlock()->getShipment();
                                     <?php $configValue = (string)$viewModel->getFieldConfigValue('express_delivery', $storeId) ?>
                                     <?php foreach ($viewModel->getExpressDeliveryCodeOptions() as $optionData): ?>
                                         <?php $isSelected = $configValue === (string)$optionData['value'] ?>
-                                        <option value="<?= $block->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $block->escapeHtml($optionData['label']) ?></option>
+                                        <option value="<?= $escaper->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $escaper->escapeHtml($optionData['label']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
@@ -109,7 +110,7 @@ $shipment = $block->getParentBlock()->getShipment();
                                     <?php $configValue = $viewModel->getFieldConfigFlag('cs1', $storeId) ?>
                                     <?php foreach ($viewModel->getYesNoOptions() as $optionData): ?>
                                         <?php $isSelected = $configValue === (bool)$optionData['value'] ?>
-                                        <option value="<?= $block->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $block->escapeHtml($optionData['label']) ?></option>
+                                        <option value="<?= $escaper->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $escaper->escapeHtml($optionData['label']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
@@ -120,7 +121,7 @@ $shipment = $block->getParentBlock()->getShipment();
                                     <?php $configValue = $viewModel->getFieldConfigFlag('fds', $storeId) ?>
                                     <?php foreach ($viewModel->getYesNoOptions() as $optionData): ?>
                                         <?php $isSelected = $configValue === (bool)$optionData['value'] ?>
-                                        <option value="<?= $block->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $block->escapeHtml($optionData['label']) ?></option>
+                                        <option value="<?= $escaper->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $escaper->escapeHtml($optionData['label']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
@@ -131,7 +132,7 @@ $shipment = $block->getParentBlock()->getShipment();
                                     <?php $configValue = $viewModel->getFieldConfigFlag('fss', $storeId) ?>
                                     <?php foreach ($viewModel->getYesNoOptions() as $optionData): ?>
                                         <?php $isSelected = $configValue === (bool)$optionData['value'] ?>
-                                        <option value="<?= $block->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $block->escapeHtml($optionData['label']) ?></option>
+                                        <option value="<?= $escaper->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $escaper->escapeHtml($optionData['label']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
@@ -142,7 +143,7 @@ $shipment = $block->getParentBlock()->getShipment();
                                     <?php $configValue = $viewModel->getFieldConfigFlag('sm1', $storeId) ?>
                                     <?php foreach ($viewModel->getYesNoOptions() as $optionData): ?>
                                         <?php $isSelected = $configValue === (bool)$optionData['value'] ?>
-                                        <option value="<?= $block->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $block->escapeHtml($optionData['label']) ?></option>
+                                        <option value="<?= $escaper->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $escaper->escapeHtml($optionData['label']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
@@ -153,7 +154,7 @@ $shipment = $block->getParentBlock()->getShipment();
                                     <?php $configValue = $viewModel->getFieldConfigFlag('sm2', $storeId) ?>
                                     <?php foreach ($viewModel->getYesNoOptions() as $optionData): ?>
                                         <?php $isSelected = $configValue === (bool)$optionData['value'] ?>
-                                        <option value="<?= $block->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $block->escapeHtml($optionData['label']) ?></option>
+                                        <option value="<?= $escaper->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $escaper->escapeHtml($optionData['label']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
@@ -164,7 +165,7 @@ $shipment = $block->getParentBlock()->getShipment();
                                     <?php $configValue = $viewModel->getFieldConfigFlag('aos', $storeId) ?>
                                     <?php foreach ($viewModel->getYesNoOptions() as $optionData): ?>
                                         <?php $isSelected = $configValue === (bool)$optionData['value'] ?>
-                                        <option value="<?= $block->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $block->escapeHtml($optionData['label']) ?></option>
+                                        <option value="<?= $escaper->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $escaper->escapeHtml($optionData['label']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
@@ -175,7 +176,7 @@ $shipment = $block->getParentBlock()->getShipment();
                                     <?php $configValue = $viewModel->getFieldConfigFlag('ins', $storeId) ?>
                                     <?php foreach ($viewModel->getYesNoOptions() as $optionData): ?>
                                         <?php $isSelected = $configValue === (bool)$optionData['value'] ?>
-                                        <option value="<?= $block->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $block->escapeHtml($optionData['label']) ?></option>
+                                        <option value="<?= $escaper->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $escaper->escapeHtml($optionData['label']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
@@ -185,7 +186,7 @@ $shipment = $block->getParentBlock()->getShipment();
                                 <?php $configValue = $viewModel->getFieldConfigValue('print_position', $storeId) ?>
                                 <?php foreach ($viewModel->getPrintPositionOptions() as $optionData): ?>
                                     <?php $isSelected = (int)$configValue === (int)$optionData['value'] ?>
-                                    <option value="<?= $block->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $block->escapeHtml($optionData['label']) ?></option>
+                                    <option value="<?= $escaper->escapeHtmlAttr($optionData['value']) ?>" <?= $isSelected ? 'selected' : '' ?>><?= $escaper->escapeHtml($optionData['label']) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </td>

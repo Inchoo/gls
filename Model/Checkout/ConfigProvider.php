@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Checkout;
 
@@ -34,7 +35,7 @@ class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
      */
     public function __construct(
         \GLSCroatia\Shipping\Model\Config $config,
-        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Checkout\Model\Session $checkoutSession, // phpcs:ignore
         \Magento\Framework\Serialize\Serializer\Json $json
     ) {
         $this->config = $config;

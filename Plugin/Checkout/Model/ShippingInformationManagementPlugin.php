@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Plugin\Checkout\Model;
 
@@ -43,7 +44,7 @@ class ShippingInformationManagementPlugin
      * @return void
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function beforeSaveAddressInformation(
+    public function beforeSaveAddressInformation( // phpcs:ignore
         \Magento\Checkout\Api\ShippingInformationManagementInterface $subject,
         $cartId,
         \Magento\Checkout\Api\Data\ShippingInformationInterface $addressInformation

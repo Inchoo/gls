@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Block\Checkout;
 
@@ -48,7 +49,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      * @param array $jsLayout
      * @return array
      */
-    public function process($jsLayout)
+    public function process($jsLayout) // phpcs:ignore
     {
         if (!$this->config->isActive()) {
             $jsLayout = $this->removeGlsUiComponents($jsLayout);

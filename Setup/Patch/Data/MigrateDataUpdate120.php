@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
@@ -6,10 +9,11 @@
  * @author Inchoo (https://inchoo.net)
  */
 
-declare(strict_types=1);
-
 namespace GLSCroatia\Shipping\Setup\Patch\Data;
 
+/**
+ * phpcs:disable MEQP2.Classes.ResourceModel.OutsideOfResourceModel
+ */
 class MigrateDataUpdate120 implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
     /**
@@ -71,7 +75,7 @@ class MigrateDataUpdate120 implements \Magento\Framework\Setup\Patch\DataPatchIn
         $select->from($this->moduleDataSetup->getTable('core_config_data'));
         $select->where('path = ?', 'carriers/gls/allowed_methods');
 
-        foreach ($this->moduleDataSetup->getConnection()->fetchAll($select) as $row) {
+        foreach ($this->moduleDataSetup->getConnection()->fetchAll($select) as $row) { // phpcs:ignore
             $allowedMethods = $row['value'] ? explode(',', $row['value']) : [];
             if (!in_array('psd', $allowedMethods, true)) {
                 continue;
@@ -106,7 +110,7 @@ class MigrateDataUpdate120 implements \Magento\Framework\Setup\Patch\DataPatchIn
         $select->from($this->moduleDataSetup->getTable('core_config_data'));
         $select->where('path = ?', 'carriers/gls/psd_method_price');
 
-        foreach ($this->moduleDataSetup->getConnection()->fetchAll($select) as $row) {
+        foreach ($this->moduleDataSetup->getConnection()->fetchAll($select) as $row) { // phpcs:ignore
             unset($row['config_id'], $row['updated_at']);
 
             $row['path'] = 'carriers/gls/locker_method_price';
@@ -140,7 +144,7 @@ class MigrateDataUpdate120 implements \Magento\Framework\Setup\Patch\DataPatchIn
         $select->from($this->moduleDataSetup->getTable('core_config_data'));
         $select->where('path = ?', 'carriers/gls/psd_specificcountry');
 
-        foreach ($this->moduleDataSetup->getConnection()->fetchAll($select) as $row) {
+        foreach ($this->moduleDataSetup->getConnection()->fetchAll($select) as $row) { // phpcs:ignore
             unset($row['config_id'], $row['updated_at']);
 
             $row['path'] = 'carriers/gls/locker_method_specificcountry';

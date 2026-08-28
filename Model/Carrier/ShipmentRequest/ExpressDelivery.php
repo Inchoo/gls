@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Carrier\ShipmentRequest;
 
@@ -40,7 +41,7 @@ class ExpressDelivery
      * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::isExpressDeliveryAllowed()
      *
      * @param string $expressDeliverCode
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return bool
      */
     public function isAllowed(string $expressDeliverCode, \Magento\Framework\DataObject $request): bool
@@ -82,7 +83,7 @@ class ExpressDelivery
      *
      * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::isExpressDeliveryAllowed()
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return bool
      */
     public function isAllowedShipmentRequest(\Magento\Framework\DataObject $request): bool

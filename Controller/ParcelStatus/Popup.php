@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Controller\ParcelStatus;
 
@@ -131,7 +132,7 @@ class Popup extends \Magento\Framework\App\Action\Action implements \Magento\Fra
      * @param string $hash
      * @return array
      */
-    protected function loadParcelNumbers(string $hash): array
+    protected function loadParcelNumbers(string $hash): array // phpcs:ignore
     {
         $hashData = explode(':', $this->urlDecoder->decode($hash));
         if (count($hashData) !== 3) {

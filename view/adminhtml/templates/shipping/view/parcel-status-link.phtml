@@ -7,6 +7,7 @@
  */
 
 /** @var \Magento\Backend\Block\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 
 /** @var \GLSCroatia\Shipping\ViewModel\ParcelStatus $viewModel */
@@ -21,13 +22,13 @@ $hashKey = $shipment ? 'shipment_id' : 'order_id';
 ?>
 
 <p>
-    <a href="#" id="gls-parcel-status-link" title="<?= $block->escapeHtmlAttr(__('Get GLS Parcel Status')) ?>">
-        <?= $block->escapeHtml(__('Get GLS Parcel Status')) ?>
+    <a href="#" id="gls-parcel-status-link" title="<?= $escaper->escapeHtmlAttr(__('Get GLS Parcel Status')) ?>">
+        <?= $escaper->escapeHtml(__('Get GLS Parcel Status')) ?>
     </a>
     <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
         'onclick',
         "event.preventDefault(); popWin(
-            '{$block->escapeJs($viewModel->getGlsStatusPopupUrl($source, $hashKey))}',
+            '{$escaper->escapeJs($viewModel->getGlsStatusPopupUrl($source, $hashKey))}',
             'glsstatus',
             'width=800,height=600,resizable=yes,scrollbars=yes'
         )",

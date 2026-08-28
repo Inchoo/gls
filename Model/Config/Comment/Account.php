@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Config\Comment;
 
@@ -32,7 +33,7 @@ class Account implements \Magento\Config\Model\Config\CommentInterface
      * @param string $elementValue
      * @return string
      */
-    public function getCommentText($elementValue)
+    public function getCommentText($elementValue) // phpcs:ignore
     {
         return __(
             'This is required for API usage. <a href="%1">Create account</a>.',

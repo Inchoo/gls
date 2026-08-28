@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Api;
 
@@ -250,9 +251,11 @@ class Service
     /**
      * Generate API URL.
      *
+     * Format can be "json" or "xml".
+     *
      * @param string $serviceName
      * @param string $methodName
-     * @param string $format (json|xml)
+     * @param string $format
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException
      */

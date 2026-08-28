@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Address;
 
@@ -74,7 +75,7 @@ class Origin
      * @param int $websiteId
      * @return \GLSCroatia\Shipping\Model\Address
      */
-    public function set(
+    public function set( // phpcs:ignore
         \GLSCroatia\Shipping\Model\Address $address,
         int $websiteId = 0,
     ): \GLSCroatia\Shipping\Model\Address {

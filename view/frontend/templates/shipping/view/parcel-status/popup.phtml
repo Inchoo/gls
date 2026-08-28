@@ -7,6 +7,7 @@
  */
 
 /** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 
 /** @var \GLSCroatia\Shipping\ViewModel\ParcelStatus $viewModel */
@@ -19,44 +20,44 @@ $result = $viewModel->getParcelListStatuses();
     <?php if ($result && $parcelList = $result->getData('parcel_list')): ?>
         <?php foreach ($parcelList as $parcel): ?>
             <div class="order subtitle caption">
-                <?= $block->escapeHtml(__('Parcel Number')) ?>: <?= $block->escapeHtml($parcel['ParcelNumber'] ?? '') ?>
+                <?= $escaper->escapeHtml(__('Parcel Number')) ?>: <?= $escaper->escapeHtml($parcel['ParcelNumber'] ?? '') ?>
             </div>
             <div class="table-wrapper">
                 <table class="data table order tracking">
                     <?php if ($clientNumber = $parcel['ClientNumber'] ?? ''): ?>
                         <tr>
-                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Client ID')) ?>:</th>
-                            <td class="col value"><?= $block->escapeHtml($clientNumber) ?></td>
+                            <th class="col label" scope="row"><?= $escaper->escapeHtml(__('Client ID')) ?>:</th>
+                            <td class="col value"><?= $escaper->escapeHtml($clientNumber) ?></td>
                         </tr>
                     <?php endif; ?>
                     <?php if ($clientReference = $parcel['ClientReference'] ?? ''): ?>
                         <tr>
-                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Client Reference')) ?>:</th>
-                            <td class="col value"><?= $block->escapeHtml($clientReference) ?></td>
+                            <th class="col label" scope="row"><?= $escaper->escapeHtml(__('Client Reference')) ?>:</th>
+                            <td class="col value"><?= $escaper->escapeHtml($clientReference) ?></td>
                         </tr>
                     <?php endif; ?>
                     <?php if ($deliveryCountryCode = $parcel['DeliveryCountryCode'] ?? ''): ?>
                         <tr>
-                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Delivery Country Code')) ?>:</th>
-                            <td class="col value"><?= $block->escapeHtml($deliveryCountryCode) ?></td>
+                            <th class="col label" scope="row"><?= $escaper->escapeHtml(__('Delivery Country Code')) ?>:</th>
+                            <td class="col value"><?= $escaper->escapeHtml($deliveryCountryCode) ?></td>
                         </tr>
                     <?php endif; ?>
                     <?php if ($deliveryZipCode = $parcel['DeliveryZipCode'] ?? ''): ?>
                         <tr>
-                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Delivery Postcode')) ?>:</th>
-                            <td class="col value"><?= $block->escapeHtml($deliveryZipCode) ?></td>
+                            <th class="col label" scope="row"><?= $escaper->escapeHtml(__('Delivery Postcode')) ?>:</th>
+                            <td class="col value"><?= $escaper->escapeHtml($deliveryZipCode) ?></td>
                         </tr>
                     <?php endif; ?>
                     <?php if ($parcelNumber = $parcel['ParcelNumber'] ?? ''): ?>
                         <tr>
-                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Parcel Number')) ?>:</th>
-                            <td class="col value"><?= $block->escapeHtml($parcelNumber) ?></td>
+                            <th class="col label" scope="row"><?= $escaper->escapeHtml(__('Parcel Number')) ?>:</th>
+                            <td class="col value"><?= $escaper->escapeHtml($parcelNumber) ?></td>
                         </tr>
                     <?php endif; ?>
                     <?php if ($weight = $parcel['Weight'] ?? ''): ?>
                         <tr>
-                            <th class="col label" scope="row"><?= $block->escapeHtml(__('Weight')) ?>:</th>
-                            <td class="col value"><?= $block->escapeHtml($weight) ?></td>
+                            <th class="col label" scope="row"><?= $escaper->escapeHtml(__('Weight')) ?>:</th>
+                            <td class="col value"><?= $escaper->escapeHtml($weight) ?></td>
                         </tr>
                     <?php endif; ?>
                 </table>
@@ -64,12 +65,12 @@ $result = $viewModel->getParcelListStatuses();
                     <table class="data table order tracking">
                         <thead>
                             <tr>
-                                <th class="col" scope="col"><?= $block->escapeHtml(__('Date')) ?></th>
-                                <th class="col" scope="col"><?= $block->escapeHtml(__('Depot City')) ?></th>
-                                <th class="col" scope="col"><?= $block->escapeHtml(__('Depot Number')) ?></th>
-                                <th class="col" scope="col"><?= $block->escapeHtml(__('Status Code')) ?></th>
-                                <th class="col" scope="col"><?= $block->escapeHtml(__('Description')) ?></th>
-                                <th class="col" scope="col"><?= $block->escapeHtml(__('Info')) ?></th>
+                                <th class="col" scope="col"><?= $escaper->escapeHtml(__('Date')) ?></th>
+                                <th class="col" scope="col"><?= $escaper->escapeHtml(__('Depot City')) ?></th>
+                                <th class="col" scope="col"><?= $escaper->escapeHtml(__('Depot Number')) ?></th>
+                                <th class="col" scope="col"><?= $escaper->escapeHtml(__('Status Code')) ?></th>
+                                <th class="col" scope="col"><?= $escaper->escapeHtml(__('Description')) ?></th>
+                                <th class="col" scope="col"><?= $escaper->escapeHtml(__('Info')) ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,34 +78,34 @@ $result = $viewModel->getParcelListStatuses();
                                 <tr>
                                     <td class="col">
                                         <?php if ($statusDate = $parcelStatus['StatusDate'] ?? ''): ?>
-                                            <?= $block->escapeHtml($viewModel->formatDate($statusDate)) ?>
+                                            <?= $escaper->escapeHtml($viewModel->formatDate($statusDate)) ?>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="col"><?= $block->escapeHtml($parcelStatus['DepotCity'] ?? '') ?></td>
-                                    <td class="col"><?= $block->escapeHtml($parcelStatus['DepotNumber'] ?? '') ?></td>
-                                    <td class="col"><?= $block->escapeHtml($parcelStatus['StatusCode'] ?? '') ?></td>
-                                    <td class="col"><?= $block->escapeHtml($parcelStatus['StatusDescription'] ?? '') ?></td>
-                                    <td class="col"><?= $block->escapeHtml($parcelStatus['StatusInfo'] ?? '') ?></td>
+                                    <td class="col"><?= $escaper->escapeHtml($parcelStatus['DepotCity'] ?? '') ?></td>
+                                    <td class="col"><?= $escaper->escapeHtml($parcelStatus['DepotNumber'] ?? '') ?></td>
+                                    <td class="col"><?= $escaper->escapeHtml($parcelStatus['StatusCode'] ?? '') ?></td>
+                                    <td class="col"><?= $escaper->escapeHtml($parcelStatus['StatusDescription'] ?? '') ?></td>
+                                    <td class="col"><?= $escaper->escapeHtml($parcelStatus['StatusInfo'] ?? '') ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 <?php else: ?>
                     <div class="message info empty">
-                        <div><?= $block->escapeHtml(__('Parcel status history is not available.')) ?></div>
+                        <div><?= $escaper->escapeHtml(__('Parcel status history is not available.')) ?></div>
                     </div>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
         <div class="message info empty">
-            <div><?= $block->escapeHtml(__('Parcel status is currently unavailable.')) ?></div>
+            <div><?= $escaper->escapeHtml(__('Parcel status is currently unavailable.')) ?></div>
         </div>
     <?php endif; ?>
 
     <div class="actions">
-        <button type="button" title="<?= $block->escapeHtml(__('Close Window')) ?>" class="action close">
-            <span><?= $block->escapeHtml(__('Close Window')) ?></span>
+        <button type="button" title="<?= $escaper->escapeHtml(__('Close Window')) ?>" class="action close">
+            <span><?= $escaper->escapeHtml(__('Close Window')) ?></span>
         </button>
         <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
             'onclick',

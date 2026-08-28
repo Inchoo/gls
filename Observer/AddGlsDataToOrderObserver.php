@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
@@ -6,14 +9,9 @@
  * @author Inchoo (https://inchoo.net)
  */
 
-declare(strict_types=1);
-
 namespace GLSCroatia\Shipping\Observer;
 
-use Magento\Framework\Event\Observer;
-use Magento\Framework\Event\ObserverInterface;
-
-class AddGlsDataToOrderObserver implements ObserverInterface
+class AddGlsDataToOrderObserver implements \Magento\Framework\Event\ObserverInterface
 {
     /**
      * Save GLS delivery location to the order.
@@ -21,10 +19,11 @@ class AddGlsDataToOrderObserver implements ObserverInterface
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
-    public function execute(Observer $observer)
+    public function execute(\Magento\Framework\Event\Observer $observer)
     {
         /** @var \Magento\Sales\Model\Order $order */
         $order = $observer->getData('order');
+
         /** @var \Magento\Quote\Model\Quote $quote */
         $quote = $observer->getData('quote');
 

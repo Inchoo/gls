@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\ResourceModel\Carrier;
 
@@ -92,7 +93,7 @@ class Tablerate extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $select->order('entity_id');
         $select->limitPage($currentPage, $pageSize);
 
-        return $this->getConnection()->fetchAll($select);
+        return $this->getConnection()->fetchAll($select); // phpcs:ignore
     }
 
     /**

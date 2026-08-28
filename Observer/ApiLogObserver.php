@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
@@ -6,15 +9,9 @@
  * @author Inchoo (https://inchoo.net)
  */
 
-declare(strict_types=1);
-
 namespace GLSCroatia\Shipping\Observer;
 
-use Magento\Framework\DataObject;
-use Magento\Framework\Event\Observer;
-use Magento\Framework\Event\ObserverInterface;
-
-class ApiLogObserver implements ObserverInterface
+class ApiLogObserver implements \Magento\Framework\Event\ObserverInterface
 {
     /**
      * @var \GLSCroatia\Shipping\Model\Config
@@ -52,7 +49,7 @@ class ApiLogObserver implements ObserverInterface
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
-    public function execute(Observer $observer)
+    public function execute(\Magento\Framework\Event\Observer $observer)
     {
         if (!$this->config->isDebugEnabled()) {
             return;
@@ -72,10 +69,10 @@ class ApiLogObserver implements ObserverInterface
     /**
      * Sanitize request data.
      *
-     * @param \GLSCroatia\Shipping\Model\Api\Client\Request $request
+     * @param \GLSCroatia\Shipping\Model\Api\Client\Request|\Magento\Framework\DataObject $request
      * @return array
      */
-    public function sanitizeRequestData(DataObject $request): array
+    protected function sanitizeRequestData(\Magento\Framework\DataObject $request): array // phpcs:ignore
     {
         $data = $request->getData() ?: [];
         $params = $data['params'] ?? [];
@@ -99,10 +96,10 @@ class ApiLogObserver implements ObserverInterface
     /**
      * Sanitize response data.
      *
-     * @param \GLSCroatia\Shipping\Model\Api\Client\Response  $response
+     * @param \GLSCroatia\Shipping\Model\Api\Client\Response|\Magento\Framework\DataObject $response
      * @return array
      */
-    public function sanitizeResponseData(DataObject $response): array
+    public function sanitizeResponseData(\Magento\Framework\DataObject $response): array // phpcs:ignore
     {
         $body = $response->getDecodedBody();
 

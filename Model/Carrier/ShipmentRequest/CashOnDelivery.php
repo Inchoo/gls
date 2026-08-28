@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Carrier\ShipmentRequest;
 
@@ -67,7 +68,7 @@ class CashOnDelivery
             return false; // not "cashondelivery" payment method
         }
 
-        $firstShipment = $order->getShipmentsCollection()->getFirstItem();
+        $firstShipment = $order->getShipmentsCollection()->getFirstItem(); // phpcs:ignore
 
         // COD is only available for the first shipment
         return (int)$shipment->getEntityId() === (int)$firstShipment->getEntityId();
