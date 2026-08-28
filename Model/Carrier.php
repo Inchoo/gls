@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model;
 
@@ -94,7 +95,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
      * @param \Magento\Quote\Model\Quote\Address\RateRequest $request
      * @return \Magento\Framework\DataObject|bool|null
      */
-    public function collectRates(\Magento\Quote\Model\Quote\Address\RateRequest $request)
+    public function collectRates(\Magento\Quote\Model\Quote\Address\RateRequest $request) // phpcs:ignore
     {
         if (!$this->isActive() || !$allowedMethods = $this->getValidatedMethods($request)) {
             return false;
@@ -244,7 +245,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
      * @return \Magento\Framework\DataObject
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function requestToShipment($request)
+    public function requestToShipment($request) // phpcs:ignore
     {
         $packages = $request->getPackages();
         if (!is_array($packages) || !$packages) {
@@ -280,10 +281,10 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
     /**
      * Do shipment request to carrier web service, obtain Print Shipping Labels and process errors in response.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return \Magento\Framework\DataObject
      */
-    protected function _doShipmentRequest(\Magento\Framework\DataObject $request)
+    protected function _doShipmentRequest(\Magento\Framework\DataObject $request) // phpcs:ignore
     {
         $this->_prepareShipmentRequest($request);
 
@@ -292,21 +293,25 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         try {
             $params = $this->context->getShipmentRequestBuilder()->getParams($request);
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            return $result->setErrors($e->getMessage());
+            return $result->setErrors([$e->getMessage()]);
         }
 
         $response = $this->context->getApiService()->printLabels($params);
         $body = $response->getDecodedBody();
 
         if ($printLabelsErrorList = $body['PrintLabelsErrorList'] ?? []) {
-            return $result->setErrors($printLabelsErrorList[0]['ErrorDescription'] ?? __('GLS API error.'));
+            $errors = [];
+            foreach ($printLabelsErrorList as $error) {
+                $errors[] = $error['ErrorDescription'] ?? __('GLS API error.');
+            }
+            return $result->setErrors($errors);
         }
 
         if ($labels = $body['Labels'] ?? []) {
             $result->setShippingLabelContent(implode(array_map('chr', $labels)));
         }
         if (!$result->getShippingLabelContent()) {
-            return $result->setErrors(__('Could not create label.'));
+            return $result->setErrors([__('Could not create label.')]);
         }
 
         if ($printLabelsInfoList = $body['PrintLabelsInfoList'] ?? []) {
@@ -335,6 +340,26 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         if ($shipment = $request->getOrderShipment()) {
             $request->setData('gls', $shipment->getData('gls') ?: []);
         }
+    }
+
+    /**
+     * Return the container types of the carrier.
+     *
+     * @param \Magento\Framework\DataObject|null $params
+     * @return array
+     */
+    public function getContainerTypes(?\Magento\Framework\DataObject $params = null) // phpcs:ignore
+    {
+        return [
+            '0' => ' ',
+            '1' => __('Colli'),
+            '2' => __('Box'),
+            '3' => __('Roll'),
+            '4' => __('Can'),
+            '5' => __('Case'),
+            '6' => __('Reel'),
+            '7' => __('Sack')
+        ];
     }
 
     /**
@@ -382,7 +407,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
      * @param string|null $countryId
      * @return false
      */
-    public function isZipCodeRequired($countryId = null)
+    public function isZipCodeRequired($countryId = null) // phpcs:ignore
     {
         return false;
     }

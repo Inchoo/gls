@@ -1,12 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2023-present GLS Croatia. All rights reserved.
  * See LICENSE.txt for license details.
  *
  * @author Inchoo (https://inchoo.net)
  */
-
-declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Model\Carrier;
 
@@ -53,11 +54,11 @@ class ShipmentRequestBuilder
     /**
      * Get shipment request API params.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getParams(\Magento\Framework\DataObject $request): array
+    public function getParams(\Magento\Framework\DataObject $request): array // phpcs:ignore
     {
         $storeId = $request->getStoreId();
 
@@ -67,6 +68,7 @@ class ShipmentRequestBuilder
 
         $shipment = $request->getOrderShipment();
         $requestData = $request->getData('gls') ?: [];
+        $packages = $request->getPackages() ?: [];
 
 //        $currentTimestamp = round(microtime(true) * 1000); // milliseconds
 
@@ -74,7 +76,8 @@ class ShipmentRequestBuilder
             'ClientNumber' => (int)$clientId,
             'ClientReference' => $this->generateReference($shipment),
             'Content' => $this->generateContent($shipment),
-            'Count' => count($request->getPackages() ?: []) ?: 1,
+            'Count' => count($packages) ?: 1,
+            'ParcelPropertyList' => $this->generateParcelPropertyList($packages),
 //            'PickupDate' => "/Date({$currentTimestamp})/",
             'PickupAddress' => [
                 'Name' => $request->getShipperContactCompanyName(),
@@ -292,5 +295,51 @@ class ShipmentRequestBuilder
             (string)$shipment->getOrder()->getIncrementId(),
             $this->config->getContent($shipment->getStoreId())
         );
+    }
+
+    /**
+     * Generate "ParcelPropertyList" value.
+     *
+     * @param array $packages
+     * @return array
+     */
+    protected function generateParcelPropertyList(array $packages): array // phpcs:ignore
+    {
+        $result = [];
+
+        foreach ($packages as $package) {
+            $parcelProperty = [];
+
+            $weightUnits = $package['params']['weight_units'] ?? null;
+            $dimensionUnits = $package['params']['dimension_units'] ?? null;
+
+            if ($packageType = $package['params']['container'] ?? null) {
+                $parcelProperty['PackageType'] = (int)$packageType;
+            }
+
+            if ($weight = $package['params']['weight'] ?? null) {
+                if ($weightUnits === 'POUND') {
+                    $weight *= 0.453592; // convert to kg
+                }
+                $parcelProperty['Weight'] = (float)$weight;
+            }
+
+            $length = $package['params']['length'] ?? null;
+            $width = $package['params']['width'] ?? null;
+            $height = $package['params']['height'] ?? null;
+            if ($length && $width && $height) {
+                $multiplier = $dimensionUnits === 'INCH' ? 2.54 : 1; // convert to cm
+
+                $parcelProperty['Length'] = (int)ceil($length * $multiplier);
+                $parcelProperty['Width'] = (int)ceil($width * $multiplier);
+                $parcelProperty['Height'] = (int)ceil($height * $multiplier);
+            }
+
+            if ($parcelProperty) {
+                $result[] = $parcelProperty;
+            }
+        }
+
+        return $result;
     }
 }
