@@ -1,3 +1,7 @@
+### [1.3.4] - 2026-08-28
+- Fixed the map selector state after reloading the checkout page.
+- Added `font-src` CSP policies.
+
 ### [1.3.3] - 2026-01-21
 - Added a parcel locker map saturation filter for Hungary.
 - Fixed `getFreeShipping` shipping request check.

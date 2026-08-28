@@ -79,8 +79,14 @@ define([
             this._initCountryCode();
 
             if (this.currentShippingMethodCode) {
-                this.isShippingMethodSelected(this.isLockerShopShippingMethod(this.currentShippingMethodCode));
+                this.applyShippingMethodState(this.currentShippingMethodCode);
             }
+
+            quote.shippingMethod.subscribe(function (shippingMethod) {
+                if (this.isShippingMethodSelected() && shippingMethod) {
+                    this.selectorTitle(shippingMethod.carrier_title + ' ' + shippingMethod.method_title);
+                }
+            }.bind(this));
 
             return this;
         },
@@ -118,15 +124,18 @@ define([
         },
 
         shippingMethodChanged: function (newShippingMethodCode) {
-            var isShippingMethodSelected = this.isLockerShopShippingMethod(newShippingMethodCode),
-                shippingMethod = quote.shippingMethod();
-
             this.removeDeliveryPoint();
+            this.applyShippingMethodState(newShippingMethodCode);
+        },
+
+        applyShippingMethodState: function (shippingMethodCode) {
+            var isShippingMethodSelected = this.isLockerShopShippingMethod(shippingMethodCode),
+                shippingMethod = quote.shippingMethod();
 
             if (isShippingMethodSelected) {
                 scriptLoader.createMapScript(this.mapScriptUrl);
-                this.typeFilter(newShippingMethodCode in this.mapTypeFilters ? this.mapTypeFilters[newShippingMethodCode] : null);
-                this.selectorTitle(shippingMethod.carrier_title + ' ' + shippingMethod.method_title);
+                this.typeFilter(shippingMethodCode in this.mapTypeFilters ? this.mapTypeFilters[shippingMethodCode] : null);
+                this.selectorTitle(shippingMethod ? shippingMethod.carrier_title + ' ' + shippingMethod.method_title : null);
                 this.filterSaturation(this.getFilterSaturation(this.typeFilter(), this.countryCode()));
             } else {
                 this.typeFilter(null);
