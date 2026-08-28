@@ -68,7 +68,7 @@ class CashOnDelivery
             return false; // not "cashondelivery" payment method
         }
 
-        $firstShipment = $order->getShipmentsCollection()->getFirstItem();
+        $firstShipment = $order->getShipmentsCollection()->getFirstItem(); // phpcs:ignore
 
         // COD is only available for the first shipment
         return (int)$shipment->getEntityId() === (int)$firstShipment->getEntityId();

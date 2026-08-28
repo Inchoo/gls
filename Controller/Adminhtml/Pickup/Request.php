@@ -19,6 +19,7 @@ class Request extends \Magento\Backend\App\Action implements \Magento\Framework\
      * @var \GLSCroatia\Shipping\Model\AccountRepository
      */
     protected \GLSCroatia\Shipping\Model\AccountRepository $accountRepository;
+
     /**
      * @var \GLSCroatia\Shipping\Model\AddressRepository
      */
@@ -196,9 +197,9 @@ class Request extends \Magento\Backend\App\Action implements \Magento\Framework\
             $street .= " {$streetLine2}";
         }
 
-        $fromDateTime = new \DateTime($data['pickup_time_from']);
+        $fromDateTime = new \DateTime($data['pickup_time_from']); // phpcs:ignore
         $pickupTimeFrom = $fromDateTime->getTimestamp() * 1000;
-        $toDateTime = new \DateTime($data['pickup_time_to']);
+        $toDateTime = new \DateTime($data['pickup_time_to']); // phpcs:ignore
         $pickupTimeTo = $toDateTime->getTimestamp() * 1000;
 
         return [

@@ -251,9 +251,11 @@ class Service
     /**
      * Generate API URL.
      *
+     * Format can be "json" or "xml".
+     *
      * @param string $serviceName
      * @param string $methodName
-     * @param string $format (json|xml)
+     * @param string $format
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException
      */

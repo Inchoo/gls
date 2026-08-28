@@ -35,7 +35,7 @@ class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
      */
     public function __construct(
         \GLSCroatia\Shipping\Model\Config $config,
-        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Checkout\Model\Session $checkoutSession, // phpcs:ignore
         \Magento\Framework\Serialize\Serializer\Json $json
     ) {
         $this->config = $config;

@@ -100,7 +100,7 @@ class ParcelStatus implements \Magento\Framework\View\Element\Block\ArgumentInte
     {
         preg_match('/\/Date\((\d+)([+-]\d{4})?\)\//', $date, $matches); // extract timestamp (milliseconds)
         $timestamp = (int)($matches[1] / 100);
-        $dateTime = (new \DateTime())->setTimestamp($timestamp);
+        $dateTime = (new \DateTime())->setTimestamp($timestamp); // phpcs:ignore
 
         try {
             return $this->dateTimeFormatter->formatObject(

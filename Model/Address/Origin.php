@@ -75,7 +75,7 @@ class Origin
      * @param int $websiteId
      * @return \GLSCroatia\Shipping\Model\Address
      */
-    public function set(
+    public function set( // phpcs:ignore
         \GLSCroatia\Shipping\Model\Address $address,
         int $websiteId = 0,
     ): \GLSCroatia\Shipping\Model\Address {

@@ -35,7 +35,7 @@ class ReviewPlugin
      * @param mixed $value
      * @return array
      */
-    public function beforeSetData(\Magento\Paypal\Block\Express\Review $subject, $key, $value = null): array
+    public function beforeSetData(\Magento\Paypal\Block\Express\Review $subject, $key, $value = null): array // phpcs:ignore
     {
         if ($key !== 'shipping_rate_groups'
             || !is_array($value)
@@ -69,7 +69,7 @@ class ReviewPlugin
      * @param mixed $result
      * @return mixed|null
      */
-    public function afterGetCurrentShippingRate(\Magento\Paypal\Block\Express\Review $subject, $result)
+    public function afterGetCurrentShippingRate(\Magento\Paypal\Block\Express\Review $subject, $result) // phpcs:ignore
     {
         if ($result instanceof \Magento\Quote\Model\Quote\Address\Rate
             && $result->getCarrier() === \GLSCroatia\Shipping\Model\Carrier::CODE

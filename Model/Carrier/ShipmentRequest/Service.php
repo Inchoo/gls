@@ -54,7 +54,7 @@ class Service
     /**
      * Is the "Cash on Delivery Service" allowed.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return bool
      */
     public function isCashOnDeliveryAllowed(\Magento\Framework\DataObject $request): bool
@@ -65,7 +65,7 @@ class Service
     /**
      * Calculate "CODAmount" value.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return float
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -77,7 +77,7 @@ class Service
     /**
      * Generate "CODReference" value.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return string
      */
     public function getCashOnDeliveryReference(\Magento\Framework\DataObject $request): string
@@ -88,7 +88,7 @@ class Service
     /**
      * Is the "Guaranteed 24h Service" allowed.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return bool
      */
     public function isGuaranteed24hAllowed(\Magento\Framework\DataObject $request): bool
@@ -99,7 +99,7 @@ class Service
     /**
      * Is the "Express Delivery Service" allowed.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @param string|null $expressDeliverCode
      * @return bool
      */
@@ -117,7 +117,7 @@ class Service
     /**
      * Is the "Contact Service" allowed.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return bool
      */
     public function isContactAllowed(\Magento\Framework\DataObject $request): bool
@@ -128,7 +128,7 @@ class Service
     /**
      * Is the "Flexible Delivery Service" allowed.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @param bool $isExpressDeliveryServiceUsed
      * @return bool
      */
@@ -143,7 +143,7 @@ class Service
     /**
      * Is the "Flexible Delivery SMS Service" allowed.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @param bool $isFlexibleDeliveryServiceUsed
      * @return bool
      */
@@ -157,7 +157,7 @@ class Service
     /**
      * Is the "SMS Service" allowed.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @param string $smsTxt
      * @return bool
      */
@@ -169,10 +169,10 @@ class Service
     /**
      * Is the "SMS Pre-advice Service" allowed.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return bool
      */
-    public function isSmsPreAdviceAllowed(\Magento\Framework\DataObject $request): bool
+    public function isSmsPreAdviceAllowed(\Magento\Framework\DataObject $request): bool // phpcs:ignore
     {
         return true;
     }
@@ -180,7 +180,7 @@ class Service
     /**
      * Is the "Addressee Only Service" allowed.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return bool
      */
     public function isAddresseeOnlyAllowed(\Magento\Framework\DataObject $request): bool
@@ -191,7 +191,7 @@ class Service
     /**
      * Check if insurance is allowed for package value.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return bool
      */
     public function isInsuranceAllowed(\Magento\Framework\DataObject $request): bool
@@ -206,7 +206,7 @@ class Service
     /**
      * Calculate shipment value.
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return float
      */
     public function calculateInsuranceValue(\Magento\Framework\DataObject $request): float

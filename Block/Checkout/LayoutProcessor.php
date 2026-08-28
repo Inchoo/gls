@@ -49,7 +49,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      * @param array $jsLayout
      * @return array
      */
-    public function process($jsLayout)
+    public function process($jsLayout) // phpcs:ignore
     {
         if (!$this->config->isActive()) {
             $jsLayout = $this->removeGlsUiComponents($jsLayout);

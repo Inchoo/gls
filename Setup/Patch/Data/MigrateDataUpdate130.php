@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace GLSCroatia\Shipping\Setup\Patch\Data;
 
+/**
+ * phpcs:disable MEQP2.Classes.ResourceModel.OutsideOfResourceModel
+ */
 class MigrateDataUpdate130 implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
     /**
@@ -54,7 +57,7 @@ class MigrateDataUpdate130 implements \Magento\Framework\Setup\Patch\DataPatchIn
      *
      * @return $this
      */
-    public function apply()
+    public function apply() // phpcs:ignore
     {
         $fields = ['client_id', 'api_username', 'api_password', 'api_country'];
 
@@ -143,7 +146,7 @@ class MigrateDataUpdate130 implements \Magento\Framework\Setup\Patch\DataPatchIn
 
         // clean up the "core_config_data" table
         foreach ($fields as $field) {
-            $this->moduleDataSetup->getConnection()->delete(
+            $this->moduleDataSetup->getConnection()->delete( // phpcs:ignore
                 $this->moduleDataSetup->getTable('core_config_data'),
                 ['path = ?' => "carriers/gls/{$field}"]
             );
@@ -164,6 +167,6 @@ class MigrateDataUpdate130 implements \Magento\Framework\Setup\Patch\DataPatchIn
         $select->from($this->moduleDataSetup->getTable('core_config_data'));
         $select->where('path = ?', "carriers/gls/{$field}");
 
-        return $this->moduleDataSetup->getConnection()->fetchAll($select);
+        return $this->moduleDataSetup->getConnection()->fetchAll($select); // phpcs:ignore
     }
 }

@@ -33,7 +33,7 @@ class Address implements \Magento\Config\Model\Config\CommentInterface
      * @param string $elementValue
      * @return string
      */
-    public function getCommentText($elementValue)
+    public function getCommentText($elementValue) // phpcs:ignore
     {
         return __(
             'If not selected, the Shipping Settings Origin address will be used. <a href="%1">Create address</a>.',

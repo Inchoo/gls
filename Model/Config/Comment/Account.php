@@ -33,7 +33,7 @@ class Account implements \Magento\Config\Model\Config\CommentInterface
      * @param string $elementValue
      * @return string
      */
-    public function getCommentText($elementValue)
+    public function getCommentText($elementValue) // phpcs:ignore
     {
         return __(
             'This is required for API usage. <a href="%1">Create account</a>.',

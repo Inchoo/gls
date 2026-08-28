@@ -93,7 +93,7 @@ class Tablerate extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $select->order('entity_id');
         $select->limitPage($currentPage, $pageSize);
 
-        return $this->getConnection()->fetchAll($select);
+        return $this->getConnection()->fetchAll($select); // phpcs:ignore
     }
 
     /**

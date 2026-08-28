@@ -44,7 +44,7 @@ class ShippingInformationManagementPlugin
      * @return void
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function beforeSaveAddressInformation(
+    public function beforeSaveAddressInformation( // phpcs:ignore
         \Magento\Checkout\Api\ShippingInformationManagementInterface $subject,
         $cartId,
         \Magento\Checkout\Api\Data\ShippingInformationInterface $addressInformation

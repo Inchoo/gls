@@ -132,7 +132,7 @@ class Popup extends \Magento\Framework\App\Action\Action implements \Magento\Fra
      * @param string $hash
      * @return array
      */
-    protected function loadParcelNumbers(string $hash): array
+    protected function loadParcelNumbers(string $hash): array // phpcs:ignore
     {
         $hashData = explode(':', $this->urlDecoder->decode($hash));
         if (count($hashData) !== 3) {

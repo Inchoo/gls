@@ -41,7 +41,7 @@ class ExpressDelivery
      * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::isExpressDeliveryAllowed()
      *
      * @param string $expressDeliverCode
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return bool
      */
     public function isAllowed(string $expressDeliverCode, \Magento\Framework\DataObject $request): bool
@@ -83,7 +83,7 @@ class ExpressDelivery
      *
      * @see \GLSCroatia\Shipping\Model\Carrier\ShipmentRequest\Service::isExpressDeliveryAllowed()
      *
-     * @param \Magento\Shipping\Model\Shipment\Request $request
+     * @param \Magento\Shipping\Model\Shipment\Request|\Magento\Framework\DataObject $request
      * @return bool
      */
     public function isAllowedShipmentRequest(\Magento\Framework\DataObject $request): bool
