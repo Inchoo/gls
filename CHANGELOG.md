@@ -3,6 +3,7 @@
 - Added `font-src` CSP policies.
 - Implemented parcel dimensions and packaging properties.
 - Fixed static code analysis errors.
+- Added PHP 8.5 support.
 
 ### [1.3.3] - 2026-01-21
 - Added a parcel locker map saturation filter for Hungary.
