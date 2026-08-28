@@ -7,6 +7,7 @@
  */
 
 /** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
 
 /** @var \GLSCroatia\Shipping\ViewModel\ParcelShopDelivery $parcelShopDelivery */
 $parcelShopDelivery = $block->getData('parcel_shop_delivery');
@@ -24,12 +25,12 @@ if ($isParcelShopDeliveryMethod) {
     <table>
         <tr>
             <td>
-                <h3><?= $block->escapeHtml($order->getShippingDescription()) ?></h3>
+                <h3><?= $escaper->escapeHtml($order->getShippingDescription()) ?></h3>
                 <p>
-                    <?= $block->escapeHtml((string)$deliveryData->getData('name')) ?><br>
-                    <?= $block->escapeHtml((string)$deliveryData->getData('contact/address')) ?><br>
-                    <?= $block->escapeHtml((string)$deliveryData->getData('contact/city')) ?>, <?= $block->escapeHtml((string)$deliveryData->getData('contact/postalCode')) // phpcs:ignore ?><br>
-                    <?= $block->escapeHtml((string)$deliveryData->getData('contact/countryCode')) ?><br>
+                    <?= $escaper->escapeHtml((string)$deliveryData->getData('name')) ?><br>
+                    <?= $escaper->escapeHtml((string)$deliveryData->getData('contact/address')) ?><br>
+                    <?= $escaper->escapeHtml((string)$deliveryData->getData('contact/city')) ?>, <?= $escaper->escapeHtml((string)$deliveryData->getData('contact/postalCode')) // phpcs:ignore ?><br>
+                    <?= $escaper->escapeHtml((string)$deliveryData->getData('contact/countryCode')) ?><br>
                 </p>
             </td>
         </tr>

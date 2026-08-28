@@ -7,6 +7,7 @@
  */
 
 /** @var \GLSCroatia\Shipping\Block\Adminhtml\Sales\View\ParcelShopDelivery $block */
+/** @var \Magento\Framework\Escaper $escaper */
 
 $order = $block->getOrder();
 ?>
@@ -14,7 +15,7 @@ $order = $block->getOrder();
 <?php if ($order && $block->getIsParcelShopDelivery()): ?>
     <section class="admin__page-section">
         <div class="admin__page-section-title">
-            <span class="title"><?= $block->escapeHtml($order->getShippingDescription()) ?></span>
+            <span class="title"><?= $escaper->escapeHtml($order->getShippingDescription()) ?></span>
         </div>
         <div class="admin__page-section-content">
             <div id="delivery-point-address">
@@ -23,8 +24,8 @@ $order = $block->getOrder();
 
             <?php if ($order->canShip()): ?>
                 <div id="deliver-data-change">
-                    <gls-dpm-dialog id="gls-map-dialog" country="<?= $block->escapeHtmlAttr($block->getCountryCode()) ?>" language="<?= $block->escapeHtmlAttr($block->getMapLanguageCode()) ?>"></gls-dpm-dialog>
-                    <button type="button" id="map-selector-button" class="action"><?= $block->escapeHtml(__('Change Delivery Point')) ?></button>
+                    <gls-dpm-dialog id="gls-map-dialog" country="<?= $escaper->escapeHtmlAttr($block->getCountryCode()) ?>" language="<?= $escaper->escapeHtmlAttr($block->getMapLanguageCode()) ?>"></gls-dpm-dialog>
+                    <button type="button" id="map-selector-button" class="action"><?= $escaper->escapeHtml(__('Change Delivery Point')) ?></button>
                 </div>
 
                 <script type="text/x-magento-init">
