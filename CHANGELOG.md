@@ -1,3 +1,6 @@
+### [1.3.5] - 2026-09-16
+- Added the `ShipItThermoPdf` option to `TypeOfPrinter`
+
 ### [1.3.4] - 2026-08-28
 - Fixed the map selector state after reloading the checkout page.
 - Added `font-src` CSP policies.

@@ -26,7 +26,8 @@ class PrinterType implements OptionSourceInterface
             ['value' => 'A4_2x2', 'label' => 'A4_2x2'],
             ['value' => 'A4_4x1', 'label' => 'A4_4x1'],
             ['value' => 'Connect', 'label' => 'Connect'],
-            ['value' => 'Thermo', 'label' => 'Thermo']
+            ['value' => 'Thermo', 'label' => 'Thermo'],
+            ['value' => 'ShipItThermoPdf', 'label' => 'ShipIt']
         ];
     }
 }
